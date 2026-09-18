@@ -1,0 +1,43 @@
+name: Experiment
+description: Propose and track an experiment in the lab backlog
+title: "experiment: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues hold experimental work. Create or update a PDDR only if the results lead to an important project decision.
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: What do we expect to learn or observe?
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Method
+      description: Describe the setup, comparison, inputs, and success criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence to collect
+      description: List the results, logs, measurements, or artifacts needed to evaluate the hypothesis.
+    validations:
+      required: true
+  - type: textarea
+    id: decision-impact
+    attributes:
+      label: Possible decision impact
+      description: If the result may change an important Project, Product, or Process choice, describe how. Otherwise write "Issue only".
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Record boundary
+      options:
+        - label: I understand that completing this experiment does not automatically require a PDDR.
+          required: true
