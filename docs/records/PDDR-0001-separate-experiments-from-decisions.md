@@ -4,7 +4,7 @@ title: Separate experiments from durable decisions
 decision_date: 2026-09-18
 recorded_date: 2026-09-18
 decision_status: accepted
-delivery_status: implemented
+delivery_status: validated
 scope:
   - project
   - process
@@ -15,6 +15,8 @@ evidence:
   - "README.md"
   - "AGENTS.md"
   - ".github/ISSUE_TEMPLATE/experiment.yml"
+  - "https://github.com/serevy/semantic-decision-lab/pull/11"
+  - "https://github.com/serevy/semantic-decision-lab/actions/runs/35356756165"
 related: []
 supersedes: []
 superseded_by: null
@@ -68,7 +70,7 @@ The maintainer approved this boundary on 2026-09-18.
 
 The boundary is documented in README and AGENTS instructions. An experiment Issue template prompts for the hypothesis, method, evidence, and possible decision impact while explicitly stating that experiment completion does not automatically require a PDDR.
 
-The repository contains the PDDR Kit validator and a GitHub Actions workflow. Validation on the merged `main` branch is still pending, so delivery remains `implemented` rather than `validated`.
+The repository contains the PDDR Kit validator and a GitHub Actions workflow. PR #11 was reviewed and merged, and the PDDR validation workflow succeeded on the resulting `main` commit. The documented boundary and validation path are therefore `validated`.
 
 ## Consequences
 
@@ -92,6 +94,8 @@ The repository contains the PDDR Kit validator and a GitHub Actions workflow. Va
 - `AGENTS.md`
 - `.github/ISSUE_TEMPLATE/experiment.yml`
 - `.github/workflows/pddr.yml`
+- [Adoption PR #11](https://github.com/serevy/semantic-decision-lab/pull/11)
+- [Merged `main` validation](https://github.com/serevy/semantic-decision-lab/actions/runs/35356756165)
 
 ## Related records
 
