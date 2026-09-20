@@ -1,0 +1,35 @@
+{
+  "source_repository": "serevy/pddr-kit",
+  "source_path": "docs/records",
+  "snapshot_date": "2026-09-21",
+  "records": [
+    {
+      "file": "PDDR-0001-why-pddr-kit-exists.md",
+      "blob_sha": "1763c789c051a1880ea1226128e2cdc610ab97f5"
+    },
+    {
+      "file": "PDDR-0002-portable-init-and-validation.md",
+      "blob_sha": "7a94935295d530a16575aefea8a6df32ada64dc6"
+    },
+    {
+      "file": "PDDR-0003-first-external-adoption-findings.md",
+      "blob_sha": "f7db60610446b78b20bca1c0351f7c16bea34696"
+    },
+    {
+      "file": "PDDR-0004-skill-evaluation-contract.md",
+      "blob_sha": "9643c302107737c059c4cff0b583382cae234748"
+    },
+    {
+      "file": "PDDR-0005-unknown-delivery-state.md",
+      "blob_sha": "3d45b4a8fe73d3c0c5819d64784f3431d0c86359"
+    },
+    {
+      "file": "PDDR-0006-safe-context-consumption.md",
+      "blob_sha": "a8f21fbbf85a31caf9bd36f295f52f8f21a1cb5c"
+    },
+    {
+      "file": "PDDR-0007-safe-adoption-upgrades.md",
+      "blob_sha": "d51967afae89f5ddb333bed2566016324fcddd9e"
+    }
+  ]
+}
