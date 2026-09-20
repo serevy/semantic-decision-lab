@@ -1,0 +1,60 @@
+name: README i18n PoC
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  translate-ja:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout pinned md-translator source
+        env:
+          MD_TRANSLATOR_SHA: 25d07cebc70266ed06bcfb7e5e1ef97253c3e998
+        run: |
+          git clone --filter=blob:none https://github.com/rockbenben/md-translator.git "$RUNNER_TEMP/md-translator"
+          git -C "$RUNNER_TEMP/md-translator" checkout --detach "$MD_TRANSLATOR_SHA"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.0'
+
+      - name: Install pinned translator dependencies
+        working-directory: ${{ runner.temp }}/md-translator
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Translate canonical README to Japanese
+        working-directory: ${{ runner.temp }}/md-translator
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/.i18n-poc"
+          yarn cli \
+            -i "$GITHUB_WORKSPACE/README.md" \
+            -t ja \
+            -m gtxFreeAPI \
+            --no-relay \
+            -o "$GITHUB_WORKSPACE/.i18n-poc"
+
+      - name: Verify protected project terms
+        run: |
+          set -eu
+          translated=".i18n-poc/README.ja.md"
+          test -f "$translated"
+          for term in "semantic-decision-lab" "PDDR" "PDDR Kit" "GitHub Issue" "PDDR-0001"; do
+            grep -Fq "$term" "$translated" || {
+              echo "::error::Protected term missing from translation: $term"
+              exit 1
+            }
+          done
+
+      - name: Upload translation for human review
+        uses: actions/upload-artifact@v4
+        with:
+          name: readme-ja-poc
+          path: .i18n-poc/README.ja.md
+          if-no-files-found: error
