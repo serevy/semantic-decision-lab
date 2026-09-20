@@ -1,0 +1,35 @@
+[
+  {
+    "case_id": "ctx-001",
+    "difficulty": "easy",
+    "task": "A maintainer wants to add PDDR Kit to a new repository with the smallest portable setup, using the same validation logic locally and in GitHub Actions, without installing an extra YAML package. Which prior decision is required context?",
+    "corpus": ["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],
+    "gold": {
+      "required": ["PDDR-0002"],
+      "useful": ["PDDR-0001","PDDR-0003"],
+      "irrelevant": ["PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"]
+    }
+  },
+  {
+    "case_id": "ctx-002",
+    "difficulty": "semantic",
+    "task": "An AI agent is about to use historical PDDR records as context for a current task. We need the prior decision that says accepted records are not automatically executable policy, that current instructions/policy outrank historical decision context, and that only the minimum relevant records should be selected. Which prior decision is required context?",
+    "corpus": ["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],
+    "gold": {
+      "required": ["PDDR-0006"],
+      "useful": ["PDDR-0004","PDDR-0005"],
+      "irrelevant": ["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0007"]
+    }
+  },
+  {
+    "case_id": "ctx-003",
+    "difficulty": "trap",
+    "task": "An existing project already adopted PDDR Kit. We now need to deliver a newer Kit version without overwriting project-owned configuration, PDDR records, CI, or locally modified Kit-managed files. Which prior decision is required context for the update mechanism?",
+    "corpus": ["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],
+    "gold": {
+      "required": ["PDDR-0007"],
+      "useful": ["PDDR-0002","PDDR-0003","PDDR-0006"],
+      "irrelevant": ["PDDR-0001","PDDR-0004","PDDR-0005"]
+    }
+  }
+]
