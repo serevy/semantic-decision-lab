@@ -13,3 +13,24 @@ python experiments/context_selection/evaluate_context_selection.py \
 ```
 
 The gold-only smoke selection should produce required recall 1.0, irrelevant rate 0.0, and a positive reduction ratio for every case. It is only a metric-semantics check, not an experimental result.
+
+
+## Baselines
+
+The first baselines are intentionally simple and deterministic.
+
+```bash
+# Full-context control
+python experiments/context_selection/run_baseline.py \
+  experiments/context_selection/cases.v0.1.json \
+  experiments/context_selection/corpus/pddr-kit-v0.1 full 7
+
+# Keyword baseline (top 2)
+python experiments/context_selection/run_baseline.py \
+  experiments/context_selection/cases.v0.1.json \
+  experiments/context_selection/corpus/pddr-kit-v0.1 keyword 2
+```
+
+Pipe either output to a selections JSON file and pass it to `evaluate_context_selection.py`.
+
+The keyword baseline uses normalized token overlap only. It is deliberately not tuned per case and must remain frozen once provider comparisons begin.
