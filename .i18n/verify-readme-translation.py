@@ -85,7 +85,7 @@ needle_b = "docs/records/"
 regression_lines = [
     line
     for line in prose_lines_outside_fences(translated)
-    if needle_a in line or needle_b in line
+    if needle_a in line and needle_b in line
 ]
 if (
     len(regression_lines) != 1
