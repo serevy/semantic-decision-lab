@@ -99,8 +99,8 @@ jobs:
           PY
           unset OPENAI_API_KEY
 
-          rm -rf "$GITHUB_WORKSPACE/.i18n-output"
-          mkdir -p "$GITHUB_WORKSPACE/.i18n-output"
+          rm -rf "$GITHUB_WORKSPACE/i18n-output"
+          mkdir -p "$GITHUB_WORKSPACE/i18n-output"
 
           node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
             -i "$GITHUB_WORKSPACE/README.md" \
@@ -109,12 +109,12 @@ jobs:
             --model gpt-5.6-luna \
             --no-relay --no-context \
             --cache-file "$RUNNER_TEMP/readme-i18n-cache.json" \
-            -o "$GITHUB_WORKSPACE/.i18n-output"
+            -o "$GITHUB_WORKSPACE/i18n-output"
 
       - name: Verify Markdown structure and protected terms
         run: |
           set -eu
-          mapfile -t generated < <(find .i18n-output -maxdepth 1 -type f -name 'README.*.md' -print)
+          mapfile -t generated < <(find i18n-output -maxdepth 1 -type f -name 'README.*.md' -print)
           if [ "${#generated[@]}" -ne 1 ]; then
             echo "::error::Expected exactly one translated README, found ${#generated[@]}"
             printf '%s\n' "${generated[@]}"
@@ -127,6 +127,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: readme-${{ inputs.target }}
-          path: .i18n-output/
+          path: i18n-output/
           if-no-files-found: warn
           retention-days: 7
