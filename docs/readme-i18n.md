@@ -32,6 +32,8 @@ Actionsの **README i18n** から **Run workflow** を開き、target language�
 Markdown保護はupstreamのplaceholder機構を利用する。
 LLM翻訳時のみPoCで検証したwhole-line patchを実行時に適用し、inline codeやlinkの前後を含む1行全体を翻訳単位にする。
 
+whole-line patchでは保護tokenの欠落・改変・重複を禁止する一方、対象言語の自然な語順に必要なtokenの並べ替えは許可する。並べ替えによってMarkdown構造が壊れた場合は、後段のcode/link/heading等の品質ゲートで失敗させる。
+
 ## Glossary
 
 以下は全対応言語で英語表記を維持する。
