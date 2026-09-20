@@ -35,6 +35,11 @@ jobs:
           git clone --filter=blob:none https://github.com/rockbenben/md-translator.git "$RUNNER_TEMP/md-translator"
           git -C "$RUNNER_TEMP/md-translator" checkout --detach "$MD_TRANSLATOR_SHA"
 
+      - name: Apply whole-line Markdown PoC patch
+        run: |
+          node .i18n/apply-md-translator-whole-line-patch.mjs "$RUNNER_TEMP/md-translator"
+          grep -Fq "README i18n PoC whole-line mode" "$RUNNER_TEMP/md-translator/src/app/lib/translation/cliFormat.ts"
+
       - name: Install pinned translator dependencies
         working-directory: ${{ runner.temp }}/md-translator
         run: yarn install --frozen-lockfile --ignore-scripts
@@ -50,7 +55,6 @@ jobs:
             echo "::error::Repository secret OPENAI_API_KEY is required."
             exit 1
           }
-          # Keep the key out of command-line arguments, artifacts and git files.
           settings_file="$(mktemp "$RUNNER_TEMP/readme-i18n-settings.XXXXXX.json")"
           trap 'rm -f "$settings_file"' EXIT
           python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" <<'PY'
@@ -59,8 +63,9 @@ jobs:
           settings = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
           settings["translationConfigs"]["openai"]["apiKey"] = os.environ["OPENAI_API_KEY"]
           path = Path(sys.argv[2])
-          path.chmod(0o600)
+          path.touch(mode=0o600)
           path.write_text(json.dumps(settings), encoding="utf-8")
+          path.chmod(0o600)
           PY
           unset OPENAI_API_KEY
           mkdir -p "$GITHUB_WORKSPACE/.i18n-poc"
@@ -73,19 +78,8 @@ jobs:
             --cache-file "$RUNNER_TEMP/readme-i18n-cache.json" \
             -o "$GITHUB_WORKSPACE/.i18n-poc"
 
-      - name: Verify protected project terms
-        run: |
-          set -eu
-          translated=".i18n-poc/README.ja.md"
-          test -s "$translated"
-          missing=0
-          for term in "semantic-decision-lab" "PDDR" "PDDR Kit" "GitHub Issue" "PDDR-0001"; do
-            if ! grep -Fq "$term" "$translated"; then
-              echo "::error::Protected term missing from translation: $term"
-              missing=1
-            fi
-          done
-          exit "$missing"
+      - name: Verify Markdown structure and protected terms
+        run: python .i18n/verify-readme-translation.py README.md .i18n-poc/README.ja.md
 
       - name: Upload translation for human review
         if: always()
