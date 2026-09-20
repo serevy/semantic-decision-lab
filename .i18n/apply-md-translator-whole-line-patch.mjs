@@ -23,7 +23,7 @@ const injected = [
   "    // keep md-translator's placeholder protection, but send each protected line as",
   "    // one unit so the model can choose natural target-language word order around",
   "    // inline code / links. Hard-fail if any placeholder is lost, duplicated,",
-  "    // rewritten, or reordered relative to the other protected tokens.",
+  "    // or rewritten. Token order may change when target-language grammar requires it;",
   "    if (ctx.isLlmMethod && contentLines.length > 0) {",
   "      const outcome = await ctx.translate(contentLines, undefined, { lineNumbers: sourceLineNumbers, fileName: ctx.fileName });",
   "      const softFilled = softFilledIndices(outcome);",
