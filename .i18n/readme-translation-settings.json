@@ -16,7 +16,9 @@
   "requestTimeoutSec": 180,
   "sourceLanguage": "en",
   "targetLanguage": "ja",
-  "targetLanguages": ["ja"],
+  "targetLanguages": [
+    "ja"
+  ],
   "multiLanguageMode": false,
   "glossaryEnabled": true,
   "activeGlossaryPresetId": "semantic-decision-lab",
@@ -25,11 +27,106 @@
       "id": "semantic-decision-lab",
       "name": "Semantic Decision Lab terms",
       "terms": [
-        { "source": "semantic-decision-lab", "target": "semantic-decision-lab", "targetLang": "ja" },
-        { "source": "PDDR", "target": "PDDR", "targetLang": "ja" },
-        { "source": "PDDR Kit", "target": "PDDR Kit", "targetLang": "ja" },
-        { "source": "GitHub Issue", "target": "GitHub Issue", "targetLang": "ja" },
-        { "source": "PDDR-0001", "target": "PDDR-0001", "targetLang": "ja" }
+        {
+          "source": "semantic-decision-lab",
+          "target": "semantic-decision-lab",
+          "targetLang": "ja"
+        },
+        {
+          "source": "PDDR",
+          "target": "PDDR",
+          "targetLang": "ja"
+        },
+        {
+          "source": "PDDR Kit",
+          "target": "PDDR Kit",
+          "targetLang": "ja"
+        },
+        {
+          "source": "GitHub Issue",
+          "target": "GitHub Issue",
+          "targetLang": "ja"
+        },
+        {
+          "source": "PDDR-0001",
+          "target": "PDDR-0001",
+          "targetLang": "ja"
+        },
+        {
+          "source": "semantic-decision-lab",
+          "target": "semantic-decision-lab",
+          "targetLang": "zh-CN"
+        },
+        {
+          "source": "PDDR",
+          "target": "PDDR",
+          "targetLang": "zh-CN"
+        },
+        {
+          "source": "PDDR Kit",
+          "target": "PDDR Kit",
+          "targetLang": "zh-CN"
+        },
+        {
+          "source": "GitHub Issue",
+          "target": "GitHub Issue",
+          "targetLang": "zh-CN"
+        },
+        {
+          "source": "PDDR-0001",
+          "target": "PDDR-0001",
+          "targetLang": "zh-CN"
+        },
+        {
+          "source": "semantic-decision-lab",
+          "target": "semantic-decision-lab",
+          "targetLang": "ko"
+        },
+        {
+          "source": "PDDR",
+          "target": "PDDR",
+          "targetLang": "ko"
+        },
+        {
+          "source": "PDDR Kit",
+          "target": "PDDR Kit",
+          "targetLang": "ko"
+        },
+        {
+          "source": "GitHub Issue",
+          "target": "GitHub Issue",
+          "targetLang": "ko"
+        },
+        {
+          "source": "PDDR-0001",
+          "target": "PDDR-0001",
+          "targetLang": "ko"
+        },
+        {
+          "source": "semantic-decision-lab",
+          "target": "semantic-decision-lab",
+          "targetLang": "fr"
+        },
+        {
+          "source": "PDDR",
+          "target": "PDDR",
+          "targetLang": "fr"
+        },
+        {
+          "source": "PDDR Kit",
+          "target": "PDDR Kit",
+          "targetLang": "fr"
+        },
+        {
+          "source": "GitHub Issue",
+          "target": "GitHub Issue",
+          "targetLang": "fr"
+        },
+        {
+          "source": "PDDR-0001",
+          "target": "PDDR-0001",
+          "targetLang": "fr"
+        }
       ]
     }
   ]

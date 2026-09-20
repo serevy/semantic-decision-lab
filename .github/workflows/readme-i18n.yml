@@ -1,17 +1,31 @@
-name: README i18n PoC
+name: README i18n
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: Target language
+        required: true
+        default: ja
+        type: choice
+        options:
+          - ja
+          - zh-CN
+          - ko
+          - fr
 
 permissions:
   contents: read
 
+# The OpenAI project currently has a 10 RPM limit. Serialize all languages so
+# separate manual runs cannot consume the shared project quota concurrently.
 concurrency:
-  group: readme-i18n-poc
+  group: readme-i18n
   cancel-in-progress: false
 
 jobs:
-  translate-ja:
+  translate:
+    name: translate-${{ inputs.target }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -35,57 +49,84 @@ jobs:
           git clone --filter=blob:none https://github.com/rockbenben/md-translator.git "$RUNNER_TEMP/md-translator"
           git -C "$RUNNER_TEMP/md-translator" checkout --detach "$MD_TRANSLATOR_SHA"
 
-      - name: Apply whole-line Markdown PoC patch
+      - name: Apply whole-line Markdown patch
         run: |
           node .i18n/apply-md-translator-whole-line-patch.mjs "$RUNNER_TEMP/md-translator"
-          grep -Fq "README i18n PoC whole-line mode" "$RUNNER_TEMP/md-translator/src/app/lib/translation/cliFormat.ts"
+          grep -Fq "README i18n whole-line mode" "$RUNNER_TEMP/md-translator/src/app/lib/translation/cliFormat.ts"
 
       - name: Install pinned translator dependencies
         working-directory: ${{ runner.temp }}/md-translator
         run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: Translate canonical README to Japanese
+      - name: Translate canonical README
         working-directory: ${{ runner.temp }}/md-translator
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           README_I18N_FETCH_GUARD: '1'
+          TARGET_LANG: ${{ inputs.target }}
         run: |
           set -eu
+          case "$TARGET_LANG" in
+            ja|zh-CN|ko|fr) ;;
+            *)
+              echo "::error::Unsupported target language: $TARGET_LANG"
+              exit 1
+              ;;
+          esac
           test -n "$OPENAI_API_KEY" || {
             echo "::error::Repository secret OPENAI_API_KEY is required."
             exit 1
           }
+
           settings_file="$(mktemp "$RUNNER_TEMP/readme-i18n-settings.XXXXXX.json")"
           trap 'rm -f "$settings_file"' EXIT
-          python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" <<'PY'
+          python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" "$TARGET_LANG" <<'PY'
           import json, os, sys
           from pathlib import Path
-          settings = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+
+          source = Path(sys.argv[1])
+          output = Path(sys.argv[2])
+          target = sys.argv[3]
+
+          settings = json.loads(source.read_text(encoding="utf-8"))
           settings["translationConfigs"]["openai"]["apiKey"] = os.environ["OPENAI_API_KEY"]
-          path = Path(sys.argv[2])
-          path.touch(mode=0o600)
-          path.write_text(json.dumps(settings), encoding="utf-8")
-          path.chmod(0o600)
+          settings["targetLanguage"] = target
+          settings["targetLanguages"] = [target]
+
+          output.touch(mode=0o600)
+          output.write_text(json.dumps(settings), encoding="utf-8")
+          output.chmod(0o600)
           PY
           unset OPENAI_API_KEY
-          mkdir -p "$GITHUB_WORKSPACE/.i18n-poc"
+
+          rm -rf "$GITHUB_WORKSPACE/.i18n-output"
+          mkdir -p "$GITHUB_WORKSPACE/.i18n-output"
+
           node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
             -i "$GITHUB_WORKSPACE/README.md" \
-            -f en -t ja -m openai \
+            -f en -t "$TARGET_LANG" -m openai \
             -s "$settings_file" \
             --model gpt-5.6-luna \
             --no-relay --no-context \
             --cache-file "$RUNNER_TEMP/readme-i18n-cache.json" \
-            -o "$GITHUB_WORKSPACE/.i18n-poc"
+            -o "$GITHUB_WORKSPACE/.i18n-output"
 
       - name: Verify Markdown structure and protected terms
-        run: python .i18n/verify-readme-translation.py README.md .i18n-poc/README.ja.md
+        run: |
+          set -eu
+          mapfile -t generated < <(find .i18n-output -maxdepth 1 -type f -name 'README.*.md' -print)
+          if [ "${#generated[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one translated README, found ${#generated[@]}"
+            printf '%s\n' "${generated[@]}"
+            exit 1
+          fi
+          python .i18n/verify-readme-translation.py README.md "${generated[0]}"
 
       - name: Upload translation for human review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: readme-ja-poc
-          path: .i18n-poc/README.ja.md
+          name: readme-${{ inputs.target }}
+          path: .i18n-output/
           if-no-files-found: warn
           retention-days: 7
