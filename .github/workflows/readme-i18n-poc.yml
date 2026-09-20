@@ -6,12 +6,27 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: readme-i18n-poc
+  cancel-in-progress: false
+
 jobs:
   translate-ja:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.0'
+
+      - name: Test request guard without API access
+        run: node --test .i18n/translation-fetch-guard.test.mjs
 
       - name: Checkout pinned md-translator source
         env:
@@ -19,11 +34,6 @@ jobs:
         run: |
           git clone --filter=blob:none https://github.com/rockbenben/md-translator.git "$RUNNER_TEMP/md-translator"
           git -C "$RUNNER_TEMP/md-translator" checkout --detach "$MD_TRANSLATOR_SHA"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.19.0'
 
       - name: Install pinned translator dependencies
         working-directory: ${{ runner.temp }}/md-translator
@@ -33,34 +43,49 @@ jobs:
         working-directory: ${{ runner.temp }}/md-translator
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          README_I18N_FETCH_GUARD: '1'
         run: |
           set -eu
           test -n "$OPENAI_API_KEY" || {
-            echo "::error::Repository secret OPENAI_API_KEY is required for the LLM translation PoC."
+            echo "::error::Repository secret OPENAI_API_KEY is required."
             exit 1
           }
+          # Keep the key out of command-line arguments, artifacts and git files.
+          settings_file="$(mktemp "$RUNNER_TEMP/readme-i18n-settings.XXXXXX.json")"
+          trap 'rm -f "$settings_file"' EXIT
+          python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          settings = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+          settings["translationConfigs"]["openai"]["apiKey"] = os.environ["OPENAI_API_KEY"]
+          path = Path(sys.argv[2])
+          path.chmod(0o600)
+          path.write_text(json.dumps(settings), encoding="utf-8")
+          PY
+          unset OPENAI_API_KEY
           mkdir -p "$GITHUB_WORKSPACE/.i18n-poc"
-          yarn cli \
+          node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
             -i "$GITHUB_WORKSPACE/README.md" \
-            -t ja \
-            -m openai \
-            -s "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" \
-            --api-key "$OPENAI_API_KEY" \
+            -f en -t ja -m openai \
+            -s "$settings_file" \
             --model gpt-5.6-luna \
-            --no-relay \
+            --no-relay --no-context \
+            --cache-file "$RUNNER_TEMP/readme-i18n-cache.json" \
             -o "$GITHUB_WORKSPACE/.i18n-poc"
 
       - name: Verify protected project terms
         run: |
           set -eu
           translated=".i18n-poc/README.ja.md"
-          test -f "$translated"
+          test -s "$translated"
+          missing=0
           for term in "semantic-decision-lab" "PDDR" "PDDR Kit" "GitHub Issue" "PDDR-0001"; do
-            grep -Fq "$term" "$translated" || {
+            if ! grep -Fq "$term" "$translated"; then
               echo "::error::Protected term missing from translation: $term"
-              exit 1
-            }
+              missing=1
+            fi
           done
+          exit "$missing"
 
       - name: Upload translation for human review
         if: always()
@@ -68,4 +93,5 @@ jobs:
         with:
           name: readme-ja-poc
           path: .i18n-poc/README.ja.md
-          if-no-files-found: error
+          if-no-files-found: warn
+          retention-days: 7

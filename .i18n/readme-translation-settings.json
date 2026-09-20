@@ -2,9 +2,16 @@
   "translationMethod": "openai",
   "translationConfigs": {
     "openai": {
-      "useRelay": false
+      "url": "https://api.openai.com/v1/chat/completions",
+      "useRelay": false,
+      "batchSize": 1,
+      "contextBatchSize": 1,
+      "delayTime": 200,
+      "maxTokens": 2048
     }
   },
+  "retryCount": 1,
+  "requestTimeoutSec": 180,
   "sourceLanguage": "en",
   "targetLanguage": "ja",
   "targetLanguages": ["ja"],
