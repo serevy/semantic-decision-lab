@@ -52,7 +52,7 @@ jobs:
       - name: Apply whole-line Markdown patch
         run: |
           node .i18n/apply-md-translator-whole-line-patch.mjs "$RUNNER_TEMP/md-translator"
-          grep -Fq "README i18n PoC whole-line mode" "$RUNNER_TEMP/md-translator/src/app/lib/translation/cliFormat.ts"
+          grep -Fq "README i18n whole-line mode" "$RUNNER_TEMP/md-translator/src/app/lib/translation/cliFormat.ts"
 
       - name: Install pinned translator dependencies
         working-directory: ${{ runner.temp }}/md-translator
