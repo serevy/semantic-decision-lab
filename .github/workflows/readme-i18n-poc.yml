@@ -31,12 +31,22 @@ jobs:
 
       - name: Translate canonical README to Japanese
         working-directory: ${{ runner.temp }}/md-translator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          set -eu
+          test -n "$OPENAI_API_KEY" || {
+            echo "::error::Repository secret OPENAI_API_KEY is required for the LLM translation PoC."
+            exit 1
+          }
           mkdir -p "$GITHUB_WORKSPACE/.i18n-poc"
           yarn cli \
             -i "$GITHUB_WORKSPACE/README.md" \
             -t ja \
-            -m gtxFreeAPI \
+            -m openai \
+            -s "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" \
+            --api-key "$OPENAI_API_KEY" \
+            --model gpt-5.6-luna \
             --no-relay \
             -o "$GITHUB_WORKSPACE/.i18n-poc"
 
