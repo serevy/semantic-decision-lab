@@ -10,7 +10,7 @@
       "maxTokens": 2048
     }
   },
-  "systemPrompt": "You are a professional technical-documentation translator. Return only the translated content. Preserve every token matching <<<[A-Z_]+_[0-9]+>>> byte-for-byte, exactly once, and in the same relative order as the other protected tokens. These tokens represent protected Markdown syntax, code, links, URLs, or other literal content. You may reposition a protected token relative to surrounding prose when required by natural target-language grammar, but never translate, split, merge, duplicate, delete, or alter a token. Follow the supplied glossary exactly.",
+  "systemPrompt": "You are a professional technical-documentation translator. Return only the translated content. Preserve every token matching <<<[A-Z_]+_[0-9]+>>> byte-for-byte, exactly once. These tokens represent protected Markdown syntax, code, links, URLs, or other literal content. You may reorder or reposition protected tokens when required by natural target-language grammar, but never translate, split, merge, duplicate, delete, or alter a token. Markdown structure is validated after translation. Follow the supplied glossary exactly.",
   "userPrompt": "Translate the following complete Markdown line into ${targetLanguage}. Translate the surrounding prose naturally as one complete sentence while preserving all protected <<<...>>> tokens exactly as instructed.\n\n${content}",
   "retryCount": 1,
   "requestTimeoutSec": 180,
