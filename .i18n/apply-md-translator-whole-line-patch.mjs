@@ -19,7 +19,7 @@ if (!source.includes(marker)) {
 const injected = [
   "    const { contentLines, sourceLineNumbers } = parsed;",
   "",
-  "    // README i18n PoC whole-line mode (LLM only):",
+  "    // README i18n whole-line mode (LLM only):",
   "    // keep md-translator's placeholder protection, but send each protected line as",
   "    // one unit so the model can choose natural target-language word order around",
   "    // inline code / links. Hard-fail if any placeholder is lost, duplicated,",
@@ -46,4 +46,4 @@ const injected = [
 ].join("\n");
 
 writeFileSync(target, source.replace(marker, injected), "utf8");
-console.log("Applied README i18n whole-line Markdown PoC patch.");
+console.log("Applied README i18n whole-line Markdown patch.");
