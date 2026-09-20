@@ -124,7 +124,7 @@ jobs:
 
       - name: Upload translation for human review
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: readme-${{ inputs.target }}
           path: .i18n-output/
