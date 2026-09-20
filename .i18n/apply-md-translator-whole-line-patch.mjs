@@ -9,7 +9,7 @@ if (!root) {
 
 const target = join(root, "src/app/lib/translation/cliFormat.ts");
 const source = readFileSync(target, "utf8");
-const marker = "    const { contentLines, sourceLineNumbers } = parsed;\n\n    // 構造化モード:";
+const marker = "    const { contentLines, sourceLineNumbers } = parsed;\n\n    // 结构化模式:";
 
 if (!source.includes(marker)) {
   console.error("Pinned md-translator source no longer matches the PoC patch point.");
