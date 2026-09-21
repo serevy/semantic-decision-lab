@@ -5,6 +5,8 @@ on:
     paths:
       - "experiments/context_selection/run_open_jev_colab.py"
       - "experiments/context_selection/test_run_open_jev_colab.py"
+      - "experiments/context_selection/open_jev_v0_1_colab.ipynb"
+      - "experiments/context_selection/test_open_jev_colab_notebook.py"
       - ".github/workflows/context-selection-open-jev-colab.yml"
   workflow_dispatch:
 
@@ -21,4 +23,6 @@ jobs:
           python-version: "3.12"
       - name: Test one-shot runner without GPU/model download
         working-directory: experiments/context_selection
-        run: python -m unittest -v test_run_open_jev_colab.py
+        run: |
+          python -m unittest -v test_run_open_jev_colab.py
+          python -m unittest -v test_open_jev_colab_notebook.py
