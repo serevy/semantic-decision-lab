@@ -1,0 +1,35 @@
+name: Context selection baseline
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/**"
+      - ".github/workflows/context-selection-baseline.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Generate baseline results
+        run: python experiments/context_selection/run_baseline_experiment.py
+      - name: Show baseline results
+        run: |
+          echo "=== full-context ==="
+          cat experiments/context_selection/results/baseline-v0.1/full-context.metrics.json
+          echo "=== keyword-top2 selections ==="
+          cat experiments/context_selection/results/baseline-v0.1/keyword-top2.selections.json
+          echo "=== keyword-top2 metrics ==="
+          cat experiments/context_selection/results/baseline-v0.1/keyword-top2.metrics.json
+      - name: Upload baseline results
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-baseline-v0.1
+          path: experiments/context_selection/results/baseline-v0.1/
