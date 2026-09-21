@@ -87,7 +87,10 @@ export function createGuardedFetch(fetchImpl, {
 // Imported into the translator process BEFORE its CLI modules are evaluated.
 // Unit tests leave this flag unset and inject a fake fetch and clock instead.
 if (process.env.README_I18N_FETCH_GUARD === '1') {
+  const configuredMax = process.env.README_I18N_MAX_REQUESTS;
+  const maxRequests = configuredMax === undefined ? 60 : Number(configuredMax);
   globalThis.fetch = createGuardedFetch(globalThis.fetch.bind(globalThis), {
+    maxRequests,
     onRequest: (n, cap) => console.error(`[i18n-guard] request ${n}/${cap}`),
   });
 }
