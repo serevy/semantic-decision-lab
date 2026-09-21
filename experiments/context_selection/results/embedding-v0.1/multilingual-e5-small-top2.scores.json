@@ -1,0 +1,36 @@
+{
+  "model": "intfloat/multilingual-e5-small",
+  "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+  "passage_prefix": "passage: ",
+  "query_prefix": "query: ",
+  "scores": {
+    "ctx-001": [
+      {"cosine_similarity": 0.8720499277114868, "pddr_id": "PDDR-0002"},
+      {"cosine_similarity": 0.8608716726303101, "pddr_id": "PDDR-0001"},
+      {"cosine_similarity": 0.8598246574401855, "pddr_id": "PDDR-0003"},
+      {"cosine_similarity": 0.8460403680801392, "pddr_id": "PDDR-0006"},
+      {"cosine_similarity": 0.8439905047416687, "pddr_id": "PDDR-0007"},
+      {"cosine_similarity": 0.8420443534851074, "pddr_id": "PDDR-0005"},
+      {"cosine_similarity": 0.836746335029602, "pddr_id": "PDDR-0004"}
+    ],
+    "ctx-002": [
+      {"cosine_similarity": 0.8487825989723206, "pddr_id": "PDDR-0001"},
+      {"cosine_similarity": 0.8444420099258423, "pddr_id": "PDDR-0003"},
+      {"cosine_similarity": 0.8410313725471497, "pddr_id": "PDDR-0006"},
+      {"cosine_similarity": 0.8391275405883789, "pddr_id": "PDDR-0004"},
+      {"cosine_similarity": 0.838036298751831, "pddr_id": "PDDR-0005"},
+      {"cosine_similarity": 0.8370529413223267, "pddr_id": "PDDR-0002"},
+      {"cosine_similarity": 0.8271127343177795, "pddr_id": "PDDR-0007"}
+    ],
+    "ctx-003": [
+      {"cosine_similarity": 0.8698444366455078, "pddr_id": "PDDR-0001"},
+      {"cosine_similarity": 0.8693415522575378, "pddr_id": "PDDR-0003"},
+      {"cosine_similarity": 0.8679416179656982, "pddr_id": "PDDR-0007"},
+      {"cosine_similarity": 0.8575611114501953, "pddr_id": "PDDR-0002"},
+      {"cosine_similarity": 0.8451388478279114, "pddr_id": "PDDR-0004"},
+      {"cosine_similarity": 0.8451323509216309, "pddr_id": "PDDR-0006"},
+      {"cosine_similarity": 0.8449529409408569, "pddr_id": "PDDR-0005"}
+    ]
+  },
+  "top_k": 2
+}
