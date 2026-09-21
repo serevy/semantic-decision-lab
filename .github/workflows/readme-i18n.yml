@@ -6,7 +6,7 @@ on:
       target:
         description: Target language
         required: true
-        default: ja
+        default: all
         type: choice
         options:
           - all
@@ -107,6 +107,12 @@ jobs:
           rm -rf "$GITHUB_WORKSPACE/i18n-output"
           mkdir -p "$GITHUB_WORKSPACE/i18n-output"
 
+          if [ "$TARGET_LANG" = "all" ]; then
+            export README_I18N_MAX_REQUESTS=80
+          else
+            export README_I18N_MAX_REQUESTS=60
+          fi
+
           target_args=()
           for lang in "${targets[@]}"; do
             target_args+=(-t "$lang")
@@ -119,8 +125,7 @@ jobs:
             -f en "${target_args[@]}" -m openai \
             -s "$settings_file" \
             --model gpt-5.6-luna \
-            --no-relay --no-context \
-            --cache-file "$RUNNER_TEMP/readme-i18n-cache.json" \
+            --no-relay --no-context --no-cache \
             -o "$GITHUB_WORKSPACE/i18n-output"
 
       - name: Verify Markdown structure and protected terms

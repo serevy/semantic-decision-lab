@@ -16,7 +16,7 @@
 
 ## 実行
 
-Actionsの **README i18n** から **Run workflow** を開き、target languageを選択する。
+Actionsの **README i18n** から **Run workflow** を開き、target languageを選択する。既定値は `all`。
 
 通常の多言語更新では `all` を選ぶ。`all` は `ja / zh-CN / ko / fr` を同じtranslatorプロセスへ複数の `-t` 引数として渡し、1回のrunで全4言語を生成する。これにより実行し忘れを防ぎ、request guardの8秒pacingとrequest countも言語をまたいで共有する。
 
@@ -37,7 +37,9 @@ Actionsの **README i18n** から **Run workflow** を開き、target language�
 Markdown保護はupstreamのplaceholder機構を利用する。
 LLM翻訳時のみPoCで検証したwhole-line patchを実行時に適用し、inline codeやlinkの前後を含む1行全体を翻訳単位にする。
 
-whole-line patchでは保護tokenの欠落・改変・重複を禁止する一方、対象言語の自然な語順に必要なtokenの並べ替えは許可する。並べ替えによってMarkdown構造が壊れた場合は、後段のcode/link/heading等の品質ゲートで失敗させる。
+whole-line patchでは保護tokenの欠落・改変・重複を禁止する一方、対象言語の自然な語順に必要なtokenの並べ替えは許可する。保護tokenの欠落・変形を検出した場合は、その行だけ1回再翻訳する。それでも一致しなければ失敗させる。並べ替えによってMarkdown構造が壊れた場合は、後段のcode/link/heading等の品質ゲートで失敗させる。
+
+README翻訳では再翻訳が実APIへ届くようCLI cacheを無効にする。READMEは短く、run間でcacheを永続利用していないため、破損結果を再利用しないことを優先する。
 
 ## Glossary
 
@@ -77,7 +79,8 @@ whole-line patchでは保護tokenの欠落・改変・重複を禁止する一�
 - redirectを拒否
 - Standard service tierを強制
 - 送信開始を最低8秒間隔
-- 1 run最大60 HTTP attempts
+- 個別言語runは最大60 HTTP attempts
+- `all` runは4言語の通常処理が約60 attemptsになるため、品質再試行の余白として最大80 HTTP attempts
 - job timeout 20分
 
 request guardは完全なsecurity sandboxではない。第三者translator codeがAPI keyと公開READMEを処理する信頼境界は残る。
