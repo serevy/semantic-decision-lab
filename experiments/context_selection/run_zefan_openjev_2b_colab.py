@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import os
 import shutil
@@ -11,6 +12,8 @@ import sys
 import time
 import urllib.request
 from pathlib import Path
+
+from packaging.version import Version
 
 
 SOURCE_REPO = "https://github.com/Zefan-Cai/Open-Jev.git"
@@ -62,6 +65,31 @@ def checkpoint_digest(path: Path) -> str:
     return digest.hexdigest()
 
 
+def remove_incompatible_torchao() -> None:
+    """Remove Colab's stale optional torchao when PEFT would reject it.
+
+    Open-Jev does not declare torchao as a dependency. Some Colab images ship an
+    older torchao anyway; PEFT 0.19.1 detects that optional package and raises
+    before loading the LoRA adapter when its version is <= 0.16.0.
+    """
+    try:
+        version = importlib.metadata.version("torchao")
+    except importlib.metadata.PackageNotFoundError:
+        print("torchao not installed; no compatibility cleanup needed.", flush=True)
+        return
+
+    if Version(version) > Version("0.16.0"):
+        print(f"torchao {version} is compatible with PEFT; keeping it.", flush=True)
+        return
+
+    print(
+        f"Removing optional incompatible torchao {version}; "
+        "Open-Jev does not require torchao.",
+        flush=True,
+    )
+    run([sys.executable, "-m", "pip", "uninstall", "-y", "torchao"])
+
+
 def require_bf16_gpu() -> None:
     import torch
 
@@ -85,9 +113,26 @@ def require_bf16_gpu() -> None:
         )
 
 
-def wait_for_server(url: str, log_path: Path, timeout_s: int = 1200) -> None:
+def server_log_tail(log_path: Path) -> str:
+    if not log_path.exists():
+        return ""
+    return "\n".join(log_path.read_text(errors="replace").splitlines()[-80:])
+
+
+def wait_for_server(
+    url: str,
+    log_path: Path,
+    server: subprocess.Popen,
+    timeout_s: int = 1200,
+) -> None:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
+        return_code = server.poll()
+        if return_code is not None:
+            raise SystemExit(
+                "Zefan Open-Jev server exited before becoming ready "
+                f"(exit={return_code}).\n{server_log_tail(log_path)}"
+            )
         try:
             with urllib.request.urlopen(url, timeout=10) as response:
                 if 200 <= response.status < 500:
@@ -97,11 +142,9 @@ def wait_for_server(url: str, log_path: Path, timeout_s: int = 1200) -> None:
             pass
         time.sleep(3)
 
-    tail = ""
-    if log_path.exists():
-        tail = "\n".join(log_path.read_text(errors="replace").splitlines()[-80:])
     raise SystemExit(
-        f"Zefan Open-Jev server did not become ready within {timeout_s}s.\n{tail}"
+        f"Zefan Open-Jev server did not become ready within {timeout_s}s.\n"
+        f"{server_log_tail(log_path)}"
     )
 
 
@@ -206,6 +249,7 @@ def main() -> None:
 
     ensure_source(source)
     run([sys.executable, "-m", "pip", "install", "-e", str(source) + "[train]"])
+    remove_incompatible_torchao()
     require_bf16_gpu()
 
     os.environ["HF_HOME"] = str(hf_home)
@@ -263,7 +307,11 @@ def main() -> None:
     )
 
     try:
-        wait_for_server("http://127.0.0.1:8791/health", log_path)
+        wait_for_server(
+            "http://127.0.0.1:8791/health",
+            log_path,
+            server,
+        )
 
         run(
             [
