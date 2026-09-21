@@ -36,6 +36,7 @@ jobs:
         run: |
           python -m unittest -v test_semantic_provider.py
           python -m unittest -v test_open_jev_independent_provider.py
+          python test_colab_notebooks.py
           python -m py_compile run_open_jev_v02_colab.py
       - name: Preflight exact upstream token packing
         working-directory: experiments/context_selection
