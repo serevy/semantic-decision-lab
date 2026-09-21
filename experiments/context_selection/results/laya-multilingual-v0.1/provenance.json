@@ -1,0 +1,32 @@
+{
+  "cases": "/content/semantic-decision-lab-laya/experiments/context_selection/cases.v0.1.json",
+  "checkpoint_default_head_max_len": 256,
+  "checkpoint_default_max_len": 1024,
+  "corpus_dir": "/content/semantic-decision-lab-laya/experiments/context_selection/corpus/pddr-kit-v0.1",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "experiment_version": "laya-multilingual-v0.1",
+  "inference_head_max_len": 256,
+  "inference_max_len": 4096,
+  "model_repository": "convaiinnovations/laya-multilingual",
+  "model_revision": "4bb4d65403a3a7b8abd9e6876ccb5e75cf923b5c",
+  "model_safetensors_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "observed_at_utc": "2026-09-21T16:27:15.893978+00:00",
+  "provider": "laya-multilingual-v0.1",
+  "runtime_versions": {
+    "huggingface_hub": "1.29.0",
+    "laya": "0.3.4",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1"
+  },
+  "source_repository": "NandhaKishorM/laya",
+  "source_revision": "42626c348753fbb17572a813127df2278a1ec527",
+  "temperature": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "temperature_by_options": {},
+  "top_k": 2
+}
