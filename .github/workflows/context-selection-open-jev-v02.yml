@@ -1,0 +1,28 @@
+name: Open Jev v0.2 adapter
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/open_jev_independent_provider.py"
+      - "experiments/context_selection/run_open_jev_v02_experiment.py"
+      - "experiments/context_selection/test_open_jev_independent_provider.py"
+      - "experiments/context_selection/providers/open-jev-v0.2.json"
+      - ".github/workflows/context-selection-open-jev-v02.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Test v0.2 adapter contract
+        working-directory: experiments/context_selection
+        run: |
+          python -m unittest -v test_semantic_provider.py
+          python -m unittest -v test_open_jev_independent_provider.py
