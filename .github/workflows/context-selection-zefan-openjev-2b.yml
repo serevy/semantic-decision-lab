@@ -28,7 +28,7 @@ jobs:
           python-version: "3.12"
       - name: Install tokenizer dependencies
         run: |
-          pip install "transformers==5.10.2" "huggingface_hub==1.29.0"
+          pip install "transformers==5.10.2" "huggingface_hub==1.29.0" "jinja2==3.1.6"
       - name: Clone pinned Zefan Open-Jev source
         run: |
           git clone https://github.com/Zefan-Cai/Open-Jev.git /tmp/zefan-open-jev
