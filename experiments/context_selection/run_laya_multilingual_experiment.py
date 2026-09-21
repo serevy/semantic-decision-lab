@@ -6,6 +6,7 @@ import hashlib
 import importlib.metadata
 import json
 import re
+import platform
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -138,7 +139,7 @@ def main() -> None:
         "dtype": str(agent.dtype),
         "top_k": args.top_k,
         "runtime_versions": {
-            "python": package_version("pip"),
+            "python": platform.python_version(),
             "torch": package_version("torch"),
             "transformers": package_version("transformers"),
             "huggingface_hub": package_version("huggingface_hub"),
