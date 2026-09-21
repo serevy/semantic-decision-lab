@@ -2,7 +2,7 @@
 
 公開READMEの多言語化ワークフロー。
 
-英語の `README.md` をcanonical sourceとして、GitHub Actionsから対象言語を1つ選び、レビュー用Artifactを生成する。生成物は自動commit・push・mergeしない。
+英語の `README.md` をcanonical sourceとして、GitHub Actionsから個別言語または `all` を選び、レビュー用Artifactを生成する。生成物は自動commit・push・mergeしない。
 
 ## 対応言語
 
