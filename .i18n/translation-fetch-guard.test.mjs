@@ -120,6 +120,18 @@ test('preload installs the guard before application code (fake transport)', () =
   assert.equal(run.status, 0, run.stderr);
   assert.match(run.stderr, /request 1\/60/);
 });
+test('preload accepts an explicit per-run request cap', () => {
+  const moduleUrl = new URL('./translation-fetch-guard.mjs', import.meta.url).href;
+  const script = `globalThis.fetch = async () => new Response('{}');
+  await import(${JSON.stringify(moduleUrl)});
+  await fetch(${JSON.stringify(ENDPOINT)}, ${JSON.stringify(init())});`;
+  const run = spawnSync(process.execPath, ['--input-type=module', '-e', script], {
+    env: { README_I18N_FETCH_GUARD: '1', README_I18N_MAX_REQUESTS: '80' }, encoding: 'utf8',
+  });
+  assert.equal(run.status, 0, run.stderr);
+  assert.match(run.stderr, /request 1\/80/);
+});
+
 test('abort while pacing cancels before the transport is called', async () => {
   const cancel = new AbortController();
   const { guarded, calls } = fixture(ok, { wait: async (_ms, signal) => {
