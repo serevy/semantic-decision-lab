@@ -1,0 +1,8 @@
+{
+  "experiment": "context-selection-baseline-v0.1",
+  "workflow_run_id": 35552109485,
+  "workflow_job_id": 106188638971,
+  "workflow_conclusion": "success",
+  "observed_at": "2026-09-21",
+  "note": "Snapshot copied from the successful GitHub Actions run before embedding or semantic-provider evaluation."
+}
