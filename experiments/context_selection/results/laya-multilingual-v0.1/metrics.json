@@ -1,0 +1,47 @@
+[
+  {
+    "case_id": "ctx-001",
+    "corpus_count": 7,
+    "irrelevant_rate": 1.0,
+    "reduction_ratio": 0.7142857142857143,
+    "required_recall": 0.0,
+    "selected": [
+      "PDDR-0005",
+      "PDDR-0006"
+    ],
+    "selected_count": 2,
+    "selection_precision": 0.0,
+    "unknown": [],
+    "useful_recall": 0.0
+  },
+  {
+    "case_id": "ctx-002",
+    "corpus_count": 7,
+    "irrelevant_rate": 0.0,
+    "reduction_ratio": 0.7142857142857143,
+    "required_recall": 1.0,
+    "selected": [
+      "PDDR-0005",
+      "PDDR-0006"
+    ],
+    "selected_count": 2,
+    "selection_precision": 1.0,
+    "unknown": [],
+    "useful_recall": 0.5
+  },
+  {
+    "case_id": "ctx-003",
+    "corpus_count": 7,
+    "irrelevant_rate": 0.5,
+    "reduction_ratio": 0.7142857142857143,
+    "required_recall": 0.0,
+    "selected": [
+      "PDDR-0005",
+      "PDDR-0006"
+    ],
+    "selected_count": 2,
+    "selection_precision": 0.5,
+    "unknown": [],
+    "useful_recall": 0.3333333333333333
+  }
+]
