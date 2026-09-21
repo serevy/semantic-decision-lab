@@ -9,6 +9,7 @@ on:
         default: ja
         type: choice
         options:
+          - all
           - ja
           - zh-CN
           - ko
@@ -17,8 +18,8 @@ on:
 permissions:
   contents: read
 
-# The OpenAI project currently has a 10 RPM limit. Serialize all languages so
-# separate manual runs cannot consume the shared project quota concurrently.
+# The OpenAI project currently has a 10 RPM limit. Serialize separate manual
+# runs so they cannot consume the shared project quota concurrently.
 concurrency:
   group: readme-i18n
   cancel-in-progress: false
@@ -66,13 +67,20 @@ jobs:
           TARGET_LANG: ${{ inputs.target }}
         run: |
           set -eu
+
           case "$TARGET_LANG" in
-            ja|zh-CN|ko|fr) ;;
+            all)
+              targets=(ja zh-CN ko fr)
+              ;;
+            ja|zh-CN|ko|fr)
+              targets=("$TARGET_LANG")
+              ;;
             *)
               echo "::error::Unsupported target language: $TARGET_LANG"
               exit 1
               ;;
           esac
+
           test -n "$OPENAI_API_KEY" || {
             echo "::error::Repository secret OPENAI_API_KEY is required."
             exit 1
@@ -80,18 +88,15 @@ jobs:
 
           settings_file="$(mktemp "$RUNNER_TEMP/readme-i18n-settings.XXXXXX.json")"
           trap 'rm -f "$settings_file"' EXIT
-          python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" "$TARGET_LANG" <<'PY'
+          python - "$GITHUB_WORKSPACE/.i18n/readme-translation-settings.json" "$settings_file" <<'PY'
           import json, os, sys
           from pathlib import Path
 
           source = Path(sys.argv[1])
           output = Path(sys.argv[2])
-          target = sys.argv[3]
 
           settings = json.loads(source.read_text(encoding="utf-8"))
           settings["translationConfigs"]["openai"]["apiKey"] = os.environ["OPENAI_API_KEY"]
-          settings["targetLanguage"] = target
-          settings["targetLanguages"] = [target]
 
           output.touch(mode=0o600)
           output.write_text(json.dumps(settings), encoding="utf-8")
@@ -102,9 +107,16 @@ jobs:
           rm -rf "$GITHUB_WORKSPACE/i18n-output"
           mkdir -p "$GITHUB_WORKSPACE/i18n-output"
 
+          target_args=()
+          for lang in "${targets[@]}"; do
+            target_args+=(-t "$lang")
+          done
+
+          # One CLI process handles all selected languages. The global fetch
+          # guard therefore paces and counts requests across the entire run.
           node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
             -i "$GITHUB_WORKSPACE/README.md" \
-            -f en -t "$TARGET_LANG" -m openai \
+            -f en "${target_args[@]}" -m openai \
             -s "$settings_file" \
             --model gpt-5.6-luna \
             --no-relay --no-context \
@@ -112,15 +124,39 @@ jobs:
             -o "$GITHUB_WORKSPACE/i18n-output"
 
       - name: Verify Markdown structure and protected terms
+        env:
+          TARGET_LANG: ${{ inputs.target }}
         run: |
           set -eu
+
+          case "$TARGET_LANG" in
+            all)
+              targets=(ja zh-CN ko fr)
+              ;;
+            ja|zh-CN|ko|fr)
+              targets=("$TARGET_LANG")
+              ;;
+            *)
+              echo "::error::Unsupported target language: $TARGET_LANG"
+              exit 1
+              ;;
+          esac
+
+          for lang in "${targets[@]}"; do
+            translated="i18n-output/README.${lang}.md"
+            test -s "$translated" || {
+              echo "::error::Expected translated README is missing: $translated"
+              exit 1
+            }
+            python .i18n/verify-readme-translation.py README.md "$translated"
+          done
+
           mapfile -t generated < <(find i18n-output -maxdepth 1 -type f -name 'README.*.md' -print)
-          if [ "${#generated[@]}" -ne 1 ]; then
-            echo "::error::Expected exactly one translated README, found ${#generated[@]}"
+          if [ "${#generated[@]}" -ne "${#targets[@]}" ]; then
+            echo "::error::Expected ${#targets[@]} translated README file(s), found ${#generated[@]}"
             printf '%s\n' "${generated[@]}"
             exit 1
           fi
-          python .i18n/verify-readme-translation.py README.md "${generated[0]}"
 
       - name: Upload translation for human review
         if: always()
