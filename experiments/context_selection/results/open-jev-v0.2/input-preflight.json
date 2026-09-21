@@ -1,0 +1,384 @@
+{
+  "experiment_version": "open-jev-v0.2",
+  "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "encoder": "answerdotai/ModernBERT-base",
+  "max_len": 4096,
+  "requests_checked": 21,
+  "all_tasks_in_question": true,
+  "all_records_fully_preserved": true,
+  "cross_case_checks": {
+    "PDDR-0001": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "01f081871ae58d69ad3e1146e8861fc1437af77202ccb43ab308263677c3bd5f"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "337ba1b928ac703bb48631db7e2519ef1a1f60bda7d280f106e37c191c8f9e86"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "75bad6209432d4513f4241ed6d7d1dc9bbf02211b153bc013530d39575a1910b"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0002": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "d8a4d6f93ebdaf2e11a17e631810fcf580313524a81b86c5dbb496a71f97c03b"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "b14e539216b7d9150deb7a9722a9abebb83b0f2f36fc0ac093bef6bc9b97f455"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "5138290455c233c6a2609ac99c40bf77db2f8202bb87a356d2cd9be5210abaa7"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0003": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "e631ced4ae872db68c91ab683e9a4ccb282a2554a20ce06a4263cd90754f810a"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "0b3d74e9266ec3c1329b034c5fc3b21b0c0fced19022a11701a9c40758407489"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "b2e0baf287da470725c6073184f22c1c66a671b3cf98fa7ac127579534fbf49e"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0004": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "9e64d4d8e7566a2a017eeda9e3322ac09466c7bd459c46275cd1a2353d962b6f"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "30f2f448c9802f338e0f138892341c0a0525fb32c5f3dea0ac8e00370869c412"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "8a29eafa51e12f981ddfc6360f6f3e7c3603980a43958525862b6bc008e62854"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0005": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "05689c024cffe947ffb4d6aafc3078df63660f2def3c7a26b1eacd0b507f81e1"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "9545127ccbc526a5c013d422de26b5020142d28b711a0ca4faa88cd29afe5e3f"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "f9b973c5178387632da2acd0091c95c3b232569f7cb2ab74ec2f10af255c2021"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0006": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "4c92451a6c3980610a18060ca7ccb3aa73a5a2d2730de312108308ce5f3ebb87"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "c22330f68d886711ca980ca01978bdfd820f8b745b9dc48500364627641a91e4"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "9d4d56d40f9dc0046e24171ebc183c25b0c44052115b32b7012e656fae420c1d"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    },
+    "PDDR-0007": {
+      "cases": [
+        {
+          "case_id": "ctx-001",
+          "input_ids_sha256": "a696aff9f4c10d27039fe429fb831bcf2f20a3f39dc8a5b6e95309882529d459"
+        },
+        {
+          "case_id": "ctx-002",
+          "input_ids_sha256": "404491562de873bb3fb1cb2864d3708540303a996cf82547643d61191902a1e8"
+        },
+        {
+          "case_id": "ctx-003",
+          "input_ids_sha256": "14ffec44e82dd55955a37875ae00e86ced5d565c532a6aa545d7c9382f69c835"
+        }
+      ],
+      "all_case_inputs_distinct": true
+    }
+  },
+  "diagnostic": [
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0001",
+      "question_tail_token_count": 140,
+      "state_token_count": 1578,
+      "state_budget": 3954,
+      "kept_state_token_count": 1578,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1720,
+      "input_ids_sha256": "01f081871ae58d69ad3e1146e8861fc1437af77202ccb43ab308263677c3bd5f"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0002",
+      "question_tail_token_count": 140,
+      "state_token_count": 1326,
+      "state_budget": 3954,
+      "kept_state_token_count": 1326,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1468,
+      "input_ids_sha256": "d8a4d6f93ebdaf2e11a17e631810fcf580313524a81b86c5dbb496a71f97c03b"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0003",
+      "question_tail_token_count": 140,
+      "state_token_count": 2512,
+      "state_budget": 3954,
+      "kept_state_token_count": 2512,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2654,
+      "input_ids_sha256": "e631ced4ae872db68c91ab683e9a4ccb282a2554a20ce06a4263cd90754f810a"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0004",
+      "question_tail_token_count": 140,
+      "state_token_count": 1918,
+      "state_budget": 3954,
+      "kept_state_token_count": 1918,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2060,
+      "input_ids_sha256": "9e64d4d8e7566a2a017eeda9e3322ac09466c7bd459c46275cd1a2353d962b6f"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0005",
+      "question_tail_token_count": 140,
+      "state_token_count": 1290,
+      "state_budget": 3954,
+      "kept_state_token_count": 1290,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1432,
+      "input_ids_sha256": "05689c024cffe947ffb4d6aafc3078df63660f2def3c7a26b1eacd0b507f81e1"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0006",
+      "question_tail_token_count": 140,
+      "state_token_count": 2387,
+      "state_budget": 3954,
+      "kept_state_token_count": 2387,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2529,
+      "input_ids_sha256": "4c92451a6c3980610a18060ca7ccb3aa73a5a2d2730de312108308ce5f3ebb87"
+    },
+    {
+      "case_id": "ctx-001",
+      "pddr_id": "PDDR-0007",
+      "question_tail_token_count": 140,
+      "state_token_count": 2113,
+      "state_budget": 3954,
+      "kept_state_token_count": 2113,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2255,
+      "input_ids_sha256": "a696aff9f4c10d27039fe429fb831bcf2f20a3f39dc8a5b6e95309882529d459"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0001",
+      "question_tail_token_count": 157,
+      "state_token_count": 1578,
+      "state_budget": 3937,
+      "kept_state_token_count": 1578,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1737,
+      "input_ids_sha256": "337ba1b928ac703bb48631db7e2519ef1a1f60bda7d280f106e37c191c8f9e86"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0002",
+      "question_tail_token_count": 157,
+      "state_token_count": 1326,
+      "state_budget": 3937,
+      "kept_state_token_count": 1326,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1485,
+      "input_ids_sha256": "b14e539216b7d9150deb7a9722a9abebb83b0f2f36fc0ac093bef6bc9b97f455"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0003",
+      "question_tail_token_count": 157,
+      "state_token_count": 2512,
+      "state_budget": 3937,
+      "kept_state_token_count": 2512,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2671,
+      "input_ids_sha256": "0b3d74e9266ec3c1329b034c5fc3b21b0c0fced19022a11701a9c40758407489"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0004",
+      "question_tail_token_count": 157,
+      "state_token_count": 1918,
+      "state_budget": 3937,
+      "kept_state_token_count": 1918,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2077,
+      "input_ids_sha256": "30f2f448c9802f338e0f138892341c0a0525fb32c5f3dea0ac8e00370869c412"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0005",
+      "question_tail_token_count": 157,
+      "state_token_count": 1290,
+      "state_budget": 3937,
+      "kept_state_token_count": 1290,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1449,
+      "input_ids_sha256": "9545127ccbc526a5c013d422de26b5020142d28b711a0ca4faa88cd29afe5e3f"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0006",
+      "question_tail_token_count": 157,
+      "state_token_count": 2387,
+      "state_budget": 3937,
+      "kept_state_token_count": 2387,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2546,
+      "input_ids_sha256": "c22330f68d886711ca980ca01978bdfd820f8b745b9dc48500364627641a91e4"
+    },
+    {
+      "case_id": "ctx-002",
+      "pddr_id": "PDDR-0007",
+      "question_tail_token_count": 157,
+      "state_token_count": 2113,
+      "state_budget": 3937,
+      "kept_state_token_count": 2113,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2272,
+      "input_ids_sha256": "404491562de873bb3fb1cb2864d3708540303a996cf82547643d61191902a1e8"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0001",
+      "question_tail_token_count": 146,
+      "state_token_count": 1578,
+      "state_budget": 3948,
+      "kept_state_token_count": 1578,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1726,
+      "input_ids_sha256": "75bad6209432d4513f4241ed6d7d1dc9bbf02211b153bc013530d39575a1910b"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0002",
+      "question_tail_token_count": 146,
+      "state_token_count": 1326,
+      "state_budget": 3948,
+      "kept_state_token_count": 1326,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1474,
+      "input_ids_sha256": "5138290455c233c6a2609ac99c40bf77db2f8202bb87a356d2cd9be5210abaa7"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0003",
+      "question_tail_token_count": 146,
+      "state_token_count": 2512,
+      "state_budget": 3948,
+      "kept_state_token_count": 2512,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2660,
+      "input_ids_sha256": "b2e0baf287da470725c6073184f22c1c66a671b3cf98fa7ac127579534fbf49e"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0004",
+      "question_tail_token_count": 146,
+      "state_token_count": 1918,
+      "state_budget": 3948,
+      "kept_state_token_count": 1918,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2066,
+      "input_ids_sha256": "8a29eafa51e12f981ddfc6360f6f3e7c3603980a43958525862b6bc008e62854"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0005",
+      "question_tail_token_count": 146,
+      "state_token_count": 1290,
+      "state_budget": 3948,
+      "kept_state_token_count": 1290,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 1438,
+      "input_ids_sha256": "f9b973c5178387632da2acd0091c95c3b232569f7cb2ab74ec2f10af255c2021"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0006",
+      "question_tail_token_count": 146,
+      "state_token_count": 2387,
+      "state_budget": 3948,
+      "kept_state_token_count": 2387,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2535,
+      "input_ids_sha256": "9d4d56d40f9dc0046e24171ebc183c25b0c44052115b32b7012e656fae420c1d"
+    },
+    {
+      "case_id": "ctx-003",
+      "pddr_id": "PDDR-0007",
+      "question_tail_token_count": 146,
+      "state_token_count": 2113,
+      "state_budget": 3948,
+      "kept_state_token_count": 2113,
+      "dropped_state_token_count": 0,
+      "task_in_question": true,
+      "input_ids_count": 2261,
+      "input_ids_sha256": "14ffec44e82dd55955a37875ae00e86ced5d565c532a6aa545d7c9382f69c835"
+    }
+  ]
+}
