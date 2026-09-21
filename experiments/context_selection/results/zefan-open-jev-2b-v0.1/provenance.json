@@ -1,0 +1,38 @@
+{
+  "base_model": "Qwen/Qwen3.5-2B",
+  "base_revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+  "batch_size": 1,
+  "cases": "/content/semantic-decision-lab-zefan/experiments/context_selection/cases.v0.1.json",
+  "checkpoint_sha256": "3076462e6356412082e79af909227b39b2863b90def79155ca0821aa506b7ded",
+  "corpus_dir": "/content/semantic-decision-lab-zefan/experiments/context_selection/corpus/pddr-kit-v0.1",
+  "experiment_version": "zefan-open-jev-2b-v0.1",
+  "inference_max_length": 4096,
+  "model_repository": "ZefanCai/Open-Jev-2B",
+  "model_revision": "0c7aa498b1627be8da4acf34c863ff0ee0a92785",
+  "observed_at_utc": "2026-09-21T19:24:17.228971+00:00",
+  "prefix_cache": false,
+  "provider": "zefan-open-jev-2b-v0.1",
+  "runtime_identity": {
+    "base_revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "checkpoint_sha256": "3076462e6356412082e79af909227b39b2863b90def79155ca0821aa506b7ded",
+    "code_commit": "ed45657bf726c3b77408942830e5578f99df904e",
+    "max_length": 4096,
+    "method": "lora_decision_head",
+    "model": "Qwen/Qwen3.5-2B",
+    "prefix_cache_enabled": false,
+    "prefix_cache_mode": "independent_candidates",
+    "temperature": 1.518796342858676
+  },
+  "runtime_versions": {
+    "open_jev": "0.1.0.dev0",
+    "peft": "0.19.1",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.10.2"
+  },
+  "source_repository": "Zefan-Cai/Open-Jev",
+  "source_revision": "ed45657bf726c3b77408942830e5578f99df904e",
+  "top_k": 2,
+  "total_provider_inference_seconds": 19.315545415000997,
+  "total_provider_input_tokens": 88617
+}
