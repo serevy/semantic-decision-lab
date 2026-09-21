@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 from evaluate_context_selection import evaluate
@@ -46,6 +48,8 @@ def main():
     parser.add_argument("corpus_dir")
     parser.add_argument("--endpoint", default="http://127.0.0.1:8000/decide")
     parser.add_argument("--top-k", type=int, default=2)
+    parser.add_argument("--provider-revision", required=True)
+    parser.add_argument("--checkpoint-path")
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args()
 
@@ -73,6 +77,30 @@ def main():
         json.dumps(raw_results, indent=2, sort_keys=True) + "\n"
     )
     (out / "metrics.json").write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
+
+    checkpoint_sha256 = None
+    if args.checkpoint_path:
+        checkpoint = Path(args.checkpoint_path)
+        digest = hashlib.sha256()
+        with checkpoint.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        checkpoint_sha256 = digest.hexdigest()
+
+    provenance = {
+        "provider": provider.name,
+        "provider_repository": "intikhab49/open-jev-typed-decision-engine",
+        "provider_revision": args.provider_revision,
+        "checkpoint_sha256": checkpoint_sha256,
+        "endpoint": args.endpoint,
+        "top_k": args.top_k,
+        "cases": str(Path(args.cases)),
+        "corpus_dir": str(Path(args.corpus_dir)),
+        "observed_at_utc": datetime.now(timezone.utc).isoformat(),
+    }
+    (out / "provenance.json").write_text(
+        json.dumps(provenance, indent=2, sort_keys=True) + "\n"
+    )
 
     print("=== selections ===")
     print(json.dumps(selections, indent=2, sort_keys=True))
