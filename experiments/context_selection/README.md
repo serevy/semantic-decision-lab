@@ -126,3 +126,14 @@ training/calibration configuration, and dynamic-schema model choice are frozen i
 
 Use `OPEN_JEV_RUNBOOK.md` for the GPU/Colab run. The experiment runner records
 provider revision and checkpoint SHA-256 in `provenance.json`.
+
+
+### One-shot Colab execution
+
+For the first real Open Jev v0.1 measurement, use a **fresh Colab T4 runtime**
+and run `open_jev_v0_1_colab.ipynb`. The notebook delegates to
+`run_open_jev_colab.py`, which performs the pinned clone, smoke test, training,
+calibration, local serving, experiment run, provenance capture, and shutdown.
+
+The runner refuses to overwrite an existing `results/open-jev-v0.1` directory,
+so the first observed provider output cannot be silently replaced.
