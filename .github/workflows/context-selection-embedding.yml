@@ -1,0 +1,39 @@
+name: Context selection embedding baseline
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/**"
+      - ".github/workflows/context-selection-embedding.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  HF_HUB_DISABLE_TELEMETRY: "1"
+
+jobs:
+  embedding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: experiments/context_selection/requirements-embedding.txt
+      - name: Cache Hugging Face model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-multilingual-e5-small-fd1525a9
+      - name: Install embedding dependencies
+        run: pip install -r experiments/context_selection/requirements-embedding.txt
+      - name: Run multilingual embedding baseline
+        run: python experiments/context_selection/run_embedding_experiment.py
+      - name: Upload embedding results
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-embedding-v0.1
+          path: experiments/context_selection/results/embedding-v0.1/
