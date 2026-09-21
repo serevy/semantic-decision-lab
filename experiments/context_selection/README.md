@@ -116,3 +116,13 @@ python experiments/context_selection/run_open_jev_experiment.py \
 
 CI tests only the adapter mapping with a fake transport; it does not download,
 train, or load the external model.
+
+
+### Open Jev v0.1 frozen run
+
+Before the first real provider output is observed, the exact upstream revision,
+training/calibration configuration, and dynamic-schema model choice are frozen in
+`providers/open-jev-v0.1.json`.
+
+Use `OPEN_JEV_RUNBOOK.md` for the GPU/Colab run. The experiment runner records
+provider revision and checkpoint SHA-256 in `provenance.json`.
