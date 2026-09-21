@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import importlib.util
 import json
+import re
 import sys
+import types
 from pathlib import Path
 from typing import Any, Mapping
+
+from transformers import AutoTokenizer
 
 from open_jev_http_provider import OpenJevHttpProvider
 
@@ -47,15 +50,53 @@ def capture_payload(task: str, records: Mapping[str, str]) -> Mapping[str, Any]:
     return captured["payload"]
 
 
-def import_upstream(upstream: Path):
+def import_upstream_td_data(upstream: Path):
+    """Import upstream td_data without installing torch.
+
+    td_data imports torch at module import time because its Dataset/collate helpers
+    use it, but this diagnostic only calls pure-Python token packing helpers
+    (add_markers/state_to_text/encode). Provide the minimum import-time stub
+    instead of downloading a large framework that cannot affect this diagnostic.
+    """
+    torch_stub = types.ModuleType("torch")
+    torch_utils_stub = types.ModuleType("torch.utils")
+    torch_utils_data_stub = types.ModuleType("torch.utils.data")
+
+    class Dataset:
+        pass
+
+    torch_utils_data_stub.Dataset = Dataset
+    torch_utils_stub.data = torch_utils_data_stub
+    torch_stub.utils = torch_utils_stub
+
+    previous = {
+        name: sys.modules.get(name)
+        for name in ("torch", "torch.utils", "torch.utils.data")
+    }
+    sys.modules["torch"] = torch_stub
+    sys.modules["torch.utils"] = torch_utils_stub
+    sys.modules["torch.utils.data"] = torch_utils_data_stub
+
     sys.path.insert(0, str(upstream))
     try:
         import td_data
-        import model
-    except Exception:
+    finally:
         sys.path.remove(str(upstream))
-        raise
-    return td_data, model
+        for name, module in previous.items():
+            if module is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = module
+
+    return td_data
+
+
+def read_upstream_encoder_name(upstream: Path) -> str:
+    model_source = (upstream / "model.py").read_text()
+    match = re.search(r'^DEFAULT_ENCODER\s*=\s*["\']([^"\']+)["\']', model_source, re.M)
+    if not match:
+        raise RuntimeError("Could not read DEFAULT_ENCODER from pinned upstream model.py")
+    return match.group(1)
 
 
 def sha256_ints(values: list[int]) -> str:
@@ -74,9 +115,10 @@ def main() -> None:
     args = parser.parse_args()
 
     upstream = Path(args.upstream_dir).resolve()
-    td_data, model_module = import_upstream(upstream)
+    td_data = import_upstream_td_data(upstream)
+    encoder_name = read_upstream_encoder_name(upstream)
 
-    tok = model_module.AutoTokenizer.from_pretrained(model_module.DEFAULT_ENCODER)
+    tok = AutoTokenizer.from_pretrained(encoder_name)
     _, qid, lid = td_data.add_markers(tok)
 
     cases = json.loads(Path(args.cases).read_text())
@@ -145,6 +187,7 @@ def main() -> None:
 
     output = {
         "provider_revision": PINNED_REVISION,
+        "encoder": encoder_name,
         "max_len": MAX_LEN,
         "diagnostic": results,
     }
