@@ -155,5 +155,18 @@ v0.2 changes only the adapter packing:
 
 The frozen configuration is in `providers/open-jev-v0.2.json`.
 
+The 1,024-token preflight showed that independent packing fixed task loss but
+still truncated every long PDDR record. Before any v0.2 provider output was
+observed, the v0.2 inference context was therefore frozen at **4,096 tokens**.
+The exact-token preflight now fails if even one frozen PDDR record is truncated.
+
+The upstream checkpoint is still trained with max_len=1,024; v0.2 changes only
+the inference context exposed to the same ModernBERT-base encoder (8,192-token
+capacity) and records that condition in provenance.
+
 If the original Colab runtime still contains the v0.1 checkpoint, reuse it when
-possible so the next run isolates the packing change.
+possible so the next run isolates packing/context changes. Otherwise the one-shot
+runner retrains with the frozen v0.1 training configuration and records the new
+checkpoint SHA-256.
+
+Run the rematch in a Colab T4 with `open_jev_v0_2_colab.ipynb`.
