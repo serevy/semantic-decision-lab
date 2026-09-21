@@ -1,0 +1,39 @@
+{
+  "provider": "open-jev-typed-decision-engine",
+  "repository": "intikhab49/open-jev-typed-decision-engine",
+  "revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "backend_mode": "dynamic-schema fine-tuned JevLite model",
+  "excluded_modes": [
+    "frozen probe",
+    "probe ensemble"
+  ],
+  "reason_for_exclusion": "The PDDR relevance questions are unseen dynamic schema; fixed-schema probe/ensemble results are not comparable.",
+  "training": {
+    "command": "python 02_train.py --epochs 20 --patience 6 --schedule cosine --bs 4 --accum 4 --max-len 1024 --lr 3e-5 --head-lr 1e-3 --brier 1.0 --config all --out jevlite.pt",
+    "encoder": "answerdotai/ModernBERT-base",
+    "config": "all",
+    "epochs": 20,
+    "patience": 6,
+    "schedule": "cosine",
+    "batch_size": 4,
+    "gradient_accumulation": 4,
+    "max_len": 1024,
+    "learning_rate": 0.00003,
+    "head_learning_rate": 0.001,
+    "brier_weight": 1.0
+  },
+  "calibration": {
+    "command": "python 03_calibrate.py --ckpt jevlite.pt --bs 8 --config all",
+    "batch_size": 8,
+    "config": "all"
+  },
+  "serve": {
+    "command": "python 05_serve.py --ckpt jevlite.pt --serve --port 8000",
+    "endpoint": "http://127.0.0.1:8000/decide"
+  },
+  "experiment": {
+    "top_k": 2,
+    "cases": "experiments/context_selection/cases.v0.1.json",
+    "corpus": "experiments/context_selection/corpus/pddr-kit-v0.1"
+  }
+}
