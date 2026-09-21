@@ -1,0 +1,5 @@
+[
+  {"case_id":"ctx-001","corpus_count":7,"irrelevant_rate":0.5714285714285714,"reduction_ratio":0.0,"required_recall":1.0,"selected":["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],"selected_count":7,"selection_precision":0.42857142857142855,"unknown":[],"useful_recall":1.0},
+  {"case_id":"ctx-002","corpus_count":7,"irrelevant_rate":0.5714285714285714,"reduction_ratio":0.0,"required_recall":1.0,"selected":["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],"selected_count":7,"selection_precision":0.42857142857142855,"unknown":[],"useful_recall":1.0},
+  {"case_id":"ctx-003","corpus_count":7,"irrelevant_rate":0.42857142857142855,"reduction_ratio":0.0,"required_recall":1.0,"selected":["PDDR-0001","PDDR-0002","PDDR-0003","PDDR-0004","PDDR-0005","PDDR-0006","PDDR-0007"],"selected_count":7,"selection_precision":0.5714285714285714,"unknown":[],"useful_recall":1.0}
+]
