@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent
 NOTEBOOKS = [
     ROOT / "open_jev_v0_1_colab.ipynb",
     ROOT / "open_jev_v0_2_colab.ipynb",
+    ROOT / "laya_multilingual_v0_1_colab.ipynb",
 ]
 
 

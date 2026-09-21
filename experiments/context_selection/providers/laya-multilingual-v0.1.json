@@ -1,0 +1,30 @@
+{
+  "experiment_version": "laya-multilingual-v0.1",
+  "source_repository": "NandhaKishorM/laya",
+  "source_revision": "42626c348753fbb17572a813127df2278a1ec527",
+  "model_repository": "convaiinnovations/laya-multilingual",
+  "model_revision": "4bb4d65403a3a7b8abd9e6876ccb5e75cf923b5c",
+  "model_safetensors_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "checkpoint_defaults": {
+    "max_len": 1024,
+    "head_max_len": 256,
+    "temperature": [1.0, 1.0, 1.0],
+    "temperature_by_options": {}
+  },
+  "inference": {
+    "max_len": 4096,
+    "head_max_len": 256,
+    "packing": "one complete PDDR state + one relevance Choice",
+    "labels": ["required", "useful", "irrelevant"],
+    "calibration": "as-shipped; do not fit on the frozen PDDR cases"
+  },
+  "selection": {
+    "top_k": 2,
+    "ranking": [
+      "required_probability desc",
+      "useful_probability desc",
+      "PDDR id asc"
+    ]
+  },
+  "note": "Frozen before observing any Laya provider output."
+}
