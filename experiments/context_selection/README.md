@@ -58,3 +58,33 @@ python experiments/context_selection/run_embedding_experiment.py
 ```
 
 Do not change the model, revision, prefixes, or top-k after seeing results without creating a new experiment version.
+
+
+## SemanticDecisionProvider contract v0.1
+
+Semantic backends are kept behind a provider-neutral typed contract. For every
+candidate PDDR, an adapter returns a probability distribution over:
+
+- `required`
+- `useful`
+- `irrelevant`
+
+The experiment applies one shared selection policy after the provider returns:
+
+1. higher `required_probability` first
+2. then higher `useful_probability`
+3. then PDDR ID for deterministic ties
+4. take top-k = **2**
+5. an explicit provider abstention selects nothing
+
+This keeps the evaluator independent from Jev-specific or open-backend response
+shapes and prevents each backend from choosing its own threshold/cutoff after
+seeing results. Provider adapters may batch questions, make multiple calls, or
+run locally; those details belong in adapter/run provenance, not evaluator code.
+
+Contract tests:
+
+```bash
+cd experiments/context_selection
+python -m unittest -v test_semantic_provider.py
+```
