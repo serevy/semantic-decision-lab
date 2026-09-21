@@ -1,0 +1,55 @@
+{
+  "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "encoder": "answerdotai/ModernBERT-base",
+  "max_len": 1024,
+  "workflow_run_id": 35582218463,
+  "artifact_id": 10630199446,
+  "artifact_zip_sha256": "fcbac547af7da92a628c0c9b14e3300a4070361c30d06ba69902172547055e0b",
+  "diagnostic": [
+    {
+      "case_id": "ctx-001",
+      "state_json_key_order": ["instruction", "pddr_records", "task"],
+      "state_token_count": 13968,
+      "question_tail_token_count": 581,
+      "state_budget": 441,
+      "kept_state_token_count": 441,
+      "dropped_state_token_count": 13527,
+      "task_token_count": 45,
+      "task_text_present_verbatim_after_truncation": false,
+      "input_ids_sha256": "fde2ffb4ea3137480f2354e28bb157fc28af0a5a32bf5c83e4ee84aa1bcb35e8",
+      "input_ids_count": 1024
+    },
+    {
+      "case_id": "ctx-002",
+      "state_json_key_order": ["instruction", "pddr_records", "task"],
+      "state_token_count": 13985,
+      "question_tail_token_count": 581,
+      "state_budget": 441,
+      "kept_state_token_count": 441,
+      "dropped_state_token_count": 13544,
+      "task_token_count": 62,
+      "task_text_present_verbatim_after_truncation": false,
+      "input_ids_sha256": "fde2ffb4ea3137480f2354e28bb157fc28af0a5a32bf5c83e4ee84aa1bcb35e8",
+      "input_ids_count": 1024
+    },
+    {
+      "case_id": "ctx-003",
+      "state_json_key_order": ["instruction", "pddr_records", "task"],
+      "state_token_count": 13974,
+      "question_tail_token_count": 581,
+      "state_budget": 441,
+      "kept_state_token_count": 441,
+      "dropped_state_token_count": 13533,
+      "task_token_count": 51,
+      "task_text_present_verbatim_after_truncation": false,
+      "input_ids_sha256": "fde2ffb4ea3137480f2354e28bb157fc28af0a5a32bf5c83e4ee84aa1bcb35e8",
+      "input_ids_count": 1024
+    }
+  ],
+  "conclusion": {
+    "task_survived_truncation": false,
+    "final_inputs_identical_across_cases": true,
+    "classification": "adapter/context-packing failure",
+    "note": "Open Jev v0.1 cannot be interpreted as a semantic-provider quality comparison because ctx-001/002/003 reached the model as identical token sequences."
+  }
+}
