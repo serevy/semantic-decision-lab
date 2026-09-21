@@ -1,0 +1,15 @@
+{
+  "backend_calls_per_case": 7,
+  "cases": "/content/semantic-decision-lab-v02-fixed/experiments/context_selection/cases.v0.1.json",
+  "checkpoint_sha256": "c83bf11b1fdae33e42704ea4fea2e6364a4fa36684f7ad199f9a4bffb5bc7dc1",
+  "corpus_dir": "/content/semantic-decision-lab-v02-fixed/experiments/context_selection/corpus/pddr-kit-v0.1",
+  "endpoint": "http://127.0.0.1:8000/decide",
+  "experiment_version": "open-jev-v0.2",
+  "inference_max_len": 4096,
+  "observed_at_utc": "2026-09-21T14:36:49.064873+00:00",
+  "packing_version": "v0.2-independent-record",
+  "provider": "open-jev-typed-decision-engine-v0.2-independent",
+  "provider_repository": "intikhab49/open-jev-typed-decision-engine",
+  "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "top_k": 2
+}
