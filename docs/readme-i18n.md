@@ -6,6 +6,7 @@
 
 ## 対応言語
 
+- `all` — 下記4言語を1回のrunで順番に処理
 - `ja` — 日本語
 - `zh-CN` — 简体中文
 - `ko` — 한국어
@@ -17,7 +18,11 @@
 
 Actionsの **README i18n** から **Run workflow** を開き、target languageを選択する。
 
-各runはOpenAI Projectの共有10 RPM枠を超えないよう同じconcurrency groupで直列化する。連続で複数言語を開始しても、同時送信は行わない。
+通常の多言語更新では `all` を選ぶ。`all` は `ja / zh-CN / ko / fr` を同じtranslatorプロセスへ複数の `-t` 引数として渡し、1回のrunで全4言語を生成する。これにより実行し忘れを防ぎ、request guardの8秒pacingとrequest countも言語をまたいで共有する。
+
+個別言語は翻訳品質の再検証や障害切り分け用に残す。
+
+別々の手動run同士はOpenAI Projectの共有10 RPM枠を超えないよう同じconcurrency groupで直列化する。ただしGitHub Actionsのconcurrencyは実行中1件に加えてpending 1件のみ保持するため、複数の個別runを同時に大量投入せず、通常は `all` を使用する。
 
 ## 翻訳構成
 
@@ -80,8 +85,8 @@ request guardは完全なsecurity sandboxではない。第三者translator code
 ## 公開フロー
 
 1. `README.md` を更新
-2. 対象言語ごとにREADME i18nを実行
-3. Artifactを回収
+2. README i18nを `all` で実行
+3. 4言語を含む `readme-all` Artifactを回収
 4. 自動品質ゲートと人間レビュー
 5. 必要な表現を修正
 6. 翻訳READMEとlanguage switcherをPR
