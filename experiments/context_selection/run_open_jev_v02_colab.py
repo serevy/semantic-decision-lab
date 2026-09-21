@@ -15,6 +15,7 @@ from pathlib import Path
 UPSTREAM_REPO = "https://github.com/intikhab49/open-jev-typed-decision-engine.git"
 UPSTREAM_REVISION = "78d3b3a171f24d8d9a8dea18e027f9d3373fda45"
 PREFERRED_V01_CHECKPOINT_SHA256 = "90f6e2766b6b1e9210d701340325b6379530046804ab53b88239fced40908115"
+INFERENCE_MAX_LEN = 4096
 
 
 def run(cmd: list[str], *, cwd: Path | None = None) -> None:
@@ -175,20 +176,27 @@ def main() -> None:
     )
 
     preflight_json = json.loads(preflight.read_text())
-    if preflight_json.get("requests_checked") != 21 or not preflight_json.get("all_tasks_in_question"):
-        raise SystemExit("v0.2 packing preflight did not pass all 21 requests.")
+    if (
+        preflight_json.get("requests_checked") != 21
+        or not preflight_json.get("all_tasks_in_question")
+        or not preflight_json.get("all_records_fully_preserved")
+    ):
+        raise SystemExit(
+            "v0.2 packing preflight did not preserve task + full record for all 21 requests."
+        )
 
-    print("+ starting Open Jev server", flush=True)
+    print("+ starting Open Jev v0.2 full-context server", flush=True)
     log_file = log_path.open("w")
     server = subprocess.Popen(
         [
             sys.executable,
-            "05_serve.py",
-            "--ckpt", "jevlite.pt",
-            "--serve",
+            str(lab_root / "experiments/context_selection/serve_open_jev_v02.py"),
+            "--upstream-dir", str(upstream),
+            "--ckpt", str(checkpoint),
+            "--max-len", str(INFERENCE_MAX_LEN),
             "--port", "8000",
         ],
-        cwd=upstream,
+        cwd=lab_root,
         stdout=log_file,
         stderr=subprocess.STDOUT,
         start_new_session=True,
@@ -207,6 +215,7 @@ def main() -> None:
                 "--top-k", "2",
                 "--provider-revision", UPSTREAM_REVISION,
                 "--checkpoint-path", str(checkpoint),
+                "--inference-max-len", str(INFERENCE_MAX_LEN),
                 "--output-dir", str(results),
             ],
             cwd=lab_root,

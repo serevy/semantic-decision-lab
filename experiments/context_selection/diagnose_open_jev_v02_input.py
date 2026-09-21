@@ -16,7 +16,7 @@ from open_jev_independent_provider import build_independent_request
 
 
 PINNED_REVISION = "78d3b3a171f24d8d9a8dea18e027f9d3373fda45"
-MAX_LEN = 1024
+MAX_LEN = 4096
 
 
 def load_docs(path: Path) -> dict[str, str]:
@@ -125,6 +125,12 @@ def main() -> None:
             state_text = td_data.state_to_text(state)
             state_tokens = tok.encode(state_text, add_special_tokens=False)
             kept_state_tokens = state_tokens[:budget]
+            dropped_state_tokens = max(0, len(state_tokens) - budget)
+            if dropped_state_tokens:
+                raise SystemExit(
+                    f"{case['case_id']} {pddr_id}: full record does not fit; "
+                    f"dropped_state_tokens={dropped_state_tokens}"
+                )
 
             row = {
                 "id": f"{case['case_id']}:{pddr_id}",
@@ -155,7 +161,7 @@ def main() -> None:
                     "state_token_count": len(state_tokens),
                     "state_budget": budget,
                     "kept_state_token_count": min(len(state_tokens), budget),
-                    "dropped_state_token_count": max(0, len(state_tokens) - budget),
+                    "dropped_state_token_count": dropped_state_tokens,
                     "task_in_question": True,
                     "input_ids_count": len(encoded["input_ids"]),
                     "input_ids_sha256": input_hash,
@@ -182,6 +188,9 @@ def main() -> None:
         "max_len": MAX_LEN,
         "requests_checked": len(results),
         "all_tasks_in_question": all(r["task_in_question"] for r in results),
+        "all_records_fully_preserved": all(
+            r["dropped_state_token_count"] == 0 for r in results
+        ),
         "cross_case_checks": cross_case_checks,
         "diagnostic": results,
     }

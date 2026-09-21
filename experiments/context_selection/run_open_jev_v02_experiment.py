@@ -60,6 +60,7 @@ def main():
     parser.add_argument("--top-k", type=int, default=2)
     parser.add_argument("--provider-revision", required=True)
     parser.add_argument("--checkpoint-path")
+    parser.add_argument("--inference-max-len", type=int, default=4096)
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args()
 
@@ -102,6 +103,7 @@ def main():
         "endpoint": args.endpoint,
         "top_k": args.top_k,
         "backend_calls_per_case": 7,
+        "inference_max_len": args.inference_max_len,
         "cases": str(Path(args.cases)),
         "corpus_dir": str(Path(args.corpus_dir)),
         "observed_at_utc": datetime.now(timezone.utc).isoformat(),
