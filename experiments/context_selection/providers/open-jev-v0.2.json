@@ -2,17 +2,32 @@
   "experiment_version": "open-jev-v0.2",
   "provider": "intikhab49/open-jev-typed-decision-engine",
   "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "model": {
+    "encoder": "answerdotai/ModernBERT-base",
+    "training_max_len": 1024,
+    "inference_max_len": 4096,
+    "encoder_context_limit": 8192,
+    "note": "Inference context is raised without changing model weights. v0.2 preflight must confirm every frozen PDDR record fits without truncation."
+  },
   "packing": {
     "mode": "independent-record",
-    "state": "one PDDR record",
+    "state": "one complete PDDR record",
     "question_instructions": "frozen task + PDDR id + relevance instruction",
     "calls_per_case": 7,
-    "labels": ["required", "useful", "irrelevant"]
+    "labels": [
+      "required",
+      "useful",
+      "irrelevant"
+    ]
   },
   "selection": {
     "top_k": 2,
-    "ranking": ["required_probability desc", "useful_probability desc", "PDDR id asc"]
+    "ranking": [
+      "required_probability desc",
+      "useful_probability desc",
+      "PDDR id asc"
+    ]
   },
   "reuse_preferred_checkpoint_sha256": "90f6e2766b6b1e9210d701340325b6379530046804ab53b88239fced40908115",
-  "note": "If the original v0.1 Colab runtime is unavailable, a newly trained checkpoint is allowed but must be recorded as a distinct checkpoint SHA-256."
+  "note": "No v0.2 provider output had been observed when inference_max_len=4096 was frozen. If the original v0.1 Colab runtime is unavailable, a newly trained checkpoint is allowed but must be recorded as a distinct checkpoint SHA-256."
 }
