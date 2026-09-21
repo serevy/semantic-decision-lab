@@ -1,10 +1,33 @@
 #!/usr/bin/env python3
-from __future__ import annotations
-
 import argparse
 import importlib.util
 import sys
 from pathlib import Path
+from typing import Any, Callable, Mapping
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+
+class DecideRequest(BaseModel):
+    state: Any
+    questions: dict
+    calibrated: bool = True
+
+
+DecideFn = Callable[[Any, dict, bool], Mapping[str, Any]]
+
+
+def build_app(decide_fn: DecideFn) -> FastAPI:
+    """Build the v0.2 HTTP shim without loading the upstream model."""
+
+    app = FastAPI(title="JevLite v0.2 full-context shim")
+
+    @app.post("/decide")
+    def decide(body: DecideRequest):
+        return decide_fn(body.state, body.questions, body.calibrated)
+
+    return app
 
 
 def load_upstream_serve(upstream_dir: Path):
@@ -43,22 +66,9 @@ def main() -> None:
         flush=True,
     )
 
-    from fastapi import FastAPI
-    from pydantic import BaseModel
-    from typing import Any
     import uvicorn
 
-    class Req(BaseModel):
-        state: Any
-        questions: dict
-        calibrated: bool = True
-
-    app = FastAPI(title="JevLite v0.2 full-context shim")
-
-    @app.post("/decide")
-    def decide(request: Req):
-        return serve.decide(request.state, request.questions, request.calibrated)
-
+    app = build_app(serve.decide)
     uvicorn.run(app, host="127.0.0.1", port=args.port)
 
 
