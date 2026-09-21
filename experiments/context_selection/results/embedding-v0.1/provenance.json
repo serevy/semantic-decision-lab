@@ -1,0 +1,10 @@
+{
+  "experiment": "context-selection-embedding-v0.1",
+  "workflow_run_id": 35555663128,
+  "workflow_job_id": 106198713594,
+  "workflow_conclusion": "success",
+  "artifact_id": 10620530506,
+  "artifact_sha256": "cba405b9d536343cc4370a087a32657c653496de861b19883203eb3ee9639788",
+  "observed_at": "2026-09-21",
+  "note": "Snapshot copied from the successful GitHub Actions run before any semantic-decision provider evaluation."
+}
