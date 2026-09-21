@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from typing import Any, Callable, Mapping
+from urllib import error as urllib_error
 from urllib import request as urllib_request
 
 from semantic_provider import CandidateDecision, SemanticDecisionResult
@@ -19,8 +20,14 @@ def _default_transport(endpoint: str, payload: Mapping[str, Any]) -> Mapping[str
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib_request.urlopen(req, timeout=120) as response:
-        return json.loads(response.read().decode("utf-8"))
+    try:
+        with urllib_request.urlopen(req, timeout=120) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except urllib_error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            f"provider HTTP {exc.code} from {endpoint}: {detail}"
+        ) from exc
 
 
 @dataclass

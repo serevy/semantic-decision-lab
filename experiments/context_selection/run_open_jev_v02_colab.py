@@ -60,7 +60,7 @@ def wait_for_server(url: str, log_path: Path, timeout_s: int = 300) -> None:
     raise SystemExit(f"Open Jev server did not become ready within {timeout_s}s.\n{tail}")
 
 
-def ensure_upstream(upstream: Path) -> tuple[Path, bool]:
+def ensure_upstream(upstream: Path, resume_checkpoint_sha: str | None = None) -> tuple[Path, bool]:
     """Return checkpoint path and whether the exact v0.1 checkpoint was reused."""
     checkpoint = upstream / "jevlite.pt"
 
@@ -76,18 +76,26 @@ def ensure_upstream(upstream: Path) -> tuple[Path, bool]:
 
         if checkpoint.exists():
             observed = sha256_file(checkpoint)
-            if observed != PREFERRED_V01_CHECKPOINT_SHA256:
-                raise SystemExit(
-                    "Existing jevlite.pt is not the frozen v0.1 checkpoint. "
-                    f"Observed {observed}; expected {PREFERRED_V01_CHECKPOINT_SHA256}. "
-                    "Use a fresh runtime instead of silently changing the model."
+            if observed == PREFERRED_V01_CHECKPOINT_SHA256:
+                print(
+                    "=== Reusing exact Open Jev v0.1 checkpoint ===\n"
+                    f"sha256={observed}",
+                    flush=True,
                 )
-            print(
-                "=== Reusing exact Open Jev v0.1 checkpoint ===\n"
-                f"sha256={observed}",
-                flush=True,
+                return checkpoint, True
+            if resume_checkpoint_sha and observed == resume_checkpoint_sha:
+                print(
+                    "=== Resuming explicitly approved v0.2 checkpoint ===\n"
+                    f"sha256={observed}",
+                    flush=True,
+                )
+                return checkpoint, False
+            raise SystemExit(
+                "Existing jevlite.pt differs from the frozen v0.1 checkpoint. "
+                f"Observed {observed}. To resume a checkpoint produced by a previous "
+                "failed v0.2 attempt, pass --resume-checkpoint-sha with that exact hash; "
+                "otherwise use a fresh runtime."
             )
-            return checkpoint, True
 
         print("Pinned upstream checkout exists but checkpoint is absent; training it now.", flush=True)
     else:
@@ -141,6 +149,13 @@ def main() -> None:
         description="Colab/T4 runner for Experiment #2 Open Jev v0.2."
     )
     parser.add_argument("--work-root", default="/content")
+    parser.add_argument(
+        "--resume-checkpoint-sha",
+        help=(
+            "Explicitly allow reuse of an existing non-v0.1 jevlite.pt after a failed "
+            "v0.2 attempt. The observed file hash must match exactly."
+        ),
+    )
     args = parser.parse_args()
 
     lab_root = Path(__file__).resolve().parents[2]
@@ -159,7 +174,7 @@ def main() -> None:
             "Preserve it before any rerun."
         )
 
-    checkpoint, reused = ensure_upstream(upstream)
+    checkpoint, reused = ensure_upstream(upstream, args.resume_checkpoint_sha)
 
     # Re-run the exact packing preflight in the same runtime and pinned upstream
     # immediately before inference.
