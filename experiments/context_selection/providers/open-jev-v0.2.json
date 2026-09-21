@@ -1,0 +1,18 @@
+{
+  "experiment_version": "open-jev-v0.2",
+  "provider": "intikhab49/open-jev-typed-decision-engine",
+  "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "packing": {
+    "mode": "independent-record",
+    "state": "one PDDR record",
+    "question_instructions": "frozen task + PDDR id + relevance instruction",
+    "calls_per_case": 7,
+    "labels": ["required", "useful", "irrelevant"]
+  },
+  "selection": {
+    "top_k": 2,
+    "ranking": ["required_probability desc", "useful_probability desc", "PDDR id asc"]
+  },
+  "reuse_preferred_checkpoint_sha256": "90f6e2766b6b1e9210d701340325b6379530046804ab53b88239fced40908115",
+  "note": "If the original v0.1 Colab runtime is unavailable, a newly trained checkpoint is allowed but must be recorded as a distinct checkpoint SHA-256."
+}

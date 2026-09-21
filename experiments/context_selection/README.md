@@ -137,3 +137,23 @@ calibration, local serving, experiment run, provenance capture, and shutdown.
 
 The runner refuses to overwrite an existing `results/open-jev-v0.1` directory,
 so the first observed provider output cannot be silently replaced.
+
+
+## Open Jev v0.2 independent record packing
+
+v0.1 is preserved as raw evidence but classified as an adapter/context-packing
+failure: all three tasks were truncated away and reached the model as identical
+1,024-token inputs.
+
+v0.2 changes only the adapter packing:
+
+- one PDDR record per backend request
+- the frozen task text lives in the question instructions
+- one `required/useful/irrelevant` Choice per request
+- seven distributions are combined into the same provider-neutral result
+- the shared Top-2 ranking policy is unchanged
+
+The frozen configuration is in `providers/open-jev-v0.2.json`.
+
+If the original Colab runtime still contains the v0.1 checkpoint, reuse it when
+possible so the next run isolates the packing change.

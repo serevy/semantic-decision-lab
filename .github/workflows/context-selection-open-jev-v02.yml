@@ -1,0 +1,48 @@
+name: Open Jev v0.2 adapter
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/open_jev_independent_provider.py"
+      - "experiments/context_selection/run_open_jev_v02_experiment.py"
+      - "experiments/context_selection/test_open_jev_independent_provider.py"
+      - "experiments/context_selection/diagnose_open_jev_v02_input.py"
+      - "experiments/context_selection/providers/open-jev-v0.2.json"
+      - ".github/workflows/context-selection-open-jev-v02.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install tokenizer dependency
+        run: pip install "transformers==5.16.1"
+      - name: Clone pinned Open Jev revision
+        run: |
+          git clone https://github.com/intikhab49/open-jev-typed-decision-engine.git /tmp/open-jev
+          git -C /tmp/open-jev checkout 78d3b3a171f24d8d9a8dea18e027f9d3373fda45
+      - name: Test v0.2 adapter contract
+        working-directory: experiments/context_selection
+        run: |
+          python -m unittest -v test_semantic_provider.py
+          python -m unittest -v test_open_jev_independent_provider.py
+      - name: Preflight exact upstream token packing
+        working-directory: experiments/context_selection
+        run: |
+          python diagnose_open_jev_v02_input.py \
+            cases.v0.1.json \
+            corpus/pddr-kit-v0.1 \
+            --upstream-dir /tmp/open-jev \
+            --output /tmp/open-jev-v0.2-input-preflight.json
+      - name: Upload preflight
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-jev-v0.2-input-preflight
+          path: /tmp/open-jev-v0.2-input-preflight.json
