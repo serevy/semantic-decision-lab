@@ -8,6 +8,7 @@ on:
       - "experiments/context_selection/diagnose_zefan_openjev_2b_input.py"
       - "experiments/context_selection/run_zefan_openjev_2b_experiment.py"
       - "experiments/context_selection/run_zefan_openjev_2b_colab.py"
+      - "experiments/context_selection/test_zefan_openjev_2b_colab_runner.py"
       - "experiments/context_selection/zefan_openjev_2b_v0_1_colab.ipynb"
       - "experiments/context_selection/ZEFAN_OPENJEV_2B_V01_RUNBOOK.md"
       - "experiments/context_selection/providers/zefan-open-jev-2b-v0.1.json"
@@ -38,6 +39,7 @@ jobs:
         run: |
           python -m unittest -v test_semantic_provider.py
           python -m unittest -v test_zefan_openjev_2b_provider.py
+          python -m unittest -v test_zefan_openjev_2b_colab_runner.py
           python test_colab_notebooks.py
           python -m py_compile diagnose_zefan_openjev_2b_input.py
           python -m py_compile run_zefan_openjev_2b_experiment.py
