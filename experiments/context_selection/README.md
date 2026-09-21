@@ -198,3 +198,39 @@ hash differs across the three tasks.
 
 Use `LAYA_MULTILINGUAL_V01_RUNBOOK.md` or
 `laya_multilingual_v0_1_colab.ipynb` for the first T4 run.
+
+
+## Zefan Open-Jev 2B v0.1
+
+After the Laya multilingual arm, the next open backend uses the released
+Qwen-based 2B Open-Jev checkpoint from `Zefan-Cai/Open-Jev`.
+
+Frozen before provider output:
+
+- source: `Zefan-Cai/Open-Jev@ed45657bf726c3b77408942830e5578f99df904e`
+- model: `ZefanCai/Open-Jev-2B@0c7aa498b1627be8da4acf34c863ff0ee0a92785`
+- base: `Qwen/Qwen3.5-2B@15852e8c16360a2fea060d615a32b45270f8a8fc`
+- packaged checkpoint SHA-256:
+  `3076462e6356412082e79af909227b39b2863b90def79155ca0821aa506b7ded`
+- saved temperature: `1.518796342858676`
+- max_length: **4096**
+- batch_size: **1**
+- prefix cache: **off**
+- one complete PDDR per relevance Choice
+- shared `required/useful/irrelevant` labels and **Top-2**
+
+The upstream loader uses BF16 for the Qwen backbone. The frozen first run keeps
+that behavior and requires a BF16-capable CUDA GPU; it refuses T4 rather than
+silently switching dtype.
+
+Before inference, pinned upstream request compilation and candidate rendering are
+combined with the pinned Qwen tokenizer/chat template. All 63 candidate
+sequences must preserve task, complete PDDR text and candidate text, remain
+within 4096 tokens, and differ across tasks for the same PDDR.
+
+The real HTTP responses must also prove the frozen checkpoint digest, base
+revision, source revision, max length, LoRA decision-head method and disabled
+prefix cache.
+
+Use `ZEFAN_OPENJEV_2B_V01_RUNBOOK.md` or
+`zefan_openjev_2b_v0_1_colab.ipynb` for the first run.
