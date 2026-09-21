@@ -88,3 +88,31 @@ Contract tests:
 cd experiments/context_selection
 python -m unittest -v test_semantic_provider.py
 ```
+
+
+## Open Jev HTTP adapter
+
+The first concrete open backend adapter targets
+`intikhab49/open-jev-typed-decision-engine` running its local
+`python 05_serve.py --serve` endpoint.
+
+The adapter sends the frozen task and all candidate PDDR records as state, then
+asks one dynamic `choice` question per record with the same three labels used by
+the provider-neutral contract: `required`, `useful`, and `irrelevant`.
+
+The backend's probabilities are normalized into `CandidateDecision`; the shared
+contract still owns ranking and the fixed **Top-2** cutoff.
+
+Example after starting the external backend:
+
+```bash
+python experiments/context_selection/run_open_jev_experiment.py \
+  experiments/context_selection/cases.v0.1.json \
+  experiments/context_selection/corpus/pddr-kit-v0.1 \
+  --endpoint http://127.0.0.1:8000/decide \
+  --top-k 2 \
+  --output-dir experiments/context_selection/results/open-jev-v0.1
+```
+
+CI tests only the adapter mapping with a fake transport; it does not download,
+train, or load the external model.
