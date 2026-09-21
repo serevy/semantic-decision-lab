@@ -1,0 +1,284 @@
+{
+  "ctx-001": {
+    "abstained": false,
+    "decisions": [
+      {
+        "confidence": 0.5199,
+        "irrelevant_probability": 0.4406,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.5199,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0001",
+        "required_probability": 0.0395,
+        "useful_probability": 0.5199
+      },
+      {
+        "confidence": 0.4942,
+        "irrelevant_probability": 0.4742,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.4942,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0002",
+        "required_probability": 0.0316,
+        "useful_probability": 0.4942
+      },
+      {
+        "confidence": 0.5534446555344466,
+        "irrelevant_probability": 0.5534446555344466,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5535,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0003",
+        "required_probability": 0.026897310268973105,
+        "useful_probability": 0.4196580341965804
+      },
+      {
+        "confidence": 0.5542445755424458,
+        "irrelevant_probability": 0.5542445755424458,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5543,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0004",
+        "required_probability": 0.0292970702929707,
+        "useful_probability": 0.41645835416458354
+      },
+      {
+        "confidence": 0.6143,
+        "irrelevant_probability": 0.6143,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6143,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0005",
+        "required_probability": 0.0224,
+        "useful_probability": 0.3633
+      },
+      {
+        "confidence": 0.5710000000000001,
+        "irrelevant_probability": 0.5710000000000001,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.571,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0006",
+        "required_probability": 0.027700000000000002,
+        "useful_probability": 0.40130000000000005
+      },
+      {
+        "confidence": 0.6281,
+        "irrelevant_probability": 0.6281,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6281,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0007",
+        "required_probability": 0.033,
+        "useful_probability": 0.3389
+      }
+    ],
+    "metadata": {
+      "calibrated": true,
+      "endpoint_kind": "open-jev-/decide"
+    },
+    "provider": "open-jev-typed-decision-engine"
+  },
+  "ctx-002": {
+    "abstained": false,
+    "decisions": [
+      {
+        "confidence": 0.5199,
+        "irrelevant_probability": 0.4406,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.5199,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0001",
+        "required_probability": 0.0395,
+        "useful_probability": 0.5199
+      },
+      {
+        "confidence": 0.4942,
+        "irrelevant_probability": 0.4742,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.4942,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0002",
+        "required_probability": 0.0316,
+        "useful_probability": 0.4942
+      },
+      {
+        "confidence": 0.5534446555344466,
+        "irrelevant_probability": 0.5534446555344466,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5535,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0003",
+        "required_probability": 0.026897310268973105,
+        "useful_probability": 0.4196580341965804
+      },
+      {
+        "confidence": 0.5542445755424458,
+        "irrelevant_probability": 0.5542445755424458,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5543,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0004",
+        "required_probability": 0.0292970702929707,
+        "useful_probability": 0.41645835416458354
+      },
+      {
+        "confidence": 0.6143,
+        "irrelevant_probability": 0.6143,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6143,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0005",
+        "required_probability": 0.0224,
+        "useful_probability": 0.3633
+      },
+      {
+        "confidence": 0.5710000000000001,
+        "irrelevant_probability": 0.5710000000000001,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.571,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0006",
+        "required_probability": 0.027700000000000002,
+        "useful_probability": 0.40130000000000005
+      },
+      {
+        "confidence": 0.6281,
+        "irrelevant_probability": 0.6281,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6281,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0007",
+        "required_probability": 0.033,
+        "useful_probability": 0.3389
+      }
+    ],
+    "metadata": {
+      "calibrated": true,
+      "endpoint_kind": "open-jev-/decide"
+    },
+    "provider": "open-jev-typed-decision-engine"
+  },
+  "ctx-003": {
+    "abstained": false,
+    "decisions": [
+      {
+        "confidence": 0.5199,
+        "irrelevant_probability": 0.4406,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.5199,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0001",
+        "required_probability": 0.0395,
+        "useful_probability": 0.5199
+      },
+      {
+        "confidence": 0.4942,
+        "irrelevant_probability": 0.4742,
+        "label": "useful",
+        "metadata": {
+          "backend_confidence": 0.4942,
+          "backend_label": "useful"
+        },
+        "pddr_id": "PDDR-0002",
+        "required_probability": 0.0316,
+        "useful_probability": 0.4942
+      },
+      {
+        "confidence": 0.5534446555344466,
+        "irrelevant_probability": 0.5534446555344466,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5535,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0003",
+        "required_probability": 0.026897310268973105,
+        "useful_probability": 0.4196580341965804
+      },
+      {
+        "confidence": 0.5542445755424458,
+        "irrelevant_probability": 0.5542445755424458,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.5543,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0004",
+        "required_probability": 0.0292970702929707,
+        "useful_probability": 0.41645835416458354
+      },
+      {
+        "confidence": 0.6143,
+        "irrelevant_probability": 0.6143,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6143,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0005",
+        "required_probability": 0.0224,
+        "useful_probability": 0.3633
+      },
+      {
+        "confidence": 0.5710000000000001,
+        "irrelevant_probability": 0.5710000000000001,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.571,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0006",
+        "required_probability": 0.027700000000000002,
+        "useful_probability": 0.40130000000000005
+      },
+      {
+        "confidence": 0.6281,
+        "irrelevant_probability": 0.6281,
+        "label": "irrelevant",
+        "metadata": {
+          "backend_confidence": 0.6281,
+          "backend_label": "irrelevant"
+        },
+        "pddr_id": "PDDR-0007",
+        "required_probability": 0.033,
+        "useful_probability": 0.3389
+      }
+    ],
+    "metadata": {
+      "calibrated": true,
+      "endpoint_kind": "open-jev-/decide"
+    },
+    "provider": "open-jev-typed-decision-engine"
+  }
+}
