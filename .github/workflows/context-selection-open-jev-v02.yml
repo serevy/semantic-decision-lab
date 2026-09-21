@@ -8,6 +8,9 @@ on:
       - "experiments/context_selection/test_open_jev_independent_provider.py"
       - "experiments/context_selection/diagnose_open_jev_v02_input.py"
       - "experiments/context_selection/providers/open-jev-v0.2.json"
+      - "experiments/context_selection/run_open_jev_v02_colab.py"
+      - "experiments/context_selection/open_jev_v0_2_colab.ipynb"
+      - "experiments/context_selection/OPEN_JEV_V02_RUNBOOK.md"
       - ".github/workflows/context-selection-open-jev-v02.yml"
   workflow_dispatch:
 
@@ -33,6 +36,7 @@ jobs:
         run: |
           python -m unittest -v test_semantic_provider.py
           python -m unittest -v test_open_jev_independent_provider.py
+          python -m py_compile run_open_jev_v02_colab.py
       - name: Preflight exact upstream token packing
         working-directory: experiments/context_selection
         run: |
