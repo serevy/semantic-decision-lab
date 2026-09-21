@@ -72,11 +72,16 @@ def import_laya_common(source_dir: Path):
     sys.modules["torch"] = torch_stub
     sys.modules["torch.nn"] = nn_stub
 
-    sys.path.insert(0, str(source_dir))
+    spec = importlib.util.spec_from_file_location(
+        "laya_common_pinned",
+        source_dir / "laya" / "common.py",
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load pinned Laya common.py")
+    common = importlib.util.module_from_spec(spec)
     try:
-        common = importlib.import_module("laya.common")
+        spec.loader.exec_module(common)
     finally:
-        sys.path.remove(str(source_dir))
         for name, module in previous.items():
             if module is None:
                 sys.modules.pop(name, None)
