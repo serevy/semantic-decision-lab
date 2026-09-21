@@ -1,0 +1,57 @@
+name: Laya multilingual v0.1 adapter
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/laya_multilingual_provider.py"
+      - "experiments/context_selection/test_laya_multilingual_provider.py"
+      - "experiments/context_selection/diagnose_laya_multilingual_input.py"
+      - "experiments/context_selection/run_laya_multilingual_experiment.py"
+      - "experiments/context_selection/run_laya_multilingual_colab.py"
+      - "experiments/context_selection/laya_multilingual_v0_1_colab.ipynb"
+      - "experiments/context_selection/LAYA_MULTILINGUAL_V01_RUNBOOK.md"
+      - "experiments/context_selection/providers/laya-multilingual-v0.1.json"
+      - "experiments/context_selection/test_colab_notebooks.py"
+      - ".github/workflows/context-selection-laya.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install preflight dependencies
+        run: |
+          pip install "transformers==5.16.1" "huggingface_hub==1.29.0" "numpy==2.1.3"
+      - name: Clone pinned Laya source
+        run: |
+          git clone https://github.com/NandhaKishorM/laya.git /tmp/laya
+          git -C /tmp/laya checkout --detach 42626c348753fbb17572a813127df2278a1ec527
+      - name: Test adapter and scripts
+        working-directory: experiments/context_selection
+        run: |
+          python -m unittest -v test_semantic_provider.py
+          python -m unittest -v test_laya_multilingual_provider.py
+          python test_colab_notebooks.py
+          python -m py_compile diagnose_laya_multilingual_input.py
+          python -m py_compile run_laya_multilingual_experiment.py
+          python -m py_compile run_laya_multilingual_colab.py
+      - name: Preflight exact Laya token packing
+        working-directory: experiments/context_selection
+        run: |
+          python diagnose_laya_multilingual_input.py \
+            cases.v0.1.json \
+            corpus/pddr-kit-v0.1 \
+            --source-dir /tmp/laya \
+            --output /tmp/laya-multilingual-v0.1-input-preflight.json
+      - name: Upload preflight
+        uses: actions/upload-artifact@v4
+        with:
+          name: laya-multilingual-v0.1-input-preflight
+          path: /tmp/laya-multilingual-v0.1-input-preflight.json
