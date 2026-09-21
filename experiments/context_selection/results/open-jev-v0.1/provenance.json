@@ -1,0 +1,11 @@
+{
+  "cases": "/content/semantic-decision-lab/experiments/context_selection/cases.v0.1.json",
+  "checkpoint_sha256": "90f6e2766b6b1e9210d701340325b6379530046804ab53b88239fced40908115",
+  "corpus_dir": "/content/semantic-decision-lab/experiments/context_selection/corpus/pddr-kit-v0.1",
+  "endpoint": "http://127.0.0.1:8000/decide",
+  "observed_at_utc": "2026-09-21T08:12:11.276971+00:00",
+  "provider": "open-jev-typed-decision-engine",
+  "provider_repository": "intikhab49/open-jev-typed-decision-engine",
+  "provider_revision": "78d3b3a171f24d8d9a8dea18e027f9d3373fda45",
+  "top_k": 2
+}
