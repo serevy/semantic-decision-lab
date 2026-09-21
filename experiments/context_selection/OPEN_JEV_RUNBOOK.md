@@ -63,15 +63,24 @@ sha256sum jevlite.pt
 Keep the resulting checkpoint SHA-256. The experiment runner records it in
 `provenance.json`.
 
-### 5. Start the local decision endpoint
+### 5. Start the local decision endpoint in the same Colab runtime
+
+Keep the server and the experiment runner on the same Colab VM so
+`127.0.0.1:8000` refers to the correct process.
 
 ```bash
-python 05_serve.py --ckpt jevlite.pt --serve --port 8000
+nohup python 05_serve.py --ckpt jevlite.pt --serve --port 8000 \
+  > open-jev-server.log 2>&1 &
+sleep 5
+tail -n 20 open-jev-server.log
 ```
 
-### 6. In a second Colab shell/session, run Semantic Decision Lab
+### 6. In the same Colab runtime, run Semantic Decision Lab
+
+Return to the parent directory so the two repositories are siblings.
 
 ```bash
+cd ..
 git clone https://github.com/serevy/semantic-decision-lab.git
 cd semantic-decision-lab
 
