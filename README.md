@@ -1,6 +1,6 @@
 # semantic-decision-lab
 
-**English** | [日本語](README.ja.md)
+**English** | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [한국어](README.ko.md) | [Français](README.fr.md)
 
 Experiments on semantic decision layers for AI orchestration, context selection, routing, handoffs, and real-time systems.
 
