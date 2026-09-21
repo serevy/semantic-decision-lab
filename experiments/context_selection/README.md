@@ -170,3 +170,31 @@ runner retrains with the frozen v0.1 training configuration and records the new
 checkpoint SHA-256.
 
 Run the rematch in a Colab T4 with `open_jev_v0_2_colab.ipynb`.
+
+
+## Laya multilingual v0.1
+
+The next semantic-provider arm uses the multilingual Laya checkpoint so the
+English task / Japanese PDDR setting can be tested explicitly rather than
+treating all typed-decision backends as equivalent.
+
+Frozen before provider output:
+
+- source: `NandhaKishorM/laya@42626c348753fbb17572a813127df2278a1ec527`
+- model: `convaiinnovations/laya-multilingual@4bb4d65403a3a7b8abd9e6876ccb5e75cf923b5c`
+- model SHA-256: `9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204`
+- checkpoint default max_len: 1024
+- inference max_len: **4096**
+- head_max_len: **256**
+- one complete PDDR record per classification
+- shared `required/useful/irrelevant` labels and shared **Top-2**
+- checkpoint temperatures are used as shipped; no calibration is fitted on the
+  frozen three PDDR cases
+
+The exact pinned `build_sequence` implementation is exercised before inference.
+The run aborts unless all 21 inputs preserve the complete task/question, all
+three criteria, and the complete PDDR state, and unless each PDDR's final input
+hash differs across the three tasks.
+
+Use `LAYA_MULTILINGUAL_V01_RUNBOOK.md` or
+`laya_multilingual_v0_1_colab.ipynb` for the first T4 run.
