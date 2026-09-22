@@ -1,0 +1,53 @@
+{
+  "condition_id": "embedding-chunked-v0.2",
+  "dataset_version": "0.2",
+  "purpose": "Represent complete PDDR records with tokenizer-aware chunks while holding model, gold, query text, ranking target, and Top-k fixed.",
+  "model": {
+    "name": "intfloat/multilingual-e5-small",
+    "revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+    "sentence_transformers": "6.1.0"
+  },
+  "encoding": {
+    "query_prefix": "query: ",
+    "passage_prefix": "passage: ",
+    "normalize_embeddings": true,
+    "similarity": "cosine via normalized dot product"
+  },
+  "chunking": {
+    "tokenizer_aware": true,
+    "source_text": "complete frozen PDDR markdown",
+    "content_token_budget": 448,
+    "overlap_tokens": 64,
+    "step_tokens": 384,
+    "add_special_tokens_for_windowing": false,
+    "chunk_text_reconstructed_from_fast_tokenizer_offsets": true,
+    "require_each_prefixed_chunk_with_special_tokens_lte_model_max_seq_length": true,
+    "require_full_character_coverage": true
+  },
+  "aggregation": {
+    "document_score": "maximum chunk cosine similarity",
+    "tie_break": "PDDR ID ascending"
+  },
+  "selection": {
+    "top_k": 2,
+    "cross_corpus_retrieval": false
+  },
+  "comparison_boundary": {
+    "frozen_reference": "results/baseline-v0.2-evidence.json",
+    "primary_question": "Does complete-record chunking change required-context recall at the same Top-2 budget relative to the frozen first-512-token embedding baseline?",
+    "do_not_change": [
+      "dataset v0.2 task text",
+      "gold labels",
+      "embedding model or revision",
+      "Top-k",
+      "query prefix",
+      "passage prefix",
+      "evaluator semantics"
+    ]
+  },
+  "interpretation_limits": [
+    "Max-chunk aggregation may favor longer documents because they produce more chunks; this condition measures that exact frozen rule.",
+    "A result difference is attributable to the representation/aggregation condition as a whole, not to chunking alone in isolation.",
+    "No prompt/provider/backend tuning is performed."
+  ]
+}
