@@ -1,0 +1,28 @@
+{
+  "source_repository": "serevy/readme-i18n-kit",
+  "source_path": "docs/records",
+  "source_revision": "a4eba358cf3174532c7e07c54ad1d1a13dc240fc",
+  "snapshot_date": "2026-09-22",
+  "records": [
+    {
+      "file": "PDDR-0001-review-artifacts-human-publication.md",
+      "blob_sha": "903aa453a4400768522fca3855dc2f5852c97108"
+    },
+    {
+      "file": "PDDR-0002-markdown-structure-repair.md",
+      "blob_sha": "c284dcbacaba37e46306421d7b0d792914a04110"
+    },
+    {
+      "file": "PDDR-0003-literal-mask-glossary.md",
+      "blob_sha": "ea8e09de65ed9ab0b1273f707624acf6fe2e6dc9"
+    },
+    {
+      "file": "PDDR-0004-runtime-security-boundary.md",
+      "blob_sha": "5a78ffb970fb8bce9050021ef1d53b550df2f1c3"
+    },
+    {
+      "file": "PDDR-0005-caller-contract-pinning.md",
+      "blob_sha": "92b90b8f7dfaeca59c8c775ff1204d8fb97764b7"
+    }
+  ]
+}
