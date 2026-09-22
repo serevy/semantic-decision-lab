@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "dataset_version": "0.2",
+  "source": {
+    "pr": 69,
+    "workflow_run": 35751953959,
+    "workflow_head_sha": "291eb71bea4c2a62170e6e9c8069e18ac096c496",
+    "artifact_id": 10706061221,
+    "artifact_name": "context-selection-embedding-input-diagnostics-v0.2",
+    "artifact_digest": "sha256:ebf57ea998fe2587199198bad79e47f233e1c5b2fe621c922dc4cab4c05201ff"
+  },
+  "model": {
+    "name": "intfloat/multilingual-e5-small",
+    "revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+    "tokenizer_class": "XLMRobertaTokenizer",
+    "tokenizer_model_max_length": 512,
+    "sentence_transformers_max_seq_length": 512,
+    "tokenizer_is_fast": true
+  },
+  "summary": {
+    "passage_count": 12,
+    "passages_truncated": 12,
+    "passage_raw_tokens_min": 897,
+    "passage_raw_tokens_max": 1783,
+    "passage_raw_tokens_mean": 1240,
+    "query_count": 12,
+    "queries_truncated": 0,
+    "query_raw_tokens_min": 52,
+    "query_raw_tokens_max": 100,
+    "query_raw_tokens_mean": 80.08333333333333
+  },
+  "passages": [
+    {
+      "key": "pddr-kit-v0.1:PDDR-0001",
+      "raw_tokens": 949,
+      "used_tokens": 512,
+      "truncated_tokens": 437,
+      "dropped_chars": 893
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0002",
+      "raw_tokens": 897,
+      "used_tokens": 512,
+      "truncated_tokens": 385,
+      "dropped_chars": 831
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0003",
+      "raw_tokens": 1632,
+      "used_tokens": 512,
+      "truncated_tokens": 1120,
+      "dropped_chars": 2316
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0004",
+      "raw_tokens": 1277,
+      "used_tokens": 512,
+      "truncated_tokens": 765,
+      "dropped_chars": 1611
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0005",
+      "raw_tokens": 942,
+      "used_tokens": 512,
+      "truncated_tokens": 430,
+      "dropped_chars": 976
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0006",
+      "raw_tokens": 1783,
+      "used_tokens": 512,
+      "truncated_tokens": 1271,
+      "dropped_chars": 2716
+    },
+    {
+      "key": "pddr-kit-v0.1:PDDR-0007",
+      "raw_tokens": 1572,
+      "used_tokens": 512,
+      "truncated_tokens": 1060,
+      "dropped_chars": 2273
+    },
+    {
+      "key": "readme-i18n-kit-v0.1:PDDR-0001",
+      "raw_tokens": 989,
+      "used_tokens": 512,
+      "truncated_tokens": 477,
+      "dropped_chars": 1991
+    },
+    {
+      "key": "readme-i18n-kit-v0.1:PDDR-0002",
+      "raw_tokens": 1328,
+      "used_tokens": 512,
+      "truncated_tokens": 816,
+      "dropped_chars": 3189
+    },
+    {
+      "key": "readme-i18n-kit-v0.1:PDDR-0003",
+      "raw_tokens": 1161,
+      "used_tokens": 512,
+      "truncated_tokens": 649,
+      "dropped_chars": 2620
+    },
+    {
+      "key": "readme-i18n-kit-v0.1:PDDR-0004",
+      "raw_tokens": 1053,
+      "used_tokens": 512,
+      "truncated_tokens": 541,
+      "dropped_chars": 2151
+    },
+    {
+      "key": "readme-i18n-kit-v0.1:PDDR-0005",
+      "raw_tokens": 1297,
+      "used_tokens": 512,
+      "truncated_tokens": 785,
+      "dropped_chars": 3122
+    }
+  ],
+  "section_visibility_observations": {
+    "note": "retained PDDR character end subtracts the 9-character 'passage: ' prefix from the diagnostic boundary",
+    "pddr-kit-v0.1:PDDR-0001": {
+      "retained_pddr_character_end": 1268,
+      "decision_heading_character_index": 1067,
+      "decision_heading_retained": true
+    },
+    "pddr-kit-v0.1:PDDR-0003": {
+      "retained_pddr_character_end": 1358,
+      "decision_heading_character_index": 1832,
+      "decision_heading_retained": false
+    },
+    "pddr-kit-v0.1:PDDR-0006": {
+      "retained_pddr_character_end": 1286,
+      "decision_heading_character_index": 1996,
+      "decision_heading_retained": false
+    },
+    "pddr-kit-v0.1:PDDR-0007": {
+      "retained_pddr_character_end": 1232,
+      "decision_heading_character_index": 1629,
+      "decision_heading_retained": false
+    }
+  },
+  "interpretation_limits": [
+    "All 12 frozen PDDR passages were truncated before embedding; all 12 task queries were not truncated.",
+    "This establishes an input-validity limitation of the frozen embedding baseline, not the causal reason for any specific retrieval miss.",
+    "Some relevant information remains in retained summaries/context, so missing the Decision section is not equivalent to having no relevant evidence.",
+    "The frozen v0.2 embedding scores and Top-k results remain historical evidence and are not overwritten."
+  ]
+}
