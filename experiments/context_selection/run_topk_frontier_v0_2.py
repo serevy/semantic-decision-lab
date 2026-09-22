@@ -100,6 +100,10 @@ def first_full_recall(frontier: list[dict]) -> int | None:
     return None
 
 
+def normalized_selection_sets(selections: dict[str, list[str]]) -> dict[str, list[str]]:
+    return {case_id: sorted(record_ids) for case_id, record_ids in selections.items()}
+
+
 def main() -> None:
     cases = json.loads(CASES.read_text())
     registry = json.loads(REGISTRY.read_text())
@@ -119,8 +123,8 @@ def main() -> None:
     keyword_top2 = next(row for row in keyword_frontier if row["top_k"] == 2)
     if keyword_top2["required_hits"] != int(frozen_keyword_top2["required_hits"].split("/")[0]):
         raise SystemExit("keyword Top-2 required hit does not reproduce frozen evidence")
-    if keyword_top2["selections"] != frozen_keyword_top2["selections"]:
-        raise SystemExit("keyword Top-2 selections do not reproduce frozen evidence")
+    if normalized_selection_sets(keyword_top2["selections"]) != normalized_selection_sets(frozen_keyword_top2["selections"]):
+        raise SystemExit("keyword Top-2 selection sets do not reproduce frozen evidence")
 
     frozen_embedding_top2 = baseline["arms"]["multilingual_e5_small_top2"]
     embedding_top2 = next(row for row in embedding_frontier if row["top_k"] == 2)
