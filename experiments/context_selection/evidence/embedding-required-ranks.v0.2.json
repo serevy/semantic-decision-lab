@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "dataset_version": "0.2",
+  "arm": "multilingual-e5-small",
+  "source": {
+    "workflow_run": 35728375871,
+    "artifact_id": 10694227966,
+    "artifact_name": "context-selection-embedding-v0.2",
+    "result_file": "multilingual-e5-small-top2.scores.json",
+    "result_file_sha256": "1e9185217d9ec5283469752f27ee595c7c8c114349b25d900d0de7bc5a240fc0",
+    "model": "intfloat/multilingual-e5-small",
+    "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98"
+  },
+  "note": "Derived only from the frozen full score ordering in the PR #65 artifact. This file preserves the required-record rank needed for the required-recall/reduction frontier; it does not replace the raw score artifact.",
+  "cases": {
+    "ctx-001": {
+      "required": "PDDR-0002",
+      "rank": 1,
+      "score": 0.8720499277114868
+    },
+    "ctx-002": {
+      "required": "PDDR-0006",
+      "rank": 3,
+      "score": 0.8410313725471497
+    },
+    "ctx-003": {
+      "required": "PDDR-0007",
+      "rank": 3,
+      "score": 0.8679416179656982
+    },
+    "ctx-004": {
+      "required": "PDDR-0001",
+      "rank": 1,
+      "score": 0.8544149398803711
+    },
+    "ctx-005": {
+      "required": "PDDR-0003",
+      "rank": 2,
+      "score": 0.8693774938583374
+    },
+    "ctx-006": {
+      "required": "PDDR-0004",
+      "rank": 1,
+      "score": 0.8483802080154419
+    },
+    "ctx-007": {
+      "required": "PDDR-0005",
+      "rank": 1,
+      "score": 0.8531526327133179
+    },
+    "ctx-008": {
+      "required": "PDDR-0001",
+      "rank": 1,
+      "score": 0.9033849239349365
+    },
+    "ctx-009": {
+      "required": "PDDR-0002",
+      "rank": 1,
+      "score": 0.8823895454406738
+    },
+    "ctx-010": {
+      "required": "PDDR-0003",
+      "rank": 1,
+      "score": 0.9034323692321777
+    },
+    "ctx-011": {
+      "required": "PDDR-0004",
+      "rank": 1,
+      "score": 0.8954179883003235
+    },
+    "ctx-012": {
+      "required": "PDDR-0005",
+      "rank": 1,
+      "score": 0.8954068422317505
+    }
+  }
+}

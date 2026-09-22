@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "dataset_version": "0.2",
+  "source": {
+    "workflow_run": 35743653448,
+    "head_sha": "e2d45ab9ab4dbf65d665943663c28a09190504f2",
+    "artifact_id": 10699764929,
+    "artifact_name": "context-selection-topk-frontier-v0.2",
+    "artifact_digest": "sha256:3fc82bb3a373adc978f05a134cd83965c947d96175018ff75b4f0c5f65290a35"
+  },
+  "full_context_control": {
+    "required_hits": "12/12",
+    "mean_required_recall": 1,
+    "mean_reduction_ratio": 0
+  },
+  "keyword": {
+    "minimum_top_k_for_full_required_recall_within_tested_range": 3,
+    "frontier": [
+      {
+        "top_k": 1,
+        "required_hits": "10/12",
+        "mean_required_recall": 0.8333333333333334,
+        "mean_reduction_ratio": 0.8333333333333334,
+        "required_misses": [
+          "ctx-002",
+          "ctx-003"
+        ]
+      },
+      {
+        "top_k": 2,
+        "required_hits": "11/12",
+        "mean_required_recall": 0.9166666666666666,
+        "mean_reduction_ratio": 0.6666666666666666,
+        "required_misses": [
+          "ctx-003"
+        ]
+      },
+      {
+        "top_k": 3,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.5,
+        "required_misses": []
+      },
+      {
+        "top_k": 4,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.3333333333333333,
+        "required_misses": []
+      },
+      {
+        "top_k": 5,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.16666666666666666,
+        "required_misses": []
+      }
+    ]
+  },
+  "embedding": {
+    "model": "intfloat/multilingual-e5-small",
+    "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+    "minimum_top_k_for_full_required_recall_within_tested_range": 3,
+    "frontier": [
+      {
+        "top_k": 1,
+        "required_hits": "9/12",
+        "mean_required_recall": 0.75,
+        "mean_reduction_ratio": 0.8333333333333334,
+        "required_misses": [
+          "ctx-002",
+          "ctx-003",
+          "ctx-005"
+        ]
+      },
+      {
+        "top_k": 2,
+        "required_hits": "10/12",
+        "mean_required_recall": 0.8333333333333334,
+        "mean_reduction_ratio": 0.6666666666666666,
+        "required_misses": [
+          "ctx-002",
+          "ctx-003"
+        ]
+      },
+      {
+        "top_k": 3,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.5,
+        "required_misses": []
+      },
+      {
+        "top_k": 4,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.3333333333333333,
+        "required_misses": []
+      },
+      {
+        "top_k": 5,
+        "required_hits": "12/12",
+        "mean_required_recall": 1,
+        "mean_reduction_ratio": 0.16666666666666666,
+        "required_misses": []
+      }
+    ]
+  },
+  "interpretation": {
+    "first_tested_full_required_recall_point": {
+      "top_k": 3,
+      "mean_reduction_ratio": 0.5
+    },
+    "limits": [
+      "Top-3 is an observed candidate operating point on this bounded diagnostic dataset, not a recommended production policy.",
+      "This slice targets required-context recall versus reduction only; useful-context recall, precision, latency, cost, and downstream task success are not optimized here.",
+      "Embedding tokenizer input-length and truncation diagnostics remain unmeasured in the current frozen evidence."
+    ]
+  }
+}

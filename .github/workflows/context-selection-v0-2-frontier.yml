@@ -1,0 +1,39 @@
+name: Context selection v0.2 Top-k frontier
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/cases.v0.2.json"
+      - "experiments/context_selection/corpus-registry.v0.2.json"
+      - "experiments/context_selection/corpus/**"
+      - "experiments/context_selection/evidence/embedding-required-ranks.v0.2.json"
+      - "experiments/context_selection/results/baseline-v0.2-evidence.json"
+      - "experiments/context_selection/run_baseline.py"
+      - "experiments/context_selection/evaluate_context_selection.py"
+      - "experiments/context_selection/run_topk_frontier_v0_2.py"
+      - "experiments/context_selection/test_topk_frontier_v0_2.py"
+      - ".github/workflows/context-selection-v0-2-frontier.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frontier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate dataset v0.2
+        run: python experiments/context_selection/validate_dataset_v0_2.py
+      - name: Test frontier guards
+        run: python -m unittest -v experiments/context_selection/test_topk_frontier_v0_2.py
+      - name: Replay Top-k frontier
+        run: python experiments/context_selection/run_topk_frontier_v0_2.py
+      - name: Upload frontier evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-topk-frontier-v0.2
+          path: experiments/context_selection/results/topk-frontier-v0.2/
