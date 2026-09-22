@@ -382,3 +382,25 @@ python experiments/context_selection/run_topk_frontier_v0_2.py
 Results are written to `results/topk-frontier-v0.2/frontier.json`. This is a
 budget replay, not provider tuning. Secondary precision/useful-recall analysis
 and downstream task success remain separate follow-up slices.
+
+## Dataset v0.2 embedding input-length diagnostics
+
+The Top-k frontier still leaves one model-validity question unresolved: the
+frozen multilingual-e5-small runner did not record effective tokenizer input
+lengths or truncation state.
+
+This diagnostic uses the **same pinned SentenceTransformer model revision and
+the same `query: ` / `passage: ` strings** as the baseline. It records:
+
+- `SentenceTransformer.max_seq_length`
+- tokenizer class / fast-tokenizer capability / declared model max length
+- raw token count before truncation
+- actual token count produced by `SentenceTransformer.tokenize`
+- whether tokens are truncated
+- truncated-token count
+- when offset mappings are available, the exact retained character boundary and
+  SHA-256 hashes of retained/dropped text
+
+It does **not** rerun similarity scoring, change Top-k, or alter gold labels.
+Observed truncation is evidence that text is omitted from model input; it is not
+by itself proof that truncation caused a retrieval miss.
