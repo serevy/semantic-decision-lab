@@ -314,3 +314,28 @@ python experiments/context_selection/evaluate_context_selection.py \
 The gold-only smoke is a metric-semantics check only. Do **not** run v0.2
 keyword, embedding, or semantic-provider arms until the dataset-freeze change
 has been reviewed and merged.
+
+
+## Dataset v0.2 baseline replay
+
+After the v0.2 dataset freeze is merged, replay the provider-neutral baselines
+before any semantic backend optimization.
+
+Frozen baseline conditions:
+
+- full-context control: all records in the case's frozen corpus snapshot
+- keyword baseline: existing normalized token-overlap implementation, Top-2
+- embedding baseline:
+  - `intfloat/multilingual-e5-small`
+  - revision `fd1525a9fd15316a2d503bf26ab031a61d056e98`
+  - normalized cosine similarity
+  - `query: ` / `passage: ` prefixes
+  - Top-2
+- evaluator semantics unchanged from v0.1
+
+The v0.2 runners resolve each case's `corpus_snapshot` through
+`corpus-registry.v0.2.json`; no cross-corpus retrieval is performed in this
+phase.
+
+Results are written to new `baseline-v0.2` and `embedding-v0.2` directories.
+v0.1 evidence is immutable.
