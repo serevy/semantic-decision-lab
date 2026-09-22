@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CASES = ROOT / "cases.v0.2.json"
+CASES_V01 = ROOT / "cases.v0.1.json"
 REGISTRY = ROOT / "corpus-registry.v0.2.json"
 
 ID_RE = re.compile(r"^id:\s*(PDDR-\d+)\s*$", re.MULTILINE)
@@ -61,10 +62,33 @@ def main() -> None:
                 f"{snapshot_name}: record id mismatch "
                 f"actual={sorted(actual)} declared={sorted(declared)}"
             )
+
+        manifest_data = load_json(manifest)
+        manifest_files = {
+            record["file"]
+            for record in manifest_data.get("records", [])
+            if isinstance(record, dict) and "file" in record
+        }
+        actual_files = {p.name for p in path.glob("PDDR-*.md")}
+        if manifest_files != actual_files:
+            fail(
+                f"{snapshot_name}: manifest/file mismatch "
+                f"manifest={sorted(manifest_files)} actual={sorted(actual_files)}"
+            )
         snapshot_ids[snapshot_name] = actual
 
     if len(cases) != 12:
         fail(f"v0.2 must freeze exactly 12 cases, found {len(cases)}")
+
+    # The original three pilot cases are immutable in v0.2. Extra metadata may
+    # be added, but the task, difficulty, corpus, and gold labels must not move.
+    pilot = load_json(CASES_V01)
+    for old, new in zip(pilot, cases[:3], strict=True):
+        for key in ("case_id", "difficulty", "task", "corpus", "gold"):
+            if new.get(key) != old.get(key):
+                fail(
+                    f"{old['case_id']}: v0.2 changed frozen pilot field {key}"
+                )
 
     case_ids = [case.get("case_id") for case in cases]
     if len(case_ids) != len(set(case_ids)):
