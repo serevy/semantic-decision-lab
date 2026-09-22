@@ -1,0 +1,65 @@
+name: typed-decision-bert v0.1 adapter
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/typed_decision_bert_provider.py"
+      - "experiments/context_selection/test_typed_decision_bert_provider.py"
+      - "experiments/context_selection/diagnose_typed_decision_bert_input.py"
+      - "experiments/context_selection/run_typed_decision_bert_experiment.py"
+      - "experiments/context_selection/run_typed_decision_bert_colab.py"
+      - "experiments/context_selection/typed_decision_bert_v0_1_colab.ipynb"
+      - "experiments/context_selection/TYPED_DECISION_BERT_V01_RUNBOOK.md"
+      - "experiments/context_selection/providers/typed-decision-bert-v0.1.json"
+      - "experiments/context_selection/test_colab_notebooks.py"
+      - ".github/workflows/context-selection-typed-decision-bert.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install tokenizer-only preflight dependencies
+        run: |
+          pip install \
+            "transformers==5.17.0" \
+            "tokenizers==0.23.2" \
+            "huggingface_hub==1.32.0" \
+            "fastapi>=0.115" \
+            "pydantic>=2.9" \
+            "pydantic-settings>=2.6" \
+            "pyyaml>=6.0"
+      - name: Clone pinned typed-decision-bert source
+        run: |
+          git clone https://github.com/hawkymisc/typed-decision-bert.git /tmp/typed-decision-bert
+          git -C /tmp/typed-decision-bert checkout --detach f0994cd4c91e7516f0e2a8d9e04b71107c309642
+      - name: Test adapter and scripts
+        working-directory: experiments/context_selection
+        run: |
+          python -m unittest -v test_semantic_provider.py
+          python -m unittest -v test_typed_decision_bert_provider.py
+          python test_colab_notebooks.py
+          python -m py_compile diagnose_typed_decision_bert_input.py
+          python -m py_compile run_typed_decision_bert_experiment.py
+          python -m py_compile run_typed_decision_bert_colab.py
+      - name: Preflight exact NLI candidate packing
+        working-directory: experiments/context_selection
+        run: |
+          python diagnose_typed_decision_bert_input.py \
+            cases.v0.1.json \
+            corpus/pddr-kit-v0.1 \
+            --source-dir /tmp/typed-decision-bert \
+            --model-dir /tmp/typed-decision-bert-tokenizer \
+            --output /tmp/typed-decision-bert-v0.1-input-preflight.json
+      - name: Upload preflight
+        uses: actions/upload-artifact@v4
+        with:
+          name: typed-decision-bert-v0.1-input-preflight
+          path: /tmp/typed-decision-bert-v0.1-input-preflight.json
