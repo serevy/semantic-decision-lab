@@ -1,0 +1,155 @@
+{
+  "backend": "a0-nli-zeroshot-v2",
+  "bundle_digest": "sha256:61dbb2190c473fa8925a523e28f32a1ec83df1dcbb2f52f832fdbdea0cb1d494",
+  "bundle_id": "jevbert-poc-nli-ja-en-0.2.0",
+  "calibration": {
+    "state": "uncalibrated",
+    "temperature": {
+      "choice": 1.0,
+      "noul": 1.0,
+      "score": 1.0
+    }
+  },
+  "cases": "/content/semantic-decision-lab-jevbert/experiments/context_selection/cases.v0.1.json",
+  "corpus_dir": "/content/semantic-decision-lab-jevbert/experiments/context_selection/corpus/pddr-kit-v0.1",
+  "dtype": "float32",
+  "experiment_version": "typed-decision-bert-v0.1",
+  "gpu": {
+    "capability": [
+      8,
+      9
+    ],
+    "memory_bytes": 23659151360,
+    "name": "NVIDIA L4"
+  },
+  "max_request_tokens": 131072,
+  "max_sequence_tokens": 2048,
+  "observed_at_utc": "2026-09-22T09:07:05.129455+00:00",
+  "provider": "typed-decision-bert-v0.1",
+  "runtime_identity": {
+    "bundle": {
+      "backend": "a0-nli-zeroshot-v2",
+      "calibration": {
+        "state": "uncalibrated",
+        "temperature": {
+          "choice": 1.0,
+          "noul": 1.0,
+          "score": 1.0
+        }
+      },
+      "confidence": "normalized-entropy-v1",
+      "digest": "sha256:61dbb2190c473fa8925a523e28f32a1ec83df1dcbb2f52f832fdbdea0cb1d494",
+      "dtype": "float32",
+      "id": "jevbert-poc-nli-ja-en-0.2.0",
+      "limits": {
+        "max_request_tokens": 131072,
+        "max_sequence_tokens": 2048
+      },
+      "serializer": "serializer-nli-v1+nli-template-v1",
+      "source_model": {
+        "repo": "MoritzLaurer/bge-m3-zeroshot-v2.0",
+        "revision": "9abf1c8aaeb82a2447809c20753ed0b106b76652"
+      },
+      "state": "ready",
+      "template": "nli-template-v1",
+      "usage": "expanded-input-a0-v1",
+      "validated": {
+        "domains": [],
+        "languages": [],
+        "max_choice_options": "unknown",
+        "quality": "unevaluated"
+      }
+    },
+    "capabilities": {
+      "aliases": {
+        "jev-latest": "jevbert-poc-nli-ja-en-0.2.0",
+        "jev-preview": "jevbert-poc-nli-ja-en-0.2.0"
+      },
+      "bundles": [
+        {
+          "backend": "a0-nli-zeroshot-v2",
+          "calibration": {
+            "state": "uncalibrated",
+            "temperature": {
+              "choice": 1.0,
+              "noul": 1.0,
+              "score": 1.0
+            }
+          },
+          "confidence": "normalized-entropy-v1",
+          "digest": "sha256:61dbb2190c473fa8925a523e28f32a1ec83df1dcbb2f52f832fdbdea0cb1d494",
+          "dtype": "float32",
+          "id": "jevbert-poc-nli-ja-en-0.2.0",
+          "limits": {
+            "max_request_tokens": 131072,
+            "max_sequence_tokens": 2048
+          },
+          "serializer": "serializer-nli-v1+nli-template-v1",
+          "source_model": {
+            "repo": "MoritzLaurer/bge-m3-zeroshot-v2.0",
+            "revision": "9abf1c8aaeb82a2447809c20753ed0b106b76652"
+          },
+          "state": "ready",
+          "template": "nli-template-v1",
+          "usage": "expanded-input-a0-v1",
+          "validated": {
+            "domains": [],
+            "languages": [],
+            "max_choice_options": "unknown",
+            "quality": "unevaluated"
+          }
+        }
+      ],
+      "contract": "jevbert-core-2026-09-21",
+      "known_differences": [
+        "confidence is a JevBERT-specific normalized-entropy statistic, not Jev's value",
+        "usage.input_tokens counts JevBERT's expanded input and is not a Jev billing token count",
+        "the response model is always an immutable JevBERT bundle ID, never a Jev version",
+        "probabilities are uncalibrated (T=1); Jev thresholds do not transfer",
+        "tie-breaking, error bodies and unknown-field handling are JevBERT decisions, not verified against the real Jev API"
+      ],
+      "limits": {
+        "max_body_bytes": 2097152,
+        "max_choice_options": 255,
+        "max_json_depth": 32,
+        "max_pending_requests": 8,
+        "max_questions": 256,
+        "max_request_chars": 524288,
+        "max_score_levels": 10,
+        "min_choice_options": 2,
+        "min_score_levels": 2,
+        "overflow_policy": "reject",
+        "request_deadline_seconds": 30.0,
+        "unknown_top_level_fields": "ignore"
+      },
+      "stage": "P0.5-poc"
+    },
+    "headers": {
+      "connection": "close",
+      "content-length": "1645",
+      "content-type": "application/json",
+      "date": "Tue, 22 Sep 2026 09:06:55 GMT",
+      "server": "uvicorn",
+      "x-jevbert-confidence": "normalized-entropy-v1",
+      "x-jevbert-contract": "jevbert-core-2026-09-21",
+      "x-request-id": "542cc0dc1aea4bd8a9f484e8f0f82345",
+      "x-typesafe-request-id": "542cc0dc1aea4bd8a9f484e8f0f82345"
+    }
+  },
+  "runtime_versions": {
+    "huggingface_hub": "1.29.0",
+    "jevbert": "0.1.0",
+    "python": "3.13.15",
+    "tokenizers": "0.23.1",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1"
+  },
+  "serializer": "serializer-nli-v1+nli-template-v1",
+  "source_model": "MoritzLaurer/bge-m3-zeroshot-v2.0",
+  "source_model_revision": "9abf1c8aaeb82a2447809c20753ed0b106b76652",
+  "source_repository": "hawkymisc/typed-decision-bert",
+  "source_revision": "f0994cd4c91e7516f0e2a8d9e04b71107c309642",
+  "top_k": 2,
+  "total_provider_http_seconds": 8.827378368000154,
+  "total_provider_input_tokens": 89091
+}
