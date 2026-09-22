@@ -339,3 +339,17 @@ phase.
 
 Results are written to new `baseline-v0.2` and `embedding-v0.2` directories.
 v0.1 evidence is immutable.
+
+## Dataset v0.2 baseline Evidence freeze
+
+The first v0.2 baseline workflow completed successfully in PR #65. The
+repository now preserves a compact machine-readable Evidence summary with
+artifact digests, result-file SHA-256 hashes, aggregate metrics, selections, and
+failure-rank evidence:
+
+- [`results/baseline-v0.2-evidence.json`](results/baseline-v0.2-evidence.json)
+- [`BASELINE_V0_2_ANALYSIS.md`](BASELINE_V0_2_ANALYSIS.md)
+
+The failure analysis does not change the frozen Top-2 condition. Top-k frontier,
+input-length diagnostics, and downstream task success are follow-up experiment
+conditions rather than edits to the observed v0.2 results.
