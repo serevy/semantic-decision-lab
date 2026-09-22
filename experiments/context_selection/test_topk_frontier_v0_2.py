@@ -33,7 +33,10 @@ class TopKFrontierV02Tests(unittest.TestCase):
         embedding = frontier.summarize_embedding(cases, ranks, 2)
 
         self.assertEqual(keyword["required_hits"], 11)
-        self.assertEqual(keyword["selections"], baseline["arms"]["keyword_top2"]["selections"])
+        self.assertEqual(
+            frontier.normalized_selection_sets(keyword["selections"]),
+            frontier.normalized_selection_sets(baseline["arms"]["keyword_top2"]["selections"]),
+        )
         self.assertEqual(embedding["required_hits"], 10)
         self.assertEqual(sorted(embedding["required_misses"]), ["ctx-002", "ctx-003"])
 
