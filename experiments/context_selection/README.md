@@ -404,3 +404,18 @@ the same `query: ` / `passage: ` strings** as the baseline. It records:
 It does **not** rerun similarity scoring, change Top-k, or alter gold labels.
 Observed truncation is evidence that text is omitted from model input; it is not
 by itself proof that truncation caused a retrieval miss.
+
+## Dataset v0.2 embedding diagnostic result
+
+The exact input-length diagnostic completed successfully. With the frozen
+`multilingual-e5-small` stack, **all 12 PDDR passages were truncated to 512
+tokens**, while all 12 task queries fit without truncation.
+
+Preserved Evidence and interpretation:
+
+- [`results/embedding-input-diagnostics-v0.2-evidence.json`](results/embedding-input-diagnostics-v0.2-evidence.json)
+- [`EMBEDDING_INPUT_DIAGNOSTIC_V0_2_ANALYSIS.md`](EMBEDDING_INPUT_DIAGNOSTIC_V0_2_ANALYSIS.md)
+
+The original v0.2 embedding result remains immutable evidence for the
+first-512-token condition. A complete-record / chunked embedding experiment must
+use a new versioned result path.
