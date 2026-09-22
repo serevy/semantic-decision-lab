@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection",
+  "issue": 2,
+  "dataset_version": "0.2",
+  "frozen_conditions": {
+    "cases": 12,
+    "corpus_snapshots": [
+      "pddr-kit-v0.1",
+      "readme-i18n-kit-v0.1"
+    ],
+    "top_k": 2,
+    "evaluator_semantics": "unchanged from v0.1",
+    "cross_corpus_retrieval": false
+  },
+  "source": {
+    "dataset_freeze_pr": 64,
+    "baseline_replay_pr": 65,
+    "workflow_run": 35728375871,
+    "workflow_head_sha": "45335d78f31f9c2c4ff1c18635916878f41aaf1e",
+    "artifacts": [
+      {
+        "name": "context-selection-baseline-v0.2",
+        "id": 10694811041,
+        "digest": "sha256:a1a5e7c1bf47936a55a21fac0374da1d184467f6653528764d0b7696619c21a9",
+        "result_file_sha256": {
+          "full-context.metrics.json": "13e05ce811c412fe740f08d74a91f3b3e3473cadfa6e3adbf4ef73bd2236da63",
+          "full-context.selections.json": "6fa14537b8ab27fff615b6bb021317721fe4e8a9155f2d0ea6b75cee17b89dd6",
+          "keyword-top2.metrics.json": "756deeae0d1246a175ef647353db022e000b04792bcb410aa3cd65b78c9a9a9d",
+          "keyword-top2.selections.json": "8034eb8dd7e51789ce13a720e09cc96a99c3383aab049f753e677f241e4d1eb5"
+        }
+      },
+      {
+        "name": "context-selection-embedding-v0.2",
+        "id": 10694227966,
+        "digest": "sha256:f5134c882ceb1b52fce59f106e17283cf7f0fd2aff448aba8ae711858d8cc529",
+        "result_file_sha256": {
+          "multilingual-e5-small-top2.metrics.json": "d94ee2e283cc21e39916b72756377b3105db8db5cfdf90ff18026d244391945a",
+          "multilingual-e5-small-top2.scores.json": "1e9185217d9ec5283469752f27ee595c7c8c114349b25d900d0de7bc5a240fc0",
+          "multilingual-e5-small-top2.selections.json": "783d3b9267dc3b8df21cf99a461713e340c80d05f6d02d2ae94d29c73272a11a"
+        }
+      }
+    ]
+  },
+  "arms": {
+    "full_context": {
+      "required_hits": "12/12",
+      "mean_required_recall": 1,
+      "mean_useful_recall": 1,
+      "mean_selection_precision": 0.4785714285714286,
+      "mean_irrelevant_rate": 0.5214285714285715,
+      "mean_reduction_ratio": 0
+    },
+    "keyword_top2": {
+      "method": "normalized token overlap",
+      "required_hits": "11/12",
+      "mean_required_recall": 0.9166666666666666,
+      "mean_useful_recall": 0.5277777777777778,
+      "mean_selection_precision": 0.9166666666666666,
+      "mean_irrelevant_rate": 0.08333333333333333,
+      "mean_reduction_ratio": 0.6666666666666666,
+      "required_misses": [
+        "ctx-003"
+      ],
+      "selections": {
+        "ctx-001": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ctx-002": [
+          "PDDR-0005",
+          "PDDR-0006"
+        ],
+        "ctx-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-004": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-006": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ctx-007": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ctx-008": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ctx-009": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ctx-010": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ctx-011": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ctx-012": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ]
+      }
+    },
+    "multilingual_e5_small_top2": {
+      "model": "intfloat/multilingual-e5-small",
+      "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+      "query_prefix": "query: ",
+      "passage_prefix": "passage: ",
+      "required_hits": "10/12",
+      "mean_required_recall": 0.8333333333333334,
+      "mean_useful_recall": 0.2777777777777778,
+      "mean_selection_precision": 0.7083333333333334,
+      "mean_irrelevant_rate": 0.2916666666666667,
+      "mean_reduction_ratio": 0.6666666666666666,
+      "required_misses": [
+        "ctx-002",
+        "ctx-003"
+      ],
+      "selections": {
+        "ctx-001": [
+          "PDDR-0002",
+          "PDDR-0001"
+        ],
+        "ctx-002": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-004": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ctx-006": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ctx-007": [
+          "PDDR-0005",
+          "PDDR-0003"
+        ],
+        "ctx-008": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ctx-009": [
+          "PDDR-0002",
+          "PDDR-0001"
+        ],
+        "ctx-010": [
+          "PDDR-0003",
+          "PDDR-0001"
+        ],
+        "ctx-011": [
+          "PDDR-0004",
+          "PDDR-0001"
+        ],
+        "ctx-012": [
+          "PDDR-0005",
+          "PDDR-0001"
+        ]
+      },
+      "failure_rank_evidence": {
+        "ctx-002": [
+          [
+            "PDDR-0001",
+            0.8487825989723206
+          ],
+          [
+            "PDDR-0003",
+            0.8444420099258423
+          ],
+          [
+            "PDDR-0006",
+            0.8410313725471497
+          ]
+        ],
+        "ctx-003": [
+          [
+            "PDDR-0001",
+            0.8698444366455078
+          ],
+          [
+            "PDDR-0003",
+            0.8693415522575378
+          ],
+          [
+            "PDDR-0007",
+            0.8679416179656982
+          ]
+        ]
+      },
+      "pddr_0001_top2_count": 10,
+      "pddr_0001_irrelevant_top2_cases": [
+        "ctx-002",
+        "ctx-003",
+        "ctx-009",
+        "ctx-010",
+        "ctx-011"
+      ]
+    }
+  },
+  "interpretation_limits": [
+    "This is a bounded diagnostic dataset, not a population-level benchmark.",
+    "Tasks were authored from known decision records, so lexical overlap may favor keyword retrieval.",
+    "Provider/model quality must not be inferred beyond the frozen conditions.",
+    "The embedding runner did not record effective tokenizer input lengths or truncation diagnostics; no truncation claim is made."
+  ]
+}
