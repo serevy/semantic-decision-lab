@@ -1,0 +1,354 @@
+[
+  {
+    "case_id": "ctx-001",
+    "difficulty": "easy",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "A maintainer wants to add PDDR Kit to a new repository with the smallest portable setup, using the same validation logic locally and in GitHub Actions, without installing an extra YAML package. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0002"
+      ],
+      "useful": [
+        "PDDR-0001",
+        "PDDR-0003"
+      ],
+      "irrelevant": [
+        "PDDR-0004",
+        "PDDR-0005",
+        "PDDR-0006",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "Unchanged from v0.1. PDDR-0002 directly defines the standard-library-only init/validate CLI and shared local/CI validation path."
+  },
+  {
+    "case_id": "ctx-002",
+    "difficulty": "semantic",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "An AI agent is about to use historical PDDR records as context for a current task. We need the prior decision that says accepted records are not automatically executable policy, that current instructions/policy outrank historical decision context, and that only the minimum relevant records should be selected. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0006"
+      ],
+      "useful": [
+        "PDDR-0004",
+        "PDDR-0005"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0002",
+        "PDDR-0003",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "Unchanged from v0.1. PDDR-0006 defines the Consumption Contract and policy separation."
+  },
+  {
+    "case_id": "ctx-003",
+    "difficulty": "trap",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "An existing project already adopted PDDR Kit. We now need to deliver a newer Kit version without overwriting project-owned configuration, PDDR records, CI, or locally modified Kit-managed files. Which prior decision is required context for the update mechanism?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0007"
+      ],
+      "useful": [
+        "PDDR-0002",
+        "PDDR-0003",
+        "PDDR-0006"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0004",
+        "PDDR-0005"
+      ]
+    },
+    "notes": "Unchanged from v0.1. PDDR-0007 defines manifest/hash-based safe upgrades, dry-run behavior, conflict stopping, and project-owned exclusions."
+  },
+  {
+    "case_id": "ctx-004",
+    "difficulty": "rationale",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "A maintainer needs the project-level rationale for why PDDR Kit exists as reusable public OSS, how it should coexist with ADR/DDR rather than replace them, and why paid semantic services such as Jev must remain optional instead of becoming a required dependency. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0001"
+      ],
+      "useful": [
+        "PDDR-0002",
+        "PDDR-0003"
+      ],
+      "irrelevant": [
+        "PDDR-0004",
+        "PDDR-0005",
+        "PDDR-0006",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "PDDR-0001 defines the project purpose, OSS/MIT choice, ADR/DDR coexistence, common-vs-project-specific boundary, and optional paid integrations."
+  },
+  {
+    "case_id": "ctx-005",
+    "difficulty": "boundary",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "After `init` safely places the common PDDR Kit files into an existing repository, a maintainer needs the prior decision explaining which project-specific integration work still must be connected explicitly instead of being rewritten automatically: README discoverability, AI/developer instructions, CI, and the boundary with existing Issues or task logs. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0003"
+      ],
+      "useful": [
+        "PDDR-0001",
+        "PDDR-0002"
+      ],
+      "irrelevant": [
+        "PDDR-0004",
+        "PDDR-0005",
+        "PDDR-0006",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "PDDR-0003 records the first external-adoption findings and explicitly rejects automatically rewriting project-specific README/rules/CI while requiring those operational connections to be checked."
+  },
+  {
+    "case_id": "ctx-006",
+    "difficulty": "semantic",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "We need to evaluate the `pddr-recorder` skill without treating one exact natural-language answer as the only correct output. The evaluation must capture routing, record action, state, required behaviors and forbidden behaviors, and it must not claim the skill is validated before real-model execution. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0004"
+      ],
+      "useful": [
+        "PDDR-0002",
+        "PDDR-0005"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0003",
+        "PDDR-0006",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "PDDR-0004 defines the portable behavioral evaluation contract. PDDR-0002 separates machine validation from semantic review, and PDDR-0005 is a later state-model refinement discovered through evaluation."
+  },
+  {
+    "case_id": "ctx-007",
+    "difficulty": "trap",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "task": "A PDDR decision is accepted, but the available evidence says nothing about whether implementation has started. We must record delivery state without inventing `not-started` from absence of evidence. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005",
+      "PDDR-0006",
+      "PDDR-0007"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0005"
+      ],
+      "useful": [
+        "PDDR-0004",
+        "PDDR-0006"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0002",
+        "PDDR-0003",
+        "PDDR-0007"
+      ]
+    },
+    "notes": "PDDR-0005 adds `delivery_status: unknown` specifically so lack of implementation evidence is not misrepresented as evidence of `not-started`."
+  },
+  {
+    "case_id": "ctx-008",
+    "difficulty": "safety",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "task": "A README translation run has passed every configured structural Quality Gate, but human review may still find awkward or semantically undesirable wording. We need the prior decision that determines whether the workflow may automatically commit/push/publish the generated README files or must emit review artifacts for a human publication step. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0001"
+      ],
+      "useful": [
+        "PDDR-0002",
+        "PDDR-0005"
+      ],
+      "irrelevant": [
+        "PDDR-0003",
+        "PDDR-0004"
+      ]
+    },
+    "notes": "PDDR-0001 establishes review-only artifacts and mandatory human publication review. PDDR-0002 explains the machine structural gate, while PDDR-0005 assigns publication responsibility to the caller."
+  },
+  {
+    "case_id": "ctx-009",
+    "difficulty": "structural",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "task": "Dogfooding shows two translation failures: source-language residue can remain, and a protected Markdown heading token can move into the middle of a translated sentence. We need the decision that allows natural whole-line translation but restores line-leading Markdown syntax deterministically, retries only bounded line failures, and keeps unsafe token corruption as a hard failure. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0002"
+      ],
+      "useful": [
+        "PDDR-0003"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0004",
+        "PDDR-0005"
+      ]
+    },
+    "notes": "PDDR-0002 directly defines whole-line translation, protected-token validation, deterministic prefix anchoring, bounded retries, and final structural verification."
+  },
+  {
+    "case_id": "ctx-010",
+    "difficulty": "trap",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "task": "A literal identity glossary entry such as `CI -> CI` has caused ordinary French text like `celui-ci` to be rewritten as `celui-CI`. We need the prior decision that separates literal identity preservation from real translation preferences so identity terms are masked/restored while only non-identity glossary entries reach glossary enforcement. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0003"
+      ],
+      "useful": [
+        "PDDR-0002",
+        "PDDR-0005"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0004"
+      ]
+    },
+    "notes": "PDDR-0003 defines separate literal-mask and translation-glossary paths. PDDR-0002 is related structural protection; PDDR-0005 places terminology configuration with the caller."
+  },
+  {
+    "case_id": "ctx-011",
+    "difficulty": "security",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "task": "The reusable translation workflow executes third-party translator code with README content and an API credential. We need the prior decision that intentionally keeps the first provider profile narrow, allows only the exact POST endpoint, disables relay, paces requests, caps each run, limits key exposure, and explicitly says the fetch guard is not a complete process sandbox. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0004"
+      ],
+      "useful": [
+        "PDDR-0005"
+      ],
+      "irrelevant": [
+        "PDDR-0001",
+        "PDDR-0002",
+        "PDDR-0003"
+      ]
+    },
+    "notes": "PDDR-0004 defines the runtime provider/network/request guard boundary. PDDR-0005 complements it by assigning provider secret/spend and reviewed revision choices to the caller."
+  },
+  {
+    "case_id": "ctx-012",
+    "difficulty": "boundary",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "task": "A production repository consumes the reusable README translation workflow. We need the prior decision that keeps repository-specific language/terminology/semantic/publication policy in the caller, keeps generic mechanics in the reusable kit, and requires a reviewed immutable commit SHA or release tag instead of silently tracking `@main`. Which prior decision is required context?",
+    "corpus": [
+      "PDDR-0001",
+      "PDDR-0002",
+      "PDDR-0003",
+      "PDDR-0004",
+      "PDDR-0005"
+    ],
+    "gold": {
+      "required": [
+        "PDDR-0005"
+      ],
+      "useful": [
+        "PDDR-0001",
+        "PDDR-0004"
+      ],
+      "irrelevant": [
+        "PDDR-0002",
+        "PDDR-0003"
+      ]
+    },
+    "notes": "PDDR-0005 defines caller-versus-kit responsibility and immutable pinning. PDDR-0001 and PDDR-0004 supply two important caller-owned boundaries: publication review and provider/security controls."
+  }
+]
