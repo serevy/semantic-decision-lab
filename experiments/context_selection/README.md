@@ -234,3 +234,42 @@ prefix cache.
 
 Use `ZEFAN_OPENJEV_2B_V01_RUNBOOK.md` or
 `zefan_openjev_2b_v0_1_colab.ipynb` for the first run.
+
+
+## typed-decision-bert v0.1
+
+The final methodologically distinct backend arm in the current Experiment #2
+comparison uses the JevBERT P0.5 PoC from
+`hawkymisc/typed-decision-bert`.
+
+Frozen before provider output:
+
+- source revision:
+  `f0994cd4c91e7516f0e2a8d9e04b71107c309642`
+- bundle: `jevbert-poc-nli-ja-en-0.2.0`
+- bundle digest:
+  `sha256:61dbb2190c473fa8925a523e28f32a1ec83df1dcbb2f52f832fdbdea0cb1d494`
+- backend: `a0-nli-zeroshot-v2`
+- serializer: `serializer-nli-v1+nli-template-v1`
+- source model:
+  `MoritzLaurer/bge-m3-zeroshot-v2.0@9abf1c8aaeb82a2447809c20753ed0b106b76652`
+- FP32
+- uncalibrated T=1.0
+- server sequence limit: 2048
+- one complete PDDR per relevance Choice
+- shared labels / Top-2 / frozen dataset / gold unchanged
+
+This arm fills the comparison gap between embedding retrieval and
+typed-decision-specific training by testing a multilingual **zero-shot NLI
+cross-encoder**.
+
+Before inference, all 63 candidate sequences are reconstructed with the pinned
+upstream compiler/template, BGE-M3 tokenizer, and JevBERT A0 escape/assembly
+rules. No truncation is allowed. The preflight also records how many sequences
+exceed the tokenizer-declared 512-token limit, because the PoC allows up to
+2048 but upstream quality above 512 is not established.
+
+Use `TYPED_DECISION_BERT_V01_RUNBOOK.md` or
+`typed_decision_bert_v0_1_colab.ipynb` for the first run.
+
+After this arm is frozen, backend expansion pauses for the planned issue audit.
