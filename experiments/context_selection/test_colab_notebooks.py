@@ -11,6 +11,7 @@ NOTEBOOKS = [
     ROOT / "open_jev_v0_2_colab.ipynb",
     ROOT / "laya_multilingual_v0_1_colab.ipynb",
     ROOT / "zefan_openjev_2b_v0_1_colab.ipynb",
+    ROOT / "typed_decision_bert_v0_1_colab.ipynb",
 ]
 
 
