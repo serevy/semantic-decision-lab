@@ -353,3 +353,32 @@ failure-rank evidence:
 The failure analysis does not change the frozen Top-2 condition. Top-k frontier,
 input-length diagnostics, and downstream task success are follow-up experiment
 conditions rather than edits to the observed v0.2 results.
+
+## Dataset v0.2 Top-k reduction frontier
+
+The first baseline failure analysis showed that both multilingual-e5-small
+required misses at frozen Top-2 were ranked **third**. The next slice therefore
+replays the selection budget without changing dataset, gold, model, or score
+ordering.
+
+Frozen frontier condition:
+
+- dataset: v0.2, unchanged
+- tested Top-k: **1 through 5**
+- keyword: the existing deterministic normalized token-overlap selector
+- embedding: required-record ranks derived from the exact frozen PR #65 score
+  artifact, whose result-file SHA-256 is already preserved in
+  `results/baseline-v0.2-evidence.json`
+- primary comparison: required-context recall versus context reduction
+- Top-2 must reproduce the already frozen v0.2 evidence before the frontier is
+  accepted
+
+Run:
+
+```bash
+python experiments/context_selection/run_topk_frontier_v0_2.py
+```
+
+Results are written to `results/topk-frontier-v0.2/frontier.json`. This is a
+budget replay, not provider tuning. Secondary precision/useful-recall analysis
+and downstream task success remain separate follow-up slices.
