@@ -17,7 +17,11 @@ evidence:
   - ".github/ISSUE_TEMPLATE/experiment.yml"
   - "https://github.com/serevy/semantic-decision-lab/pull/11"
   - "https://github.com/serevy/semantic-decision-lab/actions/runs/35356756165"
-related: []
+  - "Repository issue audit and durable-decision review, 2026-09-22"
+related:
+  - PDDR-0002
+  - PDDR-0003
+  - PDDR-0004
 supersedes: []
 superseded_by: null
 ---
@@ -72,6 +76,8 @@ The boundary is documented in README and AGENTS instructions. An experiment Issu
 
 The repository contains the PDDR Kit validator and a GitHub Actions workflow. PR #11 was reviewed and merged, and the PDDR validation workflow succeeded on the resulting `main` commit. The documented boundary and validation path are therefore `validated`.
 
+2026-09-22のIssue棚卸しでは、完了した実験やbackend runを機械的にPDDR化せず、そこから残った永続的なProject / Process判断だけを再点検した。その結果、backend expansion freeze、provider-neutral evaluation contract、versioned dataset evolutionをPDDR-0002〜0004として昇格する判断を行った。これにより、「実験完了時ではなく、Evidenceがdurable decisionへ変わった時にPDDR化する」という境界を実運用で再確認した。
+
 ## Consequences
 
 - The Issue backlog can grow without creating the same number of durable decision records.
@@ -96,7 +102,11 @@ The repository contains the PDDR Kit validator and a GitHub Actions workflow. PR
 - `.github/workflows/pddr.yml`
 - [Adoption PR #11](https://github.com/serevy/semantic-decision-lab/pull/11)
 - [Merged `main` validation](https://github.com/serevy/semantic-decision-lab/actions/runs/35356756165)
+- Repository issue audit and durable-decision review, 2026-09-22.
+- PDDR-0002 through PDDR-0004, promoted only after the audit identified durable decisions.
 
 ## Related records
 
-- None.
+- PDDR-0002: Freeze backend expansion after methodologically distinct coverage
+- PDDR-0003: Keep semantic-provider evaluation behind one provider-neutral contract
+- PDDR-0004: Evolve context-selection datasets by versioned pre-output freezes
