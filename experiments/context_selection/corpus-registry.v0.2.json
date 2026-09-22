@@ -1,0 +1,32 @@
+{
+  "dataset_version": "0.2",
+  "snapshots": {
+    "pddr-kit-v0.1": {
+      "path": "corpus/pddr-kit-v0.1",
+      "source_repository": "serevy/pddr-kit",
+      "manifest": "corpus/pddr-kit-v0.1/manifest.json",
+      "record_ids": [
+        "PDDR-0001",
+        "PDDR-0002",
+        "PDDR-0003",
+        "PDDR-0004",
+        "PDDR-0005",
+        "PDDR-0006",
+        "PDDR-0007"
+      ]
+    },
+    "readme-i18n-kit-v0.1": {
+      "path": "corpus/readme-i18n-kit-v0.1",
+      "source_repository": "serevy/readme-i18n-kit",
+      "source_revision": "a4eba358cf3174532c7e07c54ad1d1a13dc240fc",
+      "manifest": "corpus/readme-i18n-kit-v0.1/manifest.json",
+      "record_ids": [
+        "PDDR-0001",
+        "PDDR-0002",
+        "PDDR-0003",
+        "PDDR-0004",
+        "PDDR-0005"
+      ]
+    }
+  }
+}

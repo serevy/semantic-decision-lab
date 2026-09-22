@@ -273,3 +273,44 @@ Use `TYPED_DECISION_BERT_V01_RUNBOOK.md` or
 `typed_decision_bert_v0_1_colab.ipynb` for the first run.
 
 After this arm is frozen, backend expansion pauses for the planned issue audit.
+
+
+## Dataset v0.2 — 12-case balanced expansion
+
+v0.2 expands the frozen three-case pilot to **12 cases across two real PDDR
+corpus snapshots** without changing any v0.1 pilot task or gold label.
+
+Corpora:
+
+- `pddr-kit-v0.1`: the existing seven-record pilot snapshot
+- `readme-i18n-kit-v0.1`: five records pinned from
+  `serevy/readme-i18n-kit@a4eba358cf3174532c7e07c54ad1d1a13dc240fc`
+
+Design invariants frozen before any v0.2 baseline/provider run:
+
+- ctx-001 through ctx-003 are byte-for-byte unchanged for
+  `difficulty`, `task`, `corpus`, and `gold` relative to
+  `cases.v0.1.json`
+- ctx-004 through ctx-007 add the four pddr-kit records that were not the
+  required record in the pilot
+- ctx-008 through ctx-012 add one case for each readme-i18n-kit PDDR
+- each case has exactly one required record
+- **every record in each corpus snapshot is the required record exactly once**
+  across that snapshot's cases, avoiding a required-label frequency prior
+- required/useful/irrelevant partitions cover the full bounded corpus
+- new labels are derived from the frozen PDDR text and written before any v0.2
+  provider output is observed
+- later label corrections require a new dataset version and rationale
+
+Validate the freeze:
+
+```bash
+python experiments/context_selection/validate_dataset_v0_2.py
+python experiments/context_selection/evaluate_context_selection.py \
+  experiments/context_selection/cases.v0.2.json \
+  experiments/context_selection/selections.gold-only.v0.2.json
+```
+
+The gold-only smoke is a metric-semantics check only. Do **not** run v0.2
+keyword, embedding, or semantic-provider arms until the dataset-freeze change
+has been reviewed and merged.
