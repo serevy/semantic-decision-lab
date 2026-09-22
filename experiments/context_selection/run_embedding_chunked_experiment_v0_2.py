@@ -54,8 +54,8 @@ def make_chunks(tokenizer, text: str, token_budget: int, overlap: int) -> list[d
 
     while start < len(offsets):
         end = min(start + token_budget, len(offsets))
-        char_start = offsets[start][0]
-        char_end = offsets[end - 1][1]
+        char_start = 0 if start == 0 else offsets[start][0]
+        char_end = len(text) if end == len(offsets) else offsets[end - 1][1]
         chunk_text = text[char_start:char_end]
         chunks.append(
             {
