@@ -1,0 +1,42 @@
+name: Context selection dataset v0.2
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/cases.v0.2.json"
+      - "experiments/context_selection/corpus-registry.v0.2.json"
+      - "experiments/context_selection/corpus/readme-i18n-kit-v0.1/**"
+      - "experiments/context_selection/validate_dataset_v0_2.py"
+      - "experiments/context_selection/selections.gold-only.v0.2.json"
+      - "experiments/context_selection/README.md"
+      - ".github/workflows/context-selection-dataset-v0-2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Validate frozen dataset
+        run: |
+          python experiments/context_selection/validate_dataset_v0_2.py
+      - name: Smoke evaluator semantics
+        run: |
+          python experiments/context_selection/evaluate_context_selection.py             experiments/context_selection/cases.v0.2.json             experiments/context_selection/selections.gold-only.v0.2.json             > /tmp/dataset-v0.2-gold-smoke.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          rows = json.loads(Path("/tmp/dataset-v0.2-gold-smoke.json").read_text())
+          assert len(rows) == 12
+          for row in rows:
+              assert row["required_recall"] == 1.0, row
+              assert row["irrelevant_rate"] == 0.0, row
+              assert row["unknown"] == [], row
+          print("dataset v0.2 evaluator smoke: 12/12 required recall = 1.0")
+          PY
