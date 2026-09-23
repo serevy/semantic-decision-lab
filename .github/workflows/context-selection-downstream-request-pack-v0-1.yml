@@ -1,0 +1,71 @@
+name: Context selection downstream request pack v0.1
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-cases.v0.1.json"
+      - "experiments/context_selection/downstream-arms.v0.1.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.1.json"
+      - "experiments/context_selection/corpus-registry.v0.2.json"
+      - "experiments/context_selection/corpus/**"
+      - "experiments/context_selection/build_downstream_requests_v0_1.py"
+      - "experiments/context_selection/validate_downstream_results_v0_1.py"
+      - "experiments/context_selection/prepare_downstream_evaluator_input_v0_1.py"
+      - "experiments/context_selection/downstream-requests.v0.1.jsonl"
+      - ".github/workflows/context-selection-downstream-request-pack-v0-1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  request-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build frozen request pack
+        run: |
+          python experiments/context_selection/build_downstream_requests_v0_1.py \
+            --output /tmp/downstream-requests.v0.1.jsonl
+      - name: Validate request-pack structure and leakage boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("/tmp/downstream-requests.v0.1.jsonl")
+          rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+          assert len(rows) == 72
+          assert len({row["request_id"] for row in rows}) == 72
+          assert all(row["selected_records"] == sorted(row["selected_records"]) for row in rows)
+          forbidden = {"gold", "rationale", "source_case_id"}
+          for row in rows:
+              assert not forbidden.intersection(row)
+              assert set(row) == {
+                  "request_id",
+                  "arm",
+                  "case_id",
+                  "corpus_snapshot",
+                  "selected_records",
+                  "system",
+                  "user",
+                  "context_sha256",
+                  "prompt_sha256",
+              }
+          print("request pack structure valid: 72 frozen prompts")
+          PY
+      - name: Compare committed request pack when present
+        run: |
+          if test -f experiments/context_selection/downstream-requests.v0.1.jsonl; then
+            diff -u \
+              experiments/context_selection/downstream-requests.v0.1.jsonl \
+              /tmp/downstream-requests.v0.1.jsonl
+          fi
+      - name: Upload frozen request pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-downstream-requests-v0.1
+          path: /tmp/downstream-requests.v0.1.jsonl
