@@ -3,8 +3,8 @@ id: PDDR-0005
 title: Evaluate context selection through frozen downstream decision behavior
 decision_date: 2026-09-23
 recorded_date: 2026-09-23
-decision_status: proposed
-delivery_status: not-started
+decision_status: accepted
+delivery_status: validated
 scope:
   - product
   - process
@@ -16,6 +16,7 @@ evidence:
   - "https://github.com/serevy/semantic-decision-lab/pull/69"
   - "https://github.com/serevy/semantic-decision-lab/pull/72"
   - "https://github.com/serevy/semantic-decision-lab/pull/73"
+  - "Maintainer approval to merge PR #75, 2026-09-23 (private)"
 related:
   - PDDR-0002
   - PDDR-0003
@@ -59,9 +60,7 @@ PDDR Context Selectionをretrieval goldだけで評価し続けず、凍結済�
 - Costs / constraints: open-ended engineering qualityを直接表すbenchmarkではなく、choice wording biasも残る。
 - Status: proposed
 
-## Proposed decision
-
-Maintainer approval is required before this section becomes accepted.
+## Decision
 
 - 12 downstream casesをctx-001〜012へ1:1で対応させ、scenario / A-D options / gold action / source decisionをdownstream model outputを見る前にfreezeする。
 - model promptへgold choice、source PDDR ID、rationaleを渡さない。
@@ -81,7 +80,7 @@ Maintainer approval is required before this section becomes accepted.
 
 ## Delivery and validation
 
-Proposed. Issue #74 and the associated freeze PR define the candidate dataset, arms, validator, and metric semantics. No downstream-model output has been observed yet.
+Maintainer approval to merge PR #75 was given on 2026-09-23. The downstream v0.1 dataset, frozen arm replay, evaluator contract, validator, and metric-semantics smoke are implemented in that PR. The dedicated downstream CI passed before merge. No downstream-model output has been observed yet; `validated` here refers to the evaluation contract and its mechanical validation, not to downstream model quality or experiment outcome.
 
 ## Consequences
 
@@ -105,6 +104,7 @@ Proposed. Issue #74 and the associated freeze PR define the candidate dataset, a
 - [PR #69: embedding input-length diagnostics](https://github.com/serevy/semantic-decision-lab/pull/69)
 - [PR #72: complete-record chunked embedding condition](https://github.com/serevy/semantic-decision-lab/pull/72)
 - [PR #73: chunked embedding Evidence freeze](https://github.com/serevy/semantic-decision-lab/pull/73)
+- Maintainer approval to merge PR #75, 2026-09-23 (private).
 
 ## Related records
 
