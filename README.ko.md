@@ -19,7 +19,9 @@ AI 오케스트레이션, 컨텍스트 선택, 라우팅, 핸드오프, 실시�
 
 ## PDDR
 
-이 저장소에서는 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.1.0-rc.1`을 사용합니다.
+이 저장소에서는 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`을 사용합니다.
+
+또한 hardened optional checkpoint CI를 도입했습니다. PR head를 관찰하는 signal workflow는 read-only이며, marker 쓰기는 trusted default-branch writer가 담당합니다. checkpoint signal은 bounded review를 요청하는 신호일 뿐 PDDR 생성을 의무화하지 않으며, routine 실험 완료를 자동으로 PDDR로 승격하지 않습니다.
 
 `.pddr/template.md`을 바탕으로 기록을 만들고, `docs/records/` 아래에 저장한 뒤 검토 전에 검증합니다.
 
