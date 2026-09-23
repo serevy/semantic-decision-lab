@@ -19,7 +19,9 @@ Issues and PDDRs should link to each other when a decision is made, while keepin
 
 ## PDDR
 
-This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.1.0-rc.1`.
+This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`.
+
+It also uses the hardened optional checkpoint CI. The PR-head signal workflow is read-only, while marker writes are handled by a trusted default-branch writer. A checkpoint signal requests a bounded review; it does not mean a PDDR is required, and routine experiment completion is not promoted automatically.
 
 Create a record from `.pddr/template.md`, save it under `docs/records/`, and validate it before review:
 

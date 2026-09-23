@@ -19,7 +19,9 @@
 
 ## PDDR
 
-本仓库使用 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.1.0-rc.1`。
+本仓库使用 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`。
+
+同时已导入 hardened optional checkpoint CI。用于观察 PR head 的 signal workflow 仅具只读权限，marker 写入由可信的 default-branch writer 负责。checkpoint signal 只用于请求 bounded review，并不意味着必须创建 PDDR，也不会自动把日常实验完成情况提升为 PDDR。
 
 以 `.pddr/template.md` 为模板创建记录，将其保存到 `docs/records/` 目录下，并在审核前进行验证：
 

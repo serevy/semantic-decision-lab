@@ -19,7 +19,9 @@ Lorsqu’une décision est prise, l’Issue et le PDDR doivent se référencer m
 
 ## PDDR
 
-Ce dépôt utilise [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.1.0-rc.1`.
+Ce dépôt utilise [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`.
+
+Il utilise également le hardened optional checkpoint CI. Le signal workflow qui observe le PR head est en lecture seule, tandis que les écritures de marker sont effectuées par un trusted default-branch writer. Un checkpoint signal demande une bounded review ; il n’impose pas la création d’un PDDR et ne transforme pas automatiquement la fin d’une expérience routinière en PDDR.
 
 Créez un enregistrement à partir de `.pddr/template.md`, enregistrez-le dans `docs/records/`, puis validez-le avant la revue :
 
