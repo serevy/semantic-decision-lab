@@ -11,9 +11,9 @@ REQUESTS = ROOT / "downstream-requests.v0.1.jsonl"
 ALLOWED = {"A", "B", "C", "D", "ABSTAIN"}
 
 
-def read_requests() -> dict[str, dict]:
+def read_requests(path: Path) -> dict[str, dict]:
     rows = {}
-    for line in REQUESTS.read_text().splitlines():
+    for line in path.read_text().splitlines():
         if not line.strip():
             continue
         row = json.loads(line)
@@ -29,10 +29,11 @@ def main() -> None:
         )
     )
     parser.add_argument("results", type=Path)
+    parser.add_argument("--requests", type=Path, default=REQUESTS)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    requests = read_requests()
+    requests = read_requests(args.requests)
     payload = json.loads(args.results.read_text())
     answers: dict[str, dict[str, dict[str, str]]] = {}
 
