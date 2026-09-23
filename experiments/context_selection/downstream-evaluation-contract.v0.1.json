@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream task success",
+  "issue": 74,
+  "parent_issue": 2,
+  "dataset": "downstream-cases.v0.1.json",
+  "arms": "downstream-arms.v0.1.json",
+  "freeze_rule": "Scenario, options, gold action, source-record mapping, prompt contract, arm selections, and evaluator semantics are frozen before any downstream-model output is observed.",
+  "prompt_contract": {
+    "system": "You are evaluating a project-specific decision. Use only the scenario, answer options, and any Decision Context records supplied in this request. Do not invent project policy that is not supported by the supplied material. Return exactly one choice A, B, C, D, or ABSTAIN.",
+    "context_header": "Decision Context records:",
+    "no_context_marker": "(none)",
+    "user_template": "Scenario: {scenario}\\n\\nQuestion: {question}\\n\\nOptions:\\nA: {A}\\nB: {B}\\nC: {C}\\nD: {D}",
+    "allowed_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "ABSTAIN"
+    ],
+    "gold_metadata_must_not_be_prompted": [
+      "gold.choice",
+      "gold.source_record",
+      "rationale",
+      "source_case_id"
+    ]
+  },
+  "run_contract": {
+    "same_downstream_model_within_run": true,
+    "same_sampling_config_within_run": true,
+    "deterministic_context_order": "ascending PDDR ID",
+    "one_answer_per_case_per_arm": true,
+    "raw_response_and_run_provenance_required": true,
+    "retrieval_arms_are_replayed_not_rerun": true
+  },
+  "primary_metrics": [
+    "gold_action_accuracy",
+    "wrong_action_rate"
+  ],
+  "secondary_metrics": [
+    "abstention_rate",
+    "behavior_preservation_vs_full_context",
+    "per_case_failure_pattern",
+    "no_context_correct_rate_as_prompt_leakage_signal"
+  ],
+  "interpretation_limits": [
+    "This is a bounded-choice downstream slice, not an open-ended software-engineering benchmark.",
+    "A correct no-context answer weakens evidence that context selection preserved the behavior for that case.",
+    "The required-only arm is an oracle/minimal-context diagnostic and is not a deployable selector.",
+    "The first-512 embedding arm remains valid evidence for that exact truncated-input condition, not full-record retrieval.",
+    "Do not tune retrieval or edit downstream gold against observed downstream outputs within v0.1."
+  ]
+}
