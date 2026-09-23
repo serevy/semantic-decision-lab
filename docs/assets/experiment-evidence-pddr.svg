@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="420" viewBox="0 0 1500 420" role="img" aria-labelledby="title desc">
+  <title id="title">Experiment to evidence to PDDR workflow</title>
+  <desc id="desc">A hypothesis is frozen into a protocol and baselines, run as an experiment, preserved as raw evidence, analyzed, and only turned into a PDDR when a durable project, product, or process decision exists.</desc>
+  <rect width="1500" height="420" rx="24" fill="#f6f8fa"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#57606a"/>
+    </marker>
+  </defs>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" text-anchor="middle">
+    <rect x="36" y="96" width="165" height="82" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="119" y="145" font-size="20" font-weight="700" fill="#24292f">Hypothesis</text>
+
+    <rect x="245" y="82" width="210" height="110" rx="17" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="350" y="126" font-size="19" font-weight="700" fill="#24292f">Freeze protocol</text>
+    <text x="350" y="154" font-size="15" fill="#57606a">dataset · baselines</text>
+
+    <rect x="499" y="96" width="170" height="82" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="584" y="145" font-size="20" font-weight="700" fill="#24292f">Run experiment</text>
+
+    <rect x="713" y="82" width="205" height="110" rx="17" fill="#dafbe1" stroke="#2da44e" stroke-width="3"/>
+    <text x="816" y="126" font-size="20" font-weight="700" fill="#1a7f37">Preserve evidence</text>
+    <text x="816" y="154" font-size="15" fill="#24292f">raw first-run results</text>
+
+    <rect x="962" y="82" width="210" height="110" rx="17" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="1067" y="126" font-size="19" font-weight="700" fill="#24292f">Analyze</text>
+    <text x="1067" y="154" font-size="15" fill="#57606a">failures · trade-offs</text>
+
+    <polygon points="1320,72 1440,137 1320,202 1200,137" fill="#fff8c5" stroke="#bf8700" stroke-width="3"/>
+    <text x="1320" y="127" font-size="16" font-weight="700" fill="#7d4e00">Durable</text>
+    <text x="1320" y="150" font-size="16" font-weight="700" fill="#7d4e00">decision?</text>
+
+    <line x1="201" y1="137" x2="237" y2="137" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="455" y1="137" x2="491" y2="137" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="669" y1="137" x2="705" y2="137" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="918" y1="137" x2="954" y2="137" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="1172" y1="137" x2="1192" y2="137" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <line x1="1320" y1="202" x2="1320" y2="240" stroke="#57606a" stroke-width="3"/>
+    <line x1="1100" y1="240" x2="1370" y2="240" stroke="#57606a" stroke-width="3"/>
+    <line x1="1100" y1="240" x2="1100" y2="277" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="1370" y1="240" x2="1370" y2="277" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="990" y="285" width="220" height="78" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="1100" y="318" font-size="17" font-weight="700" fill="#24292f">No → keep in Issue</text>
+    <text x="1100" y="343" font-size="14" fill="#57606a">continue research</text>
+
+    <rect x="1270" y="285" width="200" height="78" rx="16" fill="#ddf4ff" stroke="#54aeff" stroke-width="3"/>
+    <text x="1370" y="331" font-size="17" font-weight="700" fill="#0969da">Yes → PDDR</text>
+
+    <text x="750" y="397" font-size="15" fill="#57606a">Experiment completion alone does not create a PDDR.</text>
+  </g>
+</svg>

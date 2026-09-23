@@ -14,12 +14,7 @@ This repository explores that question across orchestration, context selection, 
 
 A semantic layer should answer **what the current state means**. Deterministic systems remain responsible for **what happens next**.
 
-```mermaid
-flowchart LR
-    A["Ambiguous / unstructured state"] --> B["Semantic decision layer"]
-    B --> C["Typed result + probabilities"]
-    C --> D["Deterministic code / tools / policy / safety"]
-```
+![Semantic decision core architecture](docs/assets/semantic-decision-core.svg)
 
 This separation lets us test semantic judgment independently from execution logic. It also makes uncertainty, abstention, escalation, and provider replacement explicit instead of hiding them inside a monolithic agent.
 
@@ -41,15 +36,7 @@ The repository treats established task shapes such as classification, scoring, r
 
 Jev is an important provider and reference point in this work, but it is **not the definition of the research**. Experiments aim to keep application logic behind a common typed-decision boundary wherever practical.
 
-```mermaid
-flowchart TD
-    A["Application / experiment"] --> P["SemanticDecisionProvider"]
-    P --> J["TypeSafe Jev"]
-    P --> K["Kev"]
-    P --> O["Open / local typed-decision backends"]
-    P --> L["General-purpose model baseline"]
-    P --> R["Deterministic baseline"]
-```
+![Provider-neutral semantic decision architecture](docs/assets/provider-neutral-architecture.svg)
 
 Provider comparisons keep separate dimensions separate:
 
@@ -65,16 +52,7 @@ Provider comparisons keep separate dimensions separate:
 
 The lab is evidence-first. Experiment design and raw evidence stay separate from durable project decisions.
 
-```mermaid
-flowchart LR
-    H["Hypothesis"] --> F["Freeze protocol / dataset / baselines"]
-    F --> R["Run experiment"]
-    R --> E["Preserve raw evidence"]
-    E --> A["Analyze failures & trade-offs"]
-    A --> D{"Durable Project / Product / Process decision?"}
-    D -- "No" --> I["Keep in Issue / continue research"]
-    D -- "Yes" --> P["Create or update PDDR"]
-```
+![Experiment evidence and PDDR workflow](docs/assets/experiment-evidence-pddr.svg)
 
 Common rules:
 
@@ -106,40 +84,13 @@ This keeps the landing page readable while avoiding a common failure mode: attra
 
 For external implementations and papers that may influence future experiments, see [#70 External reference radar](https://github.com/serevy/semantic-decision-lab/issues/70).
 
-## Issues vs PDDR
+## Research records
 
-This repository separates **experimental work** from **durable project decisions**.
+Working experiment detail stays in GitHub Issues. A PDDR is created only when evidence leads to a durable Project, Product, or Process decision worth preserving beyond the experiment itself.
 
-| Artifact | Purpose | Typical contents |
-|---|---|---|
-| GitHub Issue | Experiment backlog and working thread | Hypothesis, setup, tasks, intermediate observations, raw results, follow-ups |
-| PDDR | Durable record of an important decision | Evidence-backed adoption, rejection, deferral, scope, consequences, revisit conditions |
+| Artifact | Role |
+|---|---|
+| GitHub Issue | Hypothesis, protocol, observations, raw evidence, failures, and follow-ups |
+| PDDR | Evidence-backed adoption, rejection, deferral, scope, consequences, and revisit conditions |
 
-Running or completing an experiment does **not** automatically create a PDDR. Create or update one only when evidence leads to an important Project, Product, or Process decision whose rationale should survive the Issue lifecycle.
-
-Issues and PDDRs should link to each other when a durable decision is made, while raw experimental detail remains in the Issue or experiment evidence.
-
-## PDDR
-
-This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`.
-
-It also uses the hardened optional checkpoint CI. The PR-head signal workflow is read-only, while marker writes are handled by a trusted default-branch writer. A checkpoint signal requests a bounded review; it does not mean a PDDR is required, and routine experiment completion is not promoted automatically.
-
-Create a record from `.pddr/template.md`, save it under `docs/records/`, and validate it before review:
-
-```bash
-cp .pddr/template.md docs/records/PDDR-0002-short-title.md
-python .pddr/pddr.py validate
-```
-
-The first record, [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md), defines the boundary between Issues and durable decision records.
-
-## Documentation direction
-
-`README.md` is the landing page and source README. The existing readme-i18n workflow propagates stabilized README content to translated versions.
-
-As the project accumulates stable experiment results, richer architecture diagrams, result dashboards, and deeper methodology pages can move to GitHub Pages without turning the README into a documentation wall.
-
----
-
-**Current documentation refresh:** [#83](https://github.com/serevy/semantic-decision-lab/issues/83)
+This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) defines the boundary between experimental work and durable decision records.

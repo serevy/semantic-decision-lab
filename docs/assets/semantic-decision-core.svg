@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic decision core architecture</title>
+  <desc id="desc">Ambiguous state flows into a semantic decision layer, becomes a typed probabilistic result, and is consumed by deterministic code, tools, policy, and safety.</desc>
+  <rect width="1200" height="260" rx="24" fill="#f6f8fa"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#57606a"/>
+    </marker>
+  </defs>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" text-anchor="middle">
+    <rect x="45" y="78" width="245" height="104" rx="18" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="168" y="119" font-size="20" font-weight="700" fill="#24292f">Ambiguous state</text>
+    <text x="168" y="148" font-size="16" fill="#57606a">text · context · signals</text>
+
+    <rect x="340" y="58" width="250" height="144" rx="20" fill="#dafbe1" stroke="#2da44e" stroke-width="3"/>
+    <text x="465" y="111" font-size="22" font-weight="700" fill="#1a7f37">Semantic decision</text>
+    <text x="465" y="140" font-size="17" fill="#24292f">interpret meaning</text>
+    <text x="465" y="166" font-size="17" fill="#24292f">under uncertainty</text>
+
+    <rect x="640" y="78" width="220" height="104" rx="18" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="750" y="119" font-size="20" font-weight="700" fill="#24292f">Typed result</text>
+    <text x="750" y="148" font-size="16" fill="#57606a">value + probabilities</text>
+
+    <rect x="910" y="58" width="245" height="144" rx="20" fill="#ddf4ff" stroke="#54aeff" stroke-width="3"/>
+    <text x="1033" y="103" font-size="21" font-weight="700" fill="#0969da">Deterministic layer</text>
+    <text x="1033" y="134" font-size="16" fill="#24292f">code · tools · policy</text>
+    <text x="1033" y="160" font-size="16" fill="#24292f">execution · safety</text>
+
+    <line x1="290" y1="130" x2="332" y2="130" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="590" y1="130" x2="632" y2="130" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="860" y1="130" x2="902" y2="130" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <text x="600" y="232" font-size="15" fill="#57606a">Semantic judgment stays testable; execution stays explicit.</text>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Provider-neutral semantic decision architecture</title>
+  <desc id="desc">Applications call a common SemanticDecisionProvider interface that can connect to TypeSafe Jev, Kev, open or local backends, general-purpose model baselines, and deterministic baselines.</desc>
+  <rect width="1200" height="500" rx="24" fill="#f6f8fa"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#57606a"/>
+    </marker>
+  </defs>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" text-anchor="middle">
+    <rect x="420" y="42" width="360" height="82" rx="18" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="600" y="77" font-size="22" font-weight="700" fill="#24292f">Application / experiment</text>
+    <text x="600" y="103" font-size="15" fill="#57606a">provider-specific details stay out of downstream logic</text>
+
+    <line x1="600" y1="124" x2="600" y2="166" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="385" y="174" width="430" height="96" rx="20" fill="#dafbe1" stroke="#2da44e" stroke-width="3"/>
+    <text x="600" y="214" font-size="23" font-weight="700" fill="#1a7f37">SemanticDecisionProvider</text>
+    <text x="600" y="242" font-size="16" fill="#24292f">common typed decision contract + capabilities</text>
+
+    <line x1="600" y1="270" x2="600" y2="304" stroke="#57606a" stroke-width="3"/>
+    <line x1="116" y1="304" x2="1084" y2="304" stroke="#57606a" stroke-width="3"/>
+
+    <g>
+      <line x1="116" y1="304" x2="116" y2="342" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+      <rect x="35" y="350" width="162" height="98" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <text x="116" y="390" font-size="19" font-weight="700" fill="#24292f">TypeSafe Jev</text>
+      <text x="116" y="418" font-size="14" fill="#57606a">hosted reference</text>
+    </g>
+
+    <g>
+      <line x1="358" y1="304" x2="358" y2="342" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+      <rect x="277" y="350" width="162" height="98" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <text x="358" y="390" font-size="19" font-weight="700" fill="#24292f">Kev</text>
+      <text x="358" y="418" font-size="14" fill="#57606a">local / open</text>
+    </g>
+
+    <g>
+      <line x1="600" y1="304" x2="600" y2="342" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+      <rect x="499" y="350" width="202" height="98" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <text x="600" y="388" font-size="18" font-weight="700" fill="#24292f">Open / local</text>
+      <text x="600" y="416" font-size="14" fill="#57606a">typed-decision backends</text>
+    </g>
+
+    <g>
+      <line x1="842" y1="304" x2="842" y2="342" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+      <rect x="751" y="350" width="182" height="98" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <text x="842" y="388" font-size="18" font-weight="700" fill="#24292f">General LLM</text>
+      <text x="842" y="416" font-size="14" fill="#57606a">model baseline</text>
+    </g>
+
+    <g>
+      <line x1="1084" y1="304" x2="1084" y2="342" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+      <rect x="993" y="350" width="182" height="98" rx="16" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <text x="1084" y="388" font-size="18" font-weight="700" fill="#24292f">Deterministic</text>
+      <text x="1084" y="416" font-size="14" fill="#57606a">rules baseline</text>
+    </g>
+
+    <text x="600" y="481" font-size="15" fill="#57606a">Compatibility, quality, calibration, robustness, and systems cost are measured separately.</text>
+  </g>
+</svg>
