@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "run_id": "openai-gpt-5.6-luna-v0.1",
+  "run_id": "openai-gpt-6-luna-v0.1",
   "experiment": "PDDR Context Selection downstream task success",
   "issue": 74,
   "request_pack": {
@@ -12,7 +12,7 @@
     "name": "OpenAI",
     "api": "Chat Completions",
     "endpoint": "https://api.openai.com/v1/chat/completions",
-    "model": "gpt-5.6-luna"
+    "model": "gpt-6-luna"
   },
   "sampling": {
     "reasoning_effort": "none",
@@ -25,7 +25,7 @@
     "request_timeout_seconds": 120,
     "transport_retries": 0,
     "order": "sha256-ranked request_id",
-    "order_salt": "semantic-decision-lab/downstream/openai-gpt-5.6-luna-v0.1",
+    "order_salt": "semantic-decision-lab/downstream/openai-gpt-6-luna-v0.1",
     "stop_on_transport_error": true,
     "continue_on_parse_error": true
   },
@@ -50,7 +50,7 @@
       "raw_response",
       "prompt_sha256"
     ],
-    "note": "The API model ID is frozen. If the provider does not expose an immutable snapshot/revision, execution timestamp and returned model metadata remain part of the provenance."
+    "note": "The API model ID `gpt-6-luna` is frozen. OpenAI currently exposes no separate immutable snapshot on the model page, so execution timestamp and returned model metadata remain part of the provenance."
   },
   "freeze_rule": "This configuration is reviewed and merged before workflow_dispatch is used. No downstream model output may be observed on the PR-validation path."
 }
