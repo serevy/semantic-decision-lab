@@ -84,40 +84,13 @@ This keeps the landing page readable while avoiding a common failure mode: attra
 
 For external implementations and papers that may influence future experiments, see [#70 External reference radar](https://github.com/serevy/semantic-decision-lab/issues/70).
 
-## Issues vs PDDR
+## Research records
 
-This repository separates **experimental work** from **durable project decisions**.
+Working experiment detail stays in GitHub Issues. A PDDR is created only when evidence leads to a durable Project, Product, or Process decision worth preserving beyond the experiment itself.
 
-| Artifact | Purpose | Typical contents |
-|---|---|---|
-| GitHub Issue | Experiment backlog and working thread | Hypothesis, setup, tasks, intermediate observations, raw results, follow-ups |
-| PDDR | Durable record of an important decision | Evidence-backed adoption, rejection, deferral, scope, consequences, revisit conditions |
+| Artifact | Role |
+|---|---|
+| GitHub Issue | Hypothesis, protocol, observations, raw evidence, failures, and follow-ups |
+| PDDR | Evidence-backed adoption, rejection, deferral, scope, consequences, and revisit conditions |
 
-Running or completing an experiment does **not** automatically create a PDDR. Create or update one only when evidence leads to an important Project, Product, or Process decision whose rationale should survive the Issue lifecycle.
-
-Issues and PDDRs should link to each other when a durable decision is made, while raw experimental detail remains in the Issue or experiment evidence.
-
-## PDDR
-
-This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`.
-
-It also uses the hardened optional checkpoint CI. The PR-head signal workflow is read-only, while marker writes are handled by a trusted default-branch writer. A checkpoint signal requests a bounded review; it does not mean a PDDR is required, and routine experiment completion is not promoted automatically.
-
-Create a record from `.pddr/template.md`, save it under `docs/records/`, and validate it before review:
-
-```bash
-cp .pddr/template.md docs/records/PDDR-0002-short-title.md
-python .pddr/pddr.py validate
-```
-
-The first record, [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md), defines the boundary between Issues and durable decision records.
-
-## Documentation direction
-
-`README.md` is the landing page and source README. The existing readme-i18n workflow propagates stabilized README content to translated versions.
-
-As the project accumulates stable experiment results, richer architecture diagrams, result dashboards, and deeper methodology pages can move to GitHub Pages without turning the README into a documentation wall.
-
----
-
-**Current documentation refresh:** [#83](https://github.com/serevy/semantic-decision-lab/issues/83)
+This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) defines the boundary between experimental work and durable decision records.
