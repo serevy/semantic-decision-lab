@@ -26,9 +26,10 @@ def read_jsonl(path: Path) -> list[dict]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("results", type=Path)
+    parser.add_argument("--requests", type=Path, default=REQUESTS)
     args = parser.parse_args()
 
-    requests = {row["request_id"]: row for row in read_jsonl(REQUESTS)}
+    requests = {row["request_id"]: row for row in read_jsonl(args.requests)}
     payload = json.loads(args.results.read_text())
 
     run = payload.get("run")
