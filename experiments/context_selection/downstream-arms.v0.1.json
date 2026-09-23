@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "dataset": "downstream-cases.v0.1.json",
+  "frozen_before_downstream_output": true,
+  "arms": {
+    "no_context": {
+      "role": "negative control",
+      "provenance": "empty context by contract",
+      "selections": {
+        "ds-001": [],
+        "ds-002": [],
+        "ds-003": [],
+        "ds-004": [],
+        "ds-005": [],
+        "ds-006": [],
+        "ds-007": [],
+        "ds-008": [],
+        "ds-009": [],
+        "ds-010": [],
+        "ds-011": [],
+        "ds-012": []
+      }
+    },
+    "required_only": {
+      "role": "minimal gold/oracle control",
+      "provenance": "required record from cases.v0.2 gold; never exposed as metadata in the prompt",
+      "selections": {
+        "ds-001": [
+          "PDDR-0002"
+        ],
+        "ds-002": [
+          "PDDR-0006"
+        ],
+        "ds-003": [
+          "PDDR-0007"
+        ],
+        "ds-004": [
+          "PDDR-0001"
+        ],
+        "ds-005": [
+          "PDDR-0003"
+        ],
+        "ds-006": [
+          "PDDR-0004"
+        ],
+        "ds-007": [
+          "PDDR-0005"
+        ],
+        "ds-008": [
+          "PDDR-0001"
+        ],
+        "ds-009": [
+          "PDDR-0002"
+        ],
+        "ds-010": [
+          "PDDR-0003"
+        ],
+        "ds-011": [
+          "PDDR-0004"
+        ],
+        "ds-012": [
+          "PDDR-0005"
+        ]
+      }
+    },
+    "full_context": {
+      "role": "full-context control",
+      "provenance": "cases.v0.2 bounded corpus",
+      "selections": {
+        "ds-001": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-002": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-003": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-004": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-005": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-006": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-007": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds-008": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-009": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-010": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-011": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-012": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ]
+      }
+    },
+    "keyword_top2": {
+      "role": "deterministic reduced-context arm",
+      "provenance": "results/baseline-v0.2-evidence.json / keyword_top2",
+      "selections": {
+        "ds-001": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ds-002": [
+          "PDDR-0005",
+          "PDDR-0006"
+        ],
+        "ds-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-004": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-006": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-007": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ds-008": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ds-009": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ds-010": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ds-011": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-012": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ]
+      }
+    },
+    "embedding_first512_top2": {
+      "role": "frozen embedding reduced-context arm",
+      "provenance": "results/baseline-v0.2-evidence.json / multilingual_e5_small_top2; passages known to have been truncated",
+      "selections": {
+        "ds-001": [
+          "PDDR-0002",
+          "PDDR-0001"
+        ],
+        "ds-002": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-004": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-006": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds-007": [
+          "PDDR-0005",
+          "PDDR-0003"
+        ],
+        "ds-008": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ds-009": [
+          "PDDR-0002",
+          "PDDR-0001"
+        ],
+        "ds-010": [
+          "PDDR-0003",
+          "PDDR-0001"
+        ],
+        "ds-011": [
+          "PDDR-0004",
+          "PDDR-0001"
+        ],
+        "ds-012": [
+          "PDDR-0005",
+          "PDDR-0001"
+        ]
+      }
+    },
+    "embedding_chunked_top2": {
+      "role": "complete-record chunked reduced-context arm",
+      "provenance": "results/embedding-chunked-v0.2-evidence.json",
+      "selections": {
+        "ds-001": [
+          "PDDR-0003",
+          "PDDR-0002"
+        ],
+        "ds-002": [
+          "PDDR-0003",
+          "PDDR-0006"
+        ],
+        "ds-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds-004": [
+          "PDDR-0003",
+          "PDDR-0001"
+        ],
+        "ds-005": [
+          "PDDR-0003",
+          "PDDR-0001"
+        ],
+        "ds-006": [
+          "PDDR-0006",
+          "PDDR-0003"
+        ],
+        "ds-007": [
+          "PDDR-0006",
+          "PDDR-0004"
+        ],
+        "ds-008": [
+          "PDDR-0001",
+          "PDDR-0004"
+        ],
+        "ds-009": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ds-010": [
+          "PDDR-0003",
+          "PDDR-0001"
+        ],
+        "ds-011": [
+          "PDDR-0004",
+          "PDDR-0001"
+        ],
+        "ds-012": [
+          "PDDR-0005",
+          "PDDR-0001"
+        ]
+      }
+    }
+  }
+}

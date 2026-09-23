@@ -1,0 +1,43 @@
+name: Context selection downstream v0.1
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/cases.v0.2.json"
+      - "experiments/context_selection/downstream-cases.v0.1.json"
+      - "experiments/context_selection/downstream-arms.v0.1.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.1.json"
+      - "experiments/context_selection/validate_downstream_v0_1.py"
+      - "experiments/context_selection/evaluate_downstream_v0_1.py"
+      - "experiments/context_selection/selections.downstream-gold-smoke.v0.1.json"
+      - ".github/workflows/context-selection-downstream-v0-1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate downstream v0.1 freeze
+        run: python experiments/context_selection/validate_downstream_v0_1.py
+      - name: Smoke downstream evaluator semantics
+        run: |
+          python experiments/context_selection/evaluate_downstream_v0_1.py \
+            experiments/context_selection/selections.downstream-gold-smoke.v0.1.json \
+            > /tmp/downstream-smoke.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("/tmp/downstream-smoke.json").read_text())
+          for arm, summary in data["summaries"].items():
+              assert summary["gold_action_accuracy"] == 1.0, (arm, summary)
+              assert summary["wrong_action_rate"] == 0.0, (arm, summary)
+              assert summary["abstention_rate"] == 0.0, (arm, summary)
+          print("downstream evaluator smoke valid")
+          PY

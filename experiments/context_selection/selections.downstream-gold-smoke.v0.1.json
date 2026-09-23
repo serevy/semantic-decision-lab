@@ -1,0 +1,236 @@
+{
+  "run": {
+    "kind": "metric-semantics-smoke",
+    "note": "gold choices copied intentionally; not model evidence"
+  },
+  "answers": {
+    "no_context": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    },
+    "required_only": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    },
+    "full_context": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    },
+    "keyword_top2": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    },
+    "embedding_first512_top2": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    },
+    "embedding_chunked_top2": {
+      "ds-001": {
+        "choice": "B"
+      },
+      "ds-002": {
+        "choice": "C"
+      },
+      "ds-003": {
+        "choice": "D"
+      },
+      "ds-004": {
+        "choice": "A"
+      },
+      "ds-005": {
+        "choice": "B"
+      },
+      "ds-006": {
+        "choice": "C"
+      },
+      "ds-007": {
+        "choice": "D"
+      },
+      "ds-008": {
+        "choice": "A"
+      },
+      "ds-009": {
+        "choice": "B"
+      },
+      "ds-010": {
+        "choice": "C"
+      },
+      "ds-011": {
+        "choice": "D"
+      },
+      "ds-012": {
+        "choice": "A"
+      }
+    }
+  }
+}
