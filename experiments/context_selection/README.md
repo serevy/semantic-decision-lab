@@ -419,3 +419,42 @@ Preserved Evidence and interpretation:
 The original v0.2 embedding result remains immutable evidence for the
 first-512-token condition. A complete-record / chunked embedding experiment must
 use a new versioned result path.
+
+## Dataset v0.2 complete-record chunked embedding condition
+
+PR #69 / #71 established that every frozen PDDR passage exceeded the embedding
+model's 512-token input limit. The next condition isolates the representation
+change while keeping dataset, gold, model revision, query text, Top-k, and
+evaluator semantics fixed.
+
+Frozen before observing output:
+
+- model: same `intfloat/multilingual-e5-small` revision as the v0.2 baseline
+- dataset / gold: v0.2 unchanged
+- Top-k: **2**
+- chunk content budget: **448 tokenizer tokens**
+- chunk overlap: **64 tokens**
+- chunk step: **384 tokens**
+- chunks are cut from original text using fast-tokenizer offset mappings
+- every prefixed chunk must fit the model's effective max sequence length
+- document score: **maximum cosine similarity across its chunks**
+- tie break: PDDR ID ascending
+- no cross-corpus retrieval
+
+The exact condition is versioned in
+[`embedding-chunked-condition.v0.2.json`](embedding-chunked-condition.v0.2.json).
+
+Run:
+
+```bash
+python experiments/context_selection/run_embedding_chunked_experiment_v0_2.py
+```
+
+Results are written to `results/embedding-chunked-v0.2/`.
+
+This condition intentionally uses max-chunk aggregation as a simple first
+complete-record representation. Because documents with more chunks receive more
+opportunities to produce a high score, any observed gain/loss belongs to the
+**chunking + max-aggregation condition as a whole**. Do not silently tune chunk
+size, overlap, or aggregation after seeing the first output; changes require a
+new versioned condition.
