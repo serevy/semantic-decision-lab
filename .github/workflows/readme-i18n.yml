@@ -1,6 +1,14 @@
 name: README i18n
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+      - .i18n/**
+      - .github/workflows/readme-i18n.yml
+
   workflow_dispatch:
     inputs:
       target:
@@ -18,16 +26,18 @@ on:
 permissions:
   contents: read
 
-# The OpenAI project currently has a 10 RPM limit. Serialize separate manual
-# runs so they cannot consume the shared project quota concurrently.
+# The OpenAI project currently has a 10 RPM limit. Serialize automatic and
+# manual runs so they cannot consume the shared project quota concurrently.
 concurrency:
   group: readme-i18n
   cancel-in-progress: false
 
 jobs:
   translate:
-    name: translate-${{ inputs.target }}
+    name: translate-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
     runs-on: ubuntu-latest
+    env:
+      TARGET_LANG: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
     timeout-minutes: 20
     steps:
       - name: Checkout repository
@@ -64,7 +74,6 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           README_I18N_FETCH_GUARD: '1'
-          TARGET_LANG: ${{ inputs.target }}
         run: |
           set -eu
 
@@ -129,8 +138,6 @@ jobs:
             -o "$GITHUB_WORKSPACE/i18n-output"
 
       - name: Verify Markdown structure and protected terms
-        env:
-          TARGET_LANG: ${{ inputs.target }}
         run: |
           set -eu
 
@@ -167,7 +174,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: readme-${{ inputs.target }}
+          name: readme-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
           path: i18n-output/
           if-no-files-found: warn
           retention-days: 7
