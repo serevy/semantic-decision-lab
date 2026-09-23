@@ -526,7 +526,9 @@ maintainer approval.
 ## Downstream task-success v0.1 execution envelope
 
 The downstream dataset/arm freeze is converted into an exact 72-request
-execution pack by `build_downstream_requests_v0_1.py`.
+execution pack by `build_downstream_requests_v0_1.py`. The pack itself is
+frozen by the SHA-256 in `downstream-request-pack.v0.1.json`, so the ~0.9 MB
+generated JSONL does not need to be duplicated in git.
 
 Each request records:
 
@@ -542,6 +544,12 @@ included in the request pack.
 The historical `embedding_first512_top2` name describes how the selected IDs
 were retrieved. The downstream model receives the **complete frozen Markdown**
 for those selected IDs; it is not truncated to 512 tokens again.
+
+Reproduce and verify the exact pack with:
+
+```bash
+python experiments/context_selection/build_downstream_requests_v0_1.py --check
+```
 
 Execution and result-envelope rules are documented in
 [`DOWNSTREAM_V0_1_RUNBOOK.md`](DOWNSTREAM_V0_1_RUNBOOK.md). Model/provider
