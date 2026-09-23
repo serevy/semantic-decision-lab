@@ -14,12 +14,7 @@ This repository explores that question across orchestration, context selection, 
 
 A semantic layer should answer **what the current state means**. Deterministic systems remain responsible for **what happens next**.
 
-```mermaid
-flowchart LR
-    A["Ambiguous / unstructured state"] --> B["Semantic decision layer"]
-    B --> C["Typed result + probabilities"]
-    C --> D["Deterministic code / tools / policy / safety"]
-```
+![Semantic decision core architecture](docs/assets/semantic-decision-core.svg)
 
 This separation lets us test semantic judgment independently from execution logic. It also makes uncertainty, abstention, escalation, and provider replacement explicit instead of hiding them inside a monolithic agent.
 
@@ -41,15 +36,7 @@ The repository treats established task shapes such as classification, scoring, r
 
 Jev is an important provider and reference point in this work, but it is **not the definition of the research**. Experiments aim to keep application logic behind a common typed-decision boundary wherever practical.
 
-```mermaid
-flowchart TD
-    A["Application / experiment"] --> P["SemanticDecisionProvider"]
-    P --> J["TypeSafe Jev"]
-    P --> K["Kev"]
-    P --> O["Open / local typed-decision backends"]
-    P --> L["General-purpose model baseline"]
-    P --> R["Deterministic baseline"]
-```
+![Provider-neutral semantic decision architecture](docs/assets/provider-neutral-architecture.svg)
 
 Provider comparisons keep separate dimensions separate:
 
@@ -65,16 +52,7 @@ Provider comparisons keep separate dimensions separate:
 
 The lab is evidence-first. Experiment design and raw evidence stay separate from durable project decisions.
 
-```mermaid
-flowchart LR
-    H["Hypothesis"] --> F["Freeze protocol / dataset / baselines"]
-    F --> R["Run experiment"]
-    R --> E["Preserve raw evidence"]
-    E --> A["Analyze failures & trade-offs"]
-    A --> D{"Durable Project / Product / Process decision?"}
-    D -- "No" --> I["Keep in Issue / continue research"]
-    D -- "Yes" --> P["Create or update PDDR"]
-```
+![Experiment evidence and PDDR workflow](docs/assets/experiment-evidence-pddr.svg)
 
 Common rules:
 
