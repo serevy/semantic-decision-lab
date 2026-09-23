@@ -458,3 +458,21 @@ opportunities to produce a high score, any observed gain/loss belongs to the
 **chunking + max-aggregation condition as a whole**. Do not silently tune chunk
 size, overlap, or aggregation after seeing the first output; changes require a
 new versioned condition.
+
+## Dataset v0.2 complete-record chunked embedding result
+
+The frozen complete-record chunked Top-2 run completed successfully. Required
+hits were **9/12**, compared with **10/12** for the original first-512-token
+embedding arm. It rescued ctx-002, left ctx-003 missed, and introduced new
+required misses in ctx-006 and ctx-007. Mean useful recall increased from
+0.2778 to 0.3611 while selection precision and irrelevant rate were unchanged.
+
+Evidence and interpretation:
+
+- [`results/embedding-chunked-v0.2-evidence.json`](results/embedding-chunked-v0.2-evidence.json)
+- [`EMBEDDING_CHUNKED_V0_2_ANALYSIS.md`](EMBEDDING_CHUNKED_V0_2_ANALYSIS.md)
+
+The chunked arm remains a frozen complete-record baseline; it does not replace
+the original embedding evidence and is not evidence that complete-record
+visibility improves retrieval. The next priority is downstream task success,
+not in-place chunk/aggregation tuning on the same 12 labels.
