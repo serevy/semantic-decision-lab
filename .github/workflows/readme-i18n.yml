@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET_LANG: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -116,26 +116,23 @@ jobs:
           rm -rf "$GITHUB_WORKSPACE/i18n-output"
           mkdir -p "$GITHUB_WORKSPACE/i18n-output"
 
-          if [ "$TARGET_LANG" = "all" ]; then
-            export README_I18N_MAX_REQUESTS=80
-          else
-            export README_I18N_MAX_REQUESTS=60
-          fi
+          # Keep the safety cap per language, not across all languages.
+          # Each translator process gets a fresh request counter while the
+          # surrounding loop remains strictly serial, preserving the shared
+          # project RPM boundary.
+          export README_I18N_MAX_REQUESTS=60
 
-          target_args=()
           for lang in "${targets[@]}"; do
-            target_args+=(-t "$lang")
+            echo "::group::Translate $lang"
+            node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
+              -i "$GITHUB_WORKSPACE/README.md" \
+              -f en -t "$lang" -m openai \
+              -s "$settings_file" \
+              --model gpt-5.6-luna \
+              --no-relay --no-context --no-cache \
+              -o "$GITHUB_WORKSPACE/i18n-output"
+            echo "::endgroup::"
           done
-
-          # One CLI process handles all selected languages. The global fetch
-          # guard therefore paces and counts requests across the entire run.
-          node --import "$GITHUB_WORKSPACE/.i18n/translation-fetch-guard.mjs" --import tsx scripts/cli.ts \
-            -i "$GITHUB_WORKSPACE/README.md" \
-            -f en "${target_args[@]}" -m openai \
-            -s "$settings_file" \
-            --model gpt-5.6-luna \
-            --no-relay --no-context --no-cache \
-            -o "$GITHUB_WORKSPACE/i18n-output"
 
       - name: Verify Markdown structure and protected terms
         run: |
