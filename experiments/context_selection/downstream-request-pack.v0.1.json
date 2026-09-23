@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream task success",
+  "request_pack_version": "v0.1",
+  "request_count": 72,
+  "request_file": "downstream-requests.v0.1.jsonl",
+  "request_file_sha256": "67977e204aea5618e2683b0be42d33696e0d83885e64a79612186588e6c89ca7",
+  "generated_from": {
+    "pull_request": 76,
+    "workflow_run": 35871721470,
+    "workflow_head_sha": "59677ed8c6e4cb95eae6d7cd042c639810a1cf14",
+    "artifact": {
+      "name": "context-selection-downstream-requests-v0.1",
+      "id": 10755431813,
+      "digest": "sha256:dece3f346ff1d0cf072d2dd1d01bc95a96b68665f644b3fb57cf44e7bfed85c6",
+      "size_in_bytes": 167185
+    }
+  },
+  "storage_boundary": {
+    "committed_request_pack": false,
+    "reason": "The exact pack is ~0.9 MB; freeze it by deterministic builder plus file SHA-256 instead of duplicating generated prompt bodies in git.",
+    "reproducibility": "Regenerate from the versioned builder and frozen corpus/dataset/arms, then require the SHA-256 above before execution."
+  },
+  "interpretation": "This manifest freezes the exact pre-output prompt pack. It contains no downstream-model outputs."
+}
