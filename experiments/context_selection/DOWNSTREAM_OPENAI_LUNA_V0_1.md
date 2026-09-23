@@ -6,11 +6,17 @@ This file freezes the first downstream-model execution condition for Experiment
 ## Why Luna for the first run
 
 The downstream task is a bounded A-D/ABSTAIN decision task over already-frozen
-project context. The first run uses `gpt-5.6-luna` as a cost-sensitive
+project context. The first run uses `gpt-6-luna` as a cost-sensitive
 high-volume model rather than making the first evidence run also a test of a
-more expensive reasoning configuration.
+more expensive reasoning configuration. OpenAI's 2026-09-22 release lists
+GPT-6 Luna at $0.10 / 1M input tokens and $0.50 / 1M output tokens for Standard
+short-context processing, 50% below GPT-5.6 Luna's promotional input price and
+more than 50% below its promotional output price.
 
-This is **not** a claim that Luna is the best downstream model. A later Sol or
+This is **not** a claim that Luna is the best downstream model. OpenAI reports
+broad capability improvements for GPT-6 Luna over its predecessor, but this
+experiment will measure the exact `reasoning_effort=none` bounded-choice
+condition rather than importing benchmark conclusions. A later Sol or
 other-model replication is a separate versioned run if the experiment needs it.
 
 ## Frozen condition
@@ -18,7 +24,7 @@ other-model replication is a separate versioned run if the experiment needs it.
 See `downstream-run.openai-luna-v0.1.json`.
 
 - OpenAI Chat Completions
-- model: `gpt-5.6-luna`
+- model: `gpt-6-luna`
 - reasoning effort: `none`
 - temperature: 0
 - max completion tokens: 8
