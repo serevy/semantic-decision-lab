@@ -5,14 +5,23 @@ and PDDR-0005. It does **not** choose or tune a downstream model.
 
 ## 1. Reproduce the frozen request pack
 
+The exact 72-request pack is frozen by a deterministic builder plus the SHA-256
+stored in `downstream-request-pack.v0.1.json`.
+
 ```bash
 python experiments/context_selection/build_downstream_requests_v0_1.py --check
+python experiments/context_selection/build_downstream_requests_v0_1.py \
+  --output /tmp/downstream-requests.v0.1.jsonl
 ```
 
-The committed JSONL contains 72 requests: 12 cases × 6 frozen context arms.
+The generated JSONL contains 72 requests: 12 cases × 6 frozen context arms.
 Every row includes the exact system/user prompt, selected PDDR IDs, and a
 `prompt_sha256`. Gold choice, gold source-record mapping, rationale, and
 `source_case_id` are intentionally absent.
+
+The first CI generation is also preserved as a workflow artifact, but the
+artifact is not the long-term source of truth: the versioned builder inputs and
+frozen file SHA-256 are.
 
 The context-selection arm determines **which records are supplied**. Once a
 record is selected, the downstream model receives that record's complete frozen
@@ -72,10 +81,12 @@ documented rerun policy before treating a run as complete.
 
 ```bash
 python experiments/context_selection/validate_downstream_results_v0_1.py \
-  /path/to/raw-results.json
+  /path/to/raw-results.json \
+  --requests /tmp/downstream-requests.v0.1.jsonl
 
 python experiments/context_selection/prepare_downstream_evaluator_input_v0_1.py \
   /path/to/raw-results.json \
+  --requests /tmp/downstream-requests.v0.1.jsonl \
   --output /tmp/downstream-evaluator-input.json
 ```
 
