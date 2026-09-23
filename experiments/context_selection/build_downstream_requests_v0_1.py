@@ -14,6 +14,7 @@ ARMS = ROOT / "downstream-arms.v0.1.json"
 CONTRACT = ROOT / "downstream-evaluation-contract.v0.1.json"
 REGISTRY = ROOT / "corpus-registry.v0.2.json"
 DEFAULT_OUTPUT = ROOT / "downstream-requests.v0.1.jsonl"
+MANIFEST = ROOT / "downstream-request-pack.v0.1.json"
 
 PDDR_ID = re.compile(r"(PDDR-\d{4})")
 
@@ -131,23 +132,28 @@ def main() -> None:
 
     rendered = serialize(build_rows())
 
+    digest = sha256_text(rendered)
+    count = len(rendered.splitlines())
+
     if args.check:
-        if not args.output.exists():
-            raise SystemExit(f"missing request pack: {args.output}")
-        current = args.output.read_text()
-        if current != rendered:
-            raise SystemExit("downstream request pack is not reproducible from frozen inputs")
+        manifest = json.loads(MANIFEST.read_text())
+        if manifest["request_count"] != count:
+            raise SystemExit(
+                f"request count mismatch: expected {manifest['request_count']}, got {count}"
+            )
+        if manifest["request_file_sha256"] != digest:
+            raise SystemExit(
+                "downstream request pack digest does not match frozen manifest"
+            )
         print(
-            f"downstream request pack valid: {len(rendered.splitlines())} requests, "
-            f"sha256={sha256_text(rendered)}"
+            f"downstream request pack valid: {count} requests, sha256={digest}"
         )
         return
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(rendered)
     print(
-        f"wrote {len(rendered.splitlines())} requests to {args.output}; "
-        f"sha256={sha256_text(rendered)}"
+        f"wrote {count} requests to {args.output}; sha256={digest}"
     )
 
 
