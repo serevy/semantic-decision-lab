@@ -17,6 +17,16 @@ Revisit recent Issues and pull requests against the PDDR threshold at these mile
 - during an Issue or roadmap audit;
 - when multiple Evidence-bearing Issues are being closed or consolidated.
 
+### Pending checkpoint marker
+
+PR本文に `## PDDR checkpoint` と `Review: pending` がある場合は、signalに関係するrecent Issues / PRs / Evidenceだけを対象にbounded auditします。
+
+- SignalはPDDR作成義務ではありません。
+- 実験開始・変更・完了やraw observationだけではPDDRへ昇格させません。
+- durableなProject / Product / Process判断がなければno-opを正常結果とします。
+- review後はPR本文のcurrent stateを `Review: completed` へ更新します。
+- 過去のCheck / Job Summaryはsignal発生時点の履歴として扱い、同期更新しません。
+
 At a checkpoint:
 
 - Review recent Issues and PRs for decisions that remain important after the underlying work is closed.
