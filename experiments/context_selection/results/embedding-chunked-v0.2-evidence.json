@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection",
+  "issue": 2,
+  "dataset_version": "0.2",
+  "condition_id": "embedding-chunked-v0.2",
+  "source": {
+    "condition_pr": 72,
+    "workflow_run": 35770144684,
+    "workflow_head_sha": "3e968fcc84c53afd734079119b559465bb59b2a7",
+    "artifact": {
+      "name": "context-selection-embedding-chunked-v0.2",
+      "id": 10713946722,
+      "digest": "sha256:dd93b5c28231dfdbd63c1d7f3964a4f27e7b16849b11c3656481de22721cce9c",
+      "result_file_sha256": {
+        "chunk-manifest.json": "6cba4e3bfe95930c42c7865d4865fad396255f77cda1e6517d4cbc01fbc4d61f",
+        "multilingual-e5-small-chunked-top2.metrics.json": "55ac00160308c09d9bf8226ec462e31871310a40fdd9c40e1c983a13e0ace6a6",
+        "multilingual-e5-small-chunked-top2.scores.json": "791130298ffa1a47063a6ce143fdc19d9700c9767cdcd9c949554ed2a7554202",
+        "multilingual-e5-small-chunked-top2.selections.json": "233e39fecdb7eb0601cbe2adb04302cfba71ce25edee63b8cf105943a1fd65c8"
+      }
+    }
+  },
+  "frozen_condition": {
+    "model": "intfloat/multilingual-e5-small",
+    "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+    "top_k": 2,
+    "content_chunk_tokens": 448,
+    "overlap_tokens": 64,
+    "step_tokens": 384,
+    "document_score": "maximum chunk cosine similarity",
+    "cross_corpus_retrieval": false
+  },
+  "result": {
+    "required_hits": "9/12",
+    "mean_required_recall": 0.75,
+    "mean_useful_recall": 0.3611111111111111,
+    "mean_selection_precision": 0.7083333333333334,
+    "mean_irrelevant_rate": 0.2916666666666667,
+    "mean_reduction_ratio": 0.6666666666666666,
+    "required_misses": [
+      "ctx-003",
+      "ctx-006",
+      "ctx-007"
+    ],
+    "selections": {
+      "ctx-001": [
+        "PDDR-0003",
+        "PDDR-0002"
+      ],
+      "ctx-002": [
+        "PDDR-0003",
+        "PDDR-0006"
+      ],
+      "ctx-003": [
+        "PDDR-0001",
+        "PDDR-0003"
+      ],
+      "ctx-004": [
+        "PDDR-0003",
+        "PDDR-0001"
+      ],
+      "ctx-005": [
+        "PDDR-0003",
+        "PDDR-0001"
+      ],
+      "ctx-006": [
+        "PDDR-0006",
+        "PDDR-0003"
+      ],
+      "ctx-007": [
+        "PDDR-0006",
+        "PDDR-0004"
+      ],
+      "ctx-008": [
+        "PDDR-0001",
+        "PDDR-0004"
+      ],
+      "ctx-009": [
+        "PDDR-0002",
+        "PDDR-0003"
+      ],
+      "ctx-010": [
+        "PDDR-0003",
+        "PDDR-0001"
+      ],
+      "ctx-011": [
+        "PDDR-0004",
+        "PDDR-0001"
+      ],
+      "ctx-012": [
+        "PDDR-0005",
+        "PDDR-0001"
+      ]
+    }
+  },
+  "comparison_to_frozen_first_512_top2": {
+    "reference": "results/baseline-v0.2-evidence.json",
+    "required_hits": "10/12 -> 9/12",
+    "mean_required_recall": "0.8333333333333334 -> 0.75",
+    "mean_useful_recall": "0.2777777777777778 -> 0.3611111111111111",
+    "mean_selection_precision": "0.7083333333333334 -> 0.7083333333333334",
+    "mean_irrelevant_rate": "0.2916666666666667 -> 0.2916666666666667",
+    "mean_reduction_ratio": "0.6666666666666666 -> 0.6666666666666666",
+    "rescued_required_case": [
+      "ctx-002"
+    ],
+    "still_missed_required_case": [
+      "ctx-003"
+    ],
+    "new_required_misses": [
+      "ctx-006",
+      "ctx-007"
+    ],
+    "required_rank_changes": {
+      "ctx-002": {
+        "required": "PDDR-0006",
+        "rank": "3 -> 2",
+        "score": "0.8410313725471497 -> 0.8696655035018921",
+        "winning_chunk_index": 1
+      },
+      "ctx-003": {
+        "required": "PDDR-0007",
+        "rank": "3 -> 3",
+        "score": "0.8679416179656982 -> 0.8642342686653137",
+        "winning_chunk_index": 2
+      },
+      "ctx-006": {
+        "required": "PDDR-0004",
+        "rank": "1 -> 3",
+        "score": "0.8483802080154419 -> 0.8552265167236328",
+        "winning_chunk_index": 0
+      },
+      "ctx-007": {
+        "required": "PDDR-0005",
+        "rank": "1 -> 4",
+        "score": "0.8531526327133179 -> 0.853342592716217",
+        "winning_chunk_index": 0
+      }
+    }
+  },
+  "new_miss_rank_evidence": {
+    "ctx-006": [
+      [
+        "PDDR-0006",
+        0.8664431571960449,
+        4
+      ],
+      [
+        "PDDR-0003",
+        0.8584306240081787,
+        4
+      ],
+      [
+        "PDDR-0004",
+        0.8552265167236328,
+        0
+      ]
+    ],
+    "ctx-007": [
+      [
+        "PDDR-0006",
+        0.8586220741271973,
+        4
+      ],
+      [
+        "PDDR-0004",
+        0.8576894998550415,
+        3
+      ],
+      [
+        "PDDR-0003",
+        0.8556170463562012,
+        4
+      ],
+      [
+        "PDDR-0005",
+        0.853342592716217,
+        0
+      ]
+    ]
+  },
+  "interpretation_limits": [
+    "This is a bounded 12-case diagnostic dataset, not a population-level benchmark.",
+    "The comparison changes the document representation and max-chunk aggregation together; it does not isolate chunking alone.",
+    "Max-over-chunks gives documents with more chunks more opportunities to produce a high local score.",
+    "Late winning chunks in the new misses contain evidence/related-record material, but this observation does not establish a general causal failure mode.",
+    "No model/provider quality claim is made beyond the frozen condition."
+  ]
+}
