@@ -1,0 +1,113 @@
+name: Context selection downstream OpenAI Luna v0.1
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-run.openai-luna-v0.1.json"
+      - "experiments/context_selection/run_downstream_openai_luna_v0_1.py"
+      - "experiments/context_selection/build_downstream_requests_v0_1.py"
+      - "experiments/context_selection/downstream-request-pack.v0.1.json"
+      - "experiments/context_selection/validate_downstream_results_v0_1.py"
+      - "experiments/context_selection/prepare_downstream_evaluator_input_v0_1.py"
+      - "experiments/context_selection/evaluate_downstream_v0_1.py"
+      - ".github/workflows/context-selection-downstream-openai-luna-v0-1.yml"
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type RUN_LUNA_V0_1 to execute the frozen 72-request paid API run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+# Reuse the README i18n concurrency group because both workflows share the
+# repository's OpenAI project / RPM budget.
+concurrency:
+  group: readme-i18n
+  cancel-in-progress: false
+
+jobs:
+  validate-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Reproduce frozen 72-request pack
+        run: |
+          python experiments/context_selection/build_downstream_requests_v0_1.py --check
+          python experiments/context_selection/build_downstream_requests_v0_1.py \
+            --output /tmp/downstream-requests.v0.1.jsonl
+      - name: Validate run configuration without API access
+        run: |
+          python experiments/context_selection/run_downstream_openai_luna_v0_1.py \
+            --requests /tmp/downstream-requests.v0.1.jsonl \
+            --output /tmp/unused.json \
+            --dry-run
+
+  live-run:
+    if: github.event_name == 'workflow_dispatch'
+    needs: validate-config
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Require explicit dispatch confirmation
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          test "$CONFIRM" = "RUN_LUNA_V0_1" || {
+            echo "::error::Confirmation must be exactly RUN_LUNA_V0_1"
+            exit 1
+          }
+      - name: Reproduce frozen request pack
+        run: |
+          python experiments/context_selection/build_downstream_requests_v0_1.py --check
+          python experiments/context_selection/build_downstream_requests_v0_1.py \
+            --output "$RUNNER_TEMP/downstream-requests.v0.1.jsonl"
+      - name: Execute frozen OpenAI Luna run
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          test -n "$OPENAI_API_KEY" || {
+            echo "::error::Repository secret OPENAI_API_KEY is required."
+            exit 1
+          }
+          mkdir -p "$RUNNER_TEMP/downstream-results"
+          python experiments/context_selection/run_downstream_openai_luna_v0_1.py \
+            --requests "$RUNNER_TEMP/downstream-requests.v0.1.jsonl" \
+            --output "$RUNNER_TEMP/downstream-results/raw-results.json"
+      - name: Validate and evaluate completed run
+        if: success()
+        run: |
+          python experiments/context_selection/validate_downstream_results_v0_1.py \
+            "$RUNNER_TEMP/downstream-results/raw-results.json" \
+            --requests "$RUNNER_TEMP/downstream-requests.v0.1.jsonl"
+
+          python experiments/context_selection/prepare_downstream_evaluator_input_v0_1.py \
+            "$RUNNER_TEMP/downstream-results/raw-results.json" \
+            --requests "$RUNNER_TEMP/downstream-requests.v0.1.jsonl" \
+            --output "$RUNNER_TEMP/downstream-results/evaluator-input.json"
+
+          python experiments/context_selection/evaluate_downstream_v0_1.py \
+            "$RUNNER_TEMP/downstream-results/evaluator-input.json" \
+            > "$RUNNER_TEMP/downstream-results/evaluation.json"
+      - name: Preserve run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-downstream-openai-luna-v0.1
+          path: |
+            ${{ runner.temp }}/downstream-results/
+            ${{ runner.temp }}/downstream-requests.v0.1.jsonl
+          if-no-files-found: warn
+          retention-days: 90
