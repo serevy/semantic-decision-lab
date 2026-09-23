@@ -476,3 +476,50 @@ The chunked arm remains a frozen complete-record baseline; it does not replace
 the original embedding evidence and is not evidence that complete-record
 visibility improves retrieval. The next priority is downstream task success,
 not in-place chunk/aggregation tuning on the same 12 labels.
+
+## Downstream task-success v0.1 freeze
+
+Retrieval-ID metrics are now separated from a first bounded downstream behavior
+slice. The 12 downstream cases map 1:1 to ctx-001..012 but ask for a
+project-specific action rather than a PDDR ID.
+
+Frozen before any downstream-model output:
+
+- four plausible actions (A-D) per case plus `ABSTAIN`
+- balanced gold labels: A/B/C/D each appear exactly three times
+- gold source record and rationale are never included in the model prompt
+- six context arms:
+  - no-context negative control
+  - required-only oracle/minimal-context control
+  - full-context control
+  - frozen keyword Top-2
+  - frozen first-512 embedding Top-2
+  - frozen complete-record chunked Top-2
+- retrieval selections are replayed from existing Evidence; no selector is
+  rerun or tuned for this slice
+- one downstream run must use the same model and sampling configuration across
+  all arms
+
+Files:
+
+- [`downstream-cases.v0.1.json`](downstream-cases.v0.1.json)
+- [`downstream-arms.v0.1.json`](downstream-arms.v0.1.json)
+- [`downstream-evaluation-contract.v0.1.json`](downstream-evaluation-contract.v0.1.json)
+
+Validate the pre-output freeze and evaluator semantics:
+
+```bash
+python experiments/context_selection/validate_downstream_v0_1.py
+python experiments/context_selection/evaluate_downstream_v0_1.py \
+  experiments/context_selection/selections.downstream-gold-smoke.v0.1.json
+```
+
+Primary metrics are gold action accuracy and wrong-action rate. Abstention,
+behavior preservation versus full context, and no-context correctness are
+diagnostics. A high no-context score weakens the case as evidence that selected
+PDDR context preserved the behavior.
+
+PDDR-0004's explicit downstream-evaluation revisit condition is triggered here.
+PDDR-0005 is included as **proposed** and must not be treated as accepted until
+maintainer approval.
+
