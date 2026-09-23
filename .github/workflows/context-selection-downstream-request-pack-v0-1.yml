@@ -11,7 +11,7 @@ on:
       - "experiments/context_selection/build_downstream_requests_v0_1.py"
       - "experiments/context_selection/validate_downstream_results_v0_1.py"
       - "experiments/context_selection/prepare_downstream_evaluator_input_v0_1.py"
-      - "experiments/context_selection/downstream-requests.v0.1.jsonl"
+      - "experiments/context_selection/downstream-request-pack.v0.1.json"
       - ".github/workflows/context-selection-downstream-request-pack-v0-1.yml"
   workflow_dispatch:
 
@@ -57,13 +57,8 @@ jobs:
               }
           print("request pack structure valid: 72 frozen prompts")
           PY
-      - name: Compare committed request pack when present
-        run: |
-          if test -f experiments/context_selection/downstream-requests.v0.1.jsonl; then
-            diff -u \
-              experiments/context_selection/downstream-requests.v0.1.jsonl \
-              /tmp/downstream-requests.v0.1.jsonl
-          fi
+      - name: Verify frozen request-pack digest
+        run: python experiments/context_selection/build_downstream_requests_v0_1.py --check
       - name: Upload frozen request pack
         uses: actions/upload-artifact@v4
         with:
