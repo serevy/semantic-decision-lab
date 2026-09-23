@@ -1,0 +1,218 @@
+[
+  {
+    "case_id": "ds-001",
+    "source_case_id": "ctx-001",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A maintainer is adding PDDR Kit to a repository that should stay portable and avoid extra Python dependencies. Existing files must not be silently replaced, and local validation should match CI validation.",
+    "question": "Which implementation approach should the maintainer use?",
+    "choices": {
+      "A": "Use a separate PyYAML-based validator in CI and document a different manual local-validation process.",
+      "B": "Use one Python-standard-library CLI with init/validate, reuse that CLI in GitHub Actions, and stop without writing when an existing file conflicts.",
+      "C": "Let init rewrite repository-specific README, developer rules, and CI so every adoption has the same layout.",
+      "D": "Require a paid semantic service during init and validation so semantic correctness is enforced automatically."
+    },
+    "gold": {
+      "choice": "B",
+      "source_record": "PDDR-0002"
+    },
+    "rationale": "PDDR-0002 defines the standard-library-only init/validate CLI, same local/CI path, and non-destructive conflict behavior."
+  },
+  {
+    "case_id": "ds-002",
+    "source_case_id": "ctx-002",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "An AI agent receives several accepted historical PDDR records while working on a current project task. The current task also has explicit user and project instructions.",
+    "question": "How should the agent use the historical PDDR records?",
+    "choices": {
+      "A": "Treat every accepted PDDR as executable policy and apply it even when it conflicts with current instructions.",
+      "B": "Load every accepted PDDR into context so no historical decision can be missed.",
+      "C": "Treat PDDRs as decision context/evidence, follow current instructions and approved policy first, and select only the records relevant to the current task.",
+      "D": "Use only the most recently dated PDDR because newer records automatically override older project instructions."
+    },
+    "gold": {
+      "choice": "C",
+      "source_record": "PDDR-0006"
+    },
+    "rationale": "PDDR-0006 separates Decision Context from executable policy and requires current instructions/policy precedence plus minimal relevant context."
+  },
+  {
+    "case_id": "ds-003",
+    "source_case_id": "ctx-003",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A project already uses PDDR Kit and needs a newer Kit version. Kit-managed files may have local edits, while project configuration, PDDR records, documentation, rules, and CI remain project-owned.",
+    "question": "Which upgrade behavior should be used?",
+    "choices": {
+      "A": "Overwrite all Kit and project-owned files with the newest templates, then ask the maintainer to restore local changes.",
+      "B": "Run a best-effort three-way merge into every managed and project-owned file and continue even if some merges are ambiguous.",
+      "C": "Update only .pddr/config.json and CI automatically, because those files determine compatibility.",
+      "D": "Track Kit-managed file hashes in a manifest, support dry-run, stop all writes on a managed-file mismatch, and leave project-owned configuration, records, docs, rules, and CI untouched."
+    },
+    "gold": {
+      "choice": "D",
+      "source_record": "PDDR-0007"
+    },
+    "rationale": "PDDR-0007 defines manifest/hash based upgrades, dry-run, all-or-nothing stop on local modification, and a narrow Kit-managed file boundary."
+  },
+  {
+    "case_id": "ds-004",
+    "source_case_id": "ctx-004",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A maintainer is explaining the project-level role of PDDR Kit to a new contributor and deciding what belongs in the reusable repository.",
+    "question": "Which description matches the project decision?",
+    "choices": {
+      "A": "PDDR Kit is a public MIT-licensed reusable layer that coexists with ADR/DDR, keeps project-specific records in each project, and keeps paid semantic services optional.",
+      "B": "PDDR Kit replaces ADR and DDR and centralizes all project records in one public repository.",
+      "C": "PDDR Kit is primarily a hosted semantic service, so external paid inference is a required dependency.",
+      "D": "PDDR Kit should remain private until every supported project uses the same record taxonomy and automation stack."
+    },
+    "gold": {
+      "choice": "A",
+      "source_record": "PDDR-0001"
+    },
+    "rationale": "PDDR-0001 defines PDDR Kit as public MIT OSS, complementary to ADR/DDR, with project-local records and optional paid semantic extensions."
+  },
+  {
+    "case_id": "ds-005",
+    "source_case_id": "ctx-005",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "The common PDDR Kit files have been placed safely into an existing repository. The maintainer now wants PDDR to be discoverable and actually used without letting the installer rewrite project-specific material.",
+    "question": "What should the adoption step do next?",
+    "choices": {
+      "A": "Nothing; successful file placement alone is enough to integrate PDDR into normal project work.",
+      "B": "Explicitly connect README discoverability, AI/developer instructions, and CI, and clarify the boundary between PDDR and existing Issues/tasks while leaving project-specific files under project control.",
+      "C": "Replace the repository's existing Issues and task logs with PDDR records so there is only one tracking system.",
+      "D": "Modify every project-specific rule and README automatically during init to guarantee consistent adoption."
+    },
+    "gold": {
+      "choice": "B",
+      "source_record": "PDDR-0003"
+    },
+    "rationale": "PDDR-0003 records the external-adoption finding that discoverability, developer/AI instructions, CI, and Issue/task boundaries require explicit integration."
+  },
+  {
+    "case_id": "ds-006",
+    "source_case_id": "ctx-006",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "The project needs a portable evaluation for the pddr-recorder skill across models whose natural-language wording may differ.",
+    "question": "Which evaluation contract should be used?",
+    "choices": {
+      "A": "Store one exact golden response and fail any model whose wording, headings, or sentence order differs.",
+      "B": "Check only the final PDDR state value because routing and prohibited behaviors are too model-specific to compare.",
+      "C": "Use structured cases covering routing, record action, state, required behaviors, and forbidden behaviors; fail forbidden actions and do not claim validation before real-model execution.",
+      "D": "Ask a second language model for a holistic score without a fixed case schema or explicit prohibited behaviors."
+    },
+    "gold": {
+      "choice": "C",
+      "source_record": "PDDR-0004"
+    },
+    "rationale": "PDDR-0004 defines behavior-oriented skill evaluation rather than exact wording, with forbidden-action failure and a real-model validation boundary."
+  },
+  {
+    "case_id": "ds-007",
+    "source_case_id": "ctx-007",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A PDDR decision is accepted, but the available evidence does not establish whether implementation has started or whether the decision has been delivered.",
+    "question": "Which delivery state should be recorded?",
+    "choices": {
+      "A": "not-started, because implementation evidence is absent.",
+      "B": "validated, because the decision itself is already accepted.",
+      "C": "Omit delivery_status until implementation evidence appears.",
+      "D": "unknown, because absence of implementation evidence does not establish not-started."
+    },
+    "gold": {
+      "choice": "D",
+      "source_record": "PDDR-0005"
+    },
+    "rationale": "PDDR-0005 adds delivery_status=unknown specifically to avoid inventing not-started from missing evidence."
+  },
+  {
+    "case_id": "ds-008",
+    "source_case_id": "ctx-008",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "A README translation run passes every configured structural Quality Gate. Human review has not happened yet.",
+    "question": "What should the workflow do with the generated translation?",
+    "choices": {
+      "A": "Produce review artifacts without repository write/publication behavior and require human review before publication.",
+      "B": "Commit and push automatically because a green structural gate is sufficient publication evidence.",
+      "C": "Publish automatically only when the translator model also self-reports high confidence.",
+      "D": "Replace the canonical README immediately, then revert later if human review finds semantic problems."
+    },
+    "gold": {
+      "choice": "A",
+      "source_record": "PDDR-0001"
+    },
+    "rationale": "readme-i18n-kit PDDR-0001 keeps generated translations as review artifacts and reserves publication for human review."
+  },
+  {
+    "case_id": "ds-009",
+    "source_case_id": "ctx-009",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "Dogfooding finds two translation defects: a source-language fragment remains, and a protected Markdown heading prefix is displaced inside the translated sentence.",
+    "question": "Which repair strategy matches the project decision?",
+    "choices": {
+      "A": "Translate protected Markdown token-by-token so structural tokens can never move, even if target-language grammar becomes unnatural.",
+      "B": "Translate whole lines under placeholder protection, restore line-leading Markdown prefixes deterministically, retry bounded line failures once, and keep unresolved unsafe token corruption as a hard failure.",
+      "C": "Ignore source-language residue if the Markdown parser still succeeds, because structural validity is the only gate.",
+      "D": "Retry the entire document indefinitely until both source residue and token placement disappear."
+    },
+    "gold": {
+      "choice": "B",
+      "source_record": "PDDR-0002"
+    },
+    "rationale": "readme-i18n-kit PDDR-0002 uses whole-line translation plus deterministic prefix repair and bounded line retries while preserving hard failure for unsafe token corruption."
+  },
+  {
+    "case_id": "ds-010",
+    "source_case_id": "ctx-010",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "A terminology entry such as CI -> CI is intended to preserve a literal token, but ordinary French text like 'celui-ci' is being rewritten because glossary enforcement matches the substring.",
+    "question": "How should terminology handling be split?",
+    "choices": {
+      "A": "Send every identity and non-identity term to the translator glossary and rely on post-processing to fix accidental matches.",
+      "B": "Remove glossary enforcement entirely and trust the language model to preserve all technical terms.",
+      "C": "Mask/restore literal identity terms, including source==target glossary entries, and send only source!=target translation preferences to glossary enforcement; mask longer literals first.",
+      "D": "Uppercase all protected terms before translation so substring collisions become easier to detect."
+    },
+    "gold": {
+      "choice": "C",
+      "source_record": "PDDR-0003"
+    },
+    "rationale": "readme-i18n-kit PDDR-0003 separates literal masking from translation preferences and sorts literal terms longest-first."
+  },
+  {
+    "case_id": "ds-011",
+    "source_case_id": "ctx-011",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "The reusable translation workflow executes third-party translator code with README content and a provider API credential.",
+    "question": "Which runtime-security profile matches the current project decision?",
+    "choices": {
+      "A": "Allow arbitrary HTTPS destinations but rely on the provider key's spend limit as the only control.",
+      "B": "Permit relay services and redirects so transient provider failures can be recovered automatically.",
+      "C": "Claim the fetch wrapper is a complete process sandbox and therefore no request pacing or run cap is needed.",
+      "D": "Allow only the exact POST endpoint, reject redirects, disable relay, pace requests, cap each run, limit key exposure, and describe the fetch guard as narrower than a full process sandbox."
+    },
+    "gold": {
+      "choice": "D",
+      "source_record": "PDDR-0004"
+    },
+    "rationale": "readme-i18n-kit PDDR-0004 defines the narrow endpoint/method, relay, pacing, request-cap, key-exposure, and security-boundary rules."
+  },
+  {
+    "case_id": "ds-012",
+    "source_case_id": "ctx-012",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "A production repository wants to consume the reusable README translation workflow while retaining its own language, terminology, semantic, credential, and publication policy.",
+    "question": "How should responsibility and version pinning be divided?",
+    "choices": {
+      "A": "Keep repository-specific policy in the caller, generic translation/safety mechanics in the reusable kit, and pin production use to a reviewed immutable commit SHA or reviewed release tag.",
+      "B": "Move target languages, terminology, semantic checks, provider credentials, and publication policy into the reusable kit so callers stay minimal.",
+      "C": "Track @main in production so every caller receives translator behavior fixes immediately without review.",
+      "D": "Let the reusable kit publish translations directly because callers should not need separate review or publication logic."
+    },
+    "gold": {
+      "choice": "A",
+      "source_record": "PDDR-0005"
+    },
+    "rationale": "readme-i18n-kit PDDR-0005 assigns repository-specific policy to callers, generic mechanics to the kit, and requires reviewed immutable pinning for production."
+  }
+]
