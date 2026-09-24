@@ -93,4 +93,4 @@ README は意図的に **ライブリーダーボードではありません**�
 | GitHub Issue | 仮説、プロトコル、観察結果、生の証拠、失敗、およびフォローアップ |
 | PDDR | 根拠に裏付けられた採用、却下、延期、範囲、結果、および再検討条件 |
 
-このリポジトリでは、[PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`を使用します。[mcp__GitHub__PDDR-0001](docs/records/PDDR-0001-separate-experiments-from-decisions.md)は、実験的な作業と永続的な意思決定記録の境界を定義します。
+このリポジトリでは、[PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`を使用します。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)は、実験的な作業と永続的な意思決定記録の境界を定義します。
