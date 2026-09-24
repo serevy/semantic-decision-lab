@@ -18,7 +18,7 @@
 
 Actionsの **README i18n** から **Run workflow** を開き、target languageを選択する。既定値は `all`。
 
-通常の多言語更新では `all` を選ぶ。`all` は `ja / zh-CN / ko / fr` を同じtranslatorプロセスへ複数の `-t` 引数として渡し、1回のrunで全4言語を生成する。これにより実行し忘れを防ぎ、request guardの8秒pacingとrequest countも言語をまたいで共有する。
+通常の多言語更新では `all` を選ぶ。`all` は `ja / zh-CN / ko / fr` を同じjob内で**言語ごとのtranslatorプロセスとして直列実行**し、1回のrunで全4言語を生成する。各言語でrequest counterをリセットしつつ、8秒pacingとglobal concurrencyは維持する。
 
 個別言語は翻訳品質の再検証や障害切り分け用に残す。
 
@@ -63,7 +63,7 @@ README翻訳では再翻訳が実APIへ届くようCLI cacheを無効にする�
 - Markdown link destination
 - heading hierarchy
 - internal placeholder漏洩
-- 既知のinline-code回帰ケース
+- source READMEに対象行が存在する場合のみ、既知のinline-code回帰ケース
 
 自動検証は「自然な翻訳」を保証しない。公開前にArtifactを人間がレビューする。
 
@@ -80,8 +80,8 @@ README翻訳では再翻訳が実APIへ届くようCLI cacheを無効にする�
 - Standard service tierを強制
 - 送信開始を最低8秒間隔
 - 個別言語runは最大60 HTTP attempts
-- `all` runは4言語の通常処理が約60 attemptsになるため、品質再試行の余白として最大80 HTTP attempts
-- job timeout 20分
+- `all` runも各言語を個別processで直列実行し、各言語最大60 HTTP attempts
+- job timeout 45分
 
 request guardは完全なsecurity sandboxではない。第三者translator codeがAPI keyと公開READMEを処理する信頼境界は残る。
 
