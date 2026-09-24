@@ -82,15 +82,18 @@ def prose_lines_outside_fences(text: str) -> list[str]:
 
 needle_a = ".pddr/template.md"
 needle_b = "docs/records/"
-regression_lines = [
+source_regression_lines = [
+    line
+    for line in prose_lines_outside_fences(source)
+    if needle_a in line and needle_b in line
+]
+translated_regression_lines = [
     line
     for line in prose_lines_outside_fences(translated)
     if needle_a in line and needle_b in line
 ]
-if (
-    len(regression_lines) != 1
-    or needle_a not in regression_lines[0]
-    or needle_b not in regression_lines[0]
+if source_regression_lines and len(translated_regression_lines) != len(
+    source_regression_lines
 ):
     errors.append("inline-code regression prose line was split, lost, or duplicated")
 
