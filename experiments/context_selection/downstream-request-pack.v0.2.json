@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream task success",
+  "version": "v0.2",
+  "issue": 97,
+  "request_count": 72,
+  "request_file_sha256": "bb7eb5109f46c93dd2e4a8ca0ceb9a99b36c6f2bc4eecdf044ede6e40b84b325",
+  "request_file_bytes": 914765,
+  "preview_evidence": {
+    "workflow_run_id": 35967410372,
+    "workflow_url": "https://github.com/serevy/semantic-decision-lab/actions/runs/35967410372",
+    "head_sha": "0313dc8b05d1f8460a3a8c4b91e4042cf171b261",
+    "artifact_id": 10794901843,
+    "artifact_digest": "sha256:3e7ae19d0c8afc44104841f9a3179ad4361f3e2e8073b1ef69783eb62d0a0b5b"
+  },
+  "freeze_rule": "The exact deterministic request-pack digest was observed and frozen on the PR validation path before any live downstream-model output for v0.2."
+}
