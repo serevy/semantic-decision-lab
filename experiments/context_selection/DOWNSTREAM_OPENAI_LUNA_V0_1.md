@@ -6,25 +6,20 @@ This file freezes the first downstream-model execution condition for Experiment
 ## Why Luna for the first run
 
 The downstream task is a bounded A-D/ABSTAIN decision task over already-frozen
-project context. The first run uses `gpt-6-luna` as a cost-sensitive
-high-volume model rather than making the first evidence run also a test of a
-more expensive reasoning configuration. OpenAI's 2026-09-22 release lists
-GPT-6 Luna at $0.10 / 1M input tokens and $0.50 / 1M output tokens for Standard
-short-context processing, 50% below GPT-5.6 Luna's promotional input price and
-more than 50% below its promotional output price.
+project context. The first run uses `gpt-5.6-luna` so it can reuse the
+repository's already-configured OpenAI credential and proceed without creating
+or rotating API keys during this work window.
 
-This is **not** a claim that Luna is the best downstream model. OpenAI reports
-broad capability improvements for GPT-6 Luna over its predecessor, but this
-experiment will measure the exact `reasoning_effort=none` bounded-choice
-condition rather than importing benchmark conclusions. A later Sol or
-other-model replication is a separate versioned run if the experiment needs it.
+This is **not** a claim that GPT-5.6 Luna is the preferred long-term model.
+GPT-6 Luna is deferred to a later versioned run when the research credential
+setup can be revisited without blocking the current experiment.
 
 ## Frozen condition
 
 See `downstream-run.openai-luna-v0.1.json`.
 
 - OpenAI Chat Completions
-- model: `gpt-6-luna`
+- model: `gpt-5.6-luna`
 - reasoning effort: `none`
 - temperature: 0
 - max completion tokens: 8
@@ -51,3 +46,15 @@ A transport/API failure stops the run and preserves the partial result artifact.
 The first evidence run does not silently retry individual requests. Invalid
 model formatting is preserved as a parse error rather than coerced into
 `ABSTAIN`.
+
+
+## Current credential boundary
+
+The live workflow temporarily reuses the repository's existing
+`OPENAI_API_KEY` secret. This avoids blocking the first downstream run on
+credential administration.
+
+Separating research and translation credentials is intentionally deferred
+maintenance, not part of the v0.1 model-quality result. The experiment evidence
+must record the model/config used here, while future credential separation or a
+GPT-6 Luna replication should be versioned independently.
