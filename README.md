@@ -18,19 +18,31 @@ A semantic layer should answer **what the current state means**. Deterministic s
 
 This separation lets us test semantic judgment independently from execution logic. It also makes uncertainty, abstention, escalation, and provider replacement explicit instead of hiding them inside a monolithic agent.
 
+## Research boundary
+
+A 2026 prior-art review found substantial existing work around model routing/cascading, context and prompt compression, structured agent handoff, dialogue/action-state tracking, pragmatics evaluation, trajectory/process supervision, high-level embodied planning, and intermediate representations.
+
+The Lab therefore treats those techniques as **building blocks and baselines**, not as novelty claims by themselves. The shared research boundary is narrower:
+
+> **Can ambiguous semantic judgment be represented as typed, uncertainty-aware state and transitions that preserve downstream behavior, remain provider-portable where practical, and stay subordinate to deterministic execution, authorization, policy, and hard safety?**
+
+This means experiments should reuse established methods where practical and spend custom engineering effort on semantic fidelity, calibration, abstention, state transitions, downstream effects, and authority boundaries.
+
+See [PDDR-0007](docs/records/PDDR-0007-focus-typed-semantic-state.md) and [#70 External reference radar](https://github.com/serevy/semantic-decision-lab/issues/70) for the evidence and scope decision.
+
 ## Research map
 
 | Area | Research question | Main threads |
 |---|---|---|
-| Orchestration | Can semantic routing reduce cost or latency without degrading successful outcomes? | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
-| Context & memory | Can we select smaller context while preserving decision-critical information? | [#2 PDDR Context Selection](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 downstream task-success evaluation](https://github.com/serevy/semantic-decision-lab/issues/74) |
-| Handoffs | Can free-form agent state become a compact typed handoff without losing important constraints? | [#3 Typed Handoff](https://github.com/serevy/semantic-decision-lab/issues/3) |
-| State interpretation | Can we represent decision state, pragmatic state, and semantic trajectories without inventing unsupported certainty? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| Orchestration | Can semantic routing improve end-to-end task success, cost, latency, and escalation/rework together? | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| Context & memory | How much decision-history context can be reduced while preserving downstream decision behavior? | [#2 PDDR Context Selection](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 downstream task-success evaluation](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| Handoffs | What is the smallest typed handoff that preserves constraints, uncertainty, evidence provenance, and required next action? | [#3 Typed Handoff](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| State interpretation | Can we represent decision state, pragmatic state, and semantic transitions without inventing unsupported certainty or authorization? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
 | Domain gates & discovery | Where do semantic classification, scoring, retrieval, and ranking help in bounded domain workflows? | [#6 Trading Strategy Gate](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 VTuber Discovery](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 Taste Discovery](https://github.com/serevy/semantic-decision-lab/issues/8) |
-| Real-time / embodied | Can low-latency semantic decisions improve interactive systems while hard safety remains independent? | [#10 Real-time / Embodied Decision Layer](https://github.com/serevy/semantic-decision-lab/issues/10) |
-| Provider portability | Can the same typed-decision application move across hosted and local providers without leaking provider-specific assumptions downstream? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
+| Real-time / embodied | Can low-latency semantic state improve interaction while deterministic hard safety remains independent under delay, drift, or model-policy changes? | [#10 Real-time / Embodied Decision Layer](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| Provider portability | Can a typed-decision contract preserve semantic meaning, calibration, and observable capabilities across hosted and local providers—not only API shape? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-The repository treats established task shapes such as classification, scoring, routing, retrieval, and verification as building blocks. The research focus is how those primitives compose into reliable software architectures and how they behave under real evaluation constraints.
+The repository treats established task shapes and supporting techniques—classification, scoring, routing, retrieval, compression, structured handoff, verification, trajectory analysis, and typed IRs—as building blocks. The research focus is how typed semantic state and transitions preserve downstream behavior when those primitives are composed into reliable software architectures.
 
 ## Provider-neutral by design
 
