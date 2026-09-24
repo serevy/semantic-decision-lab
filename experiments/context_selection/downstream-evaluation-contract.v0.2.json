@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "experiment": "PDDR Context Selection downstream task success",
+  "issue": 97,
+  "parent_issue": 2,
+  "predecessor_issue": 74,
+  "dataset": "downstream-cases.v0.2.json",
+  "audit": "downstream-context-dependence-audit.v0.2.json",
+  "arms": "downstream-arms.v0.2.json",
+  "freeze_rule": "Scenario, options, gold action, source-record mapping, context-dependence audit, diagnostic gate, prompt contract, and replayed arm selections are frozen before any downstream-model output is observed.",
+  "prompt_contract": {
+    "system": "You are evaluating a project-specific decision. Use only the scenario, answer options, and any Decision Context records supplied in this request. Generic best practice may differ from this project's recorded decision. If the supplied material is insufficient to determine the project's choice, return ABSTAIN. Return exactly one choice A, B, C, D, or ABSTAIN.",
+    "context_header": "Decision Context records:",
+    "no_context_marker": "(none)",
+    "user_template": "Scenario: {scenario}\\n\\nQuestion: {question}\\n\\nOptions:\\nA: {A}\\nB: {B}\\nC: {C}\\nD: {D}",
+    "allowed_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "ABSTAIN"
+    ],
+    "gold_metadata_must_not_be_prompted": [
+      "gold.choice",
+      "gold.source_record",
+      "rationale",
+      "source_case_id",
+      "context-dependence audit"
+    ]
+  },
+  "context_dependence_audit": {
+    "case_count": 12,
+    "minimum_plausible_no_context_choices_per_case": 2,
+    "minimum_cases_with_generic_best_practice_tension": 6,
+    "require_distractor_plausibility_notes": true,
+    "require_required_record_decision_excerpt": true,
+    "human_review_required_before_live_run": true
+  },
+  "diagnostic_gate": {
+    "frozen_before_output": true,
+    "no_context_max_correct": 8,
+    "required_only_min_correct": 10,
+    "full_context_min_correct": 10,
+    "required_only_minus_no_context_min_correct": 2,
+    "full_context_minus_no_context_min_correct": 2,
+    "interpretation": "If any gate fails, v0.2 must not be used to claim retrieval behavior preservation. Preserve the run as benchmark-design Evidence and revise only in a new version."
+  },
+  "run_contract": {
+    "same_downstream_model_within_run": true,
+    "same_sampling_config_within_run": true,
+    "deterministic_context_order": "ascending PDDR ID",
+    "one_answer_per_case_per_arm": true,
+    "raw_response_and_run_provenance_required": true,
+    "retrieval_arms_are_replayed_not_rerun": true
+  },
+  "primary_metrics": [
+    "gold_action_accuracy",
+    "wrong_action_rate"
+  ],
+  "secondary_metrics": [
+    "abstention_rate",
+    "behavior_preservation_vs_full_context",
+    "per_case_failure_pattern",
+    "no_context_correct_rate",
+    "context_dependence_gate_pass"
+  ],
+  "interpretation_limits": [
+    "The benchmark is bounded-choice and does not establish open-ended software-engineering quality.",
+    "A retrieval-preservation claim requires the frozen context-dependence diagnostic gate to pass.",
+    "The required-only arm is an oracle/minimal-context diagnostic and is not a deployable selector.",
+    "Do not tune retrieval, cases, options, gold, or the diagnostic gate against observed v0.2 outputs."
+  ]
+}
