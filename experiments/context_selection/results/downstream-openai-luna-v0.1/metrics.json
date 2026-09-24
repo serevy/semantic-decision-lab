@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream task success",
+  "version": "v0.1",
+  "issue": 74,
+  "follow_up_issue": 97,
+  "run": {
+    "workflow_run_id": 35940937705,
+    "workflow_url": "https://github.com/serevy/semantic-decision-lab/actions/runs/35940937705",
+    "repository_head": "5a58e466ad721a320f28f91731660931940f491c",
+    "provider": "OpenAI",
+    "model": "gpt-5.6-luna",
+    "executed_at": "2026-09-24T01:17:26.720446+00:00",
+    "completed_at": "2026-09-24T01:27:02.453628+00:00",
+    "sampling": {
+      "reasoning_effort": "none",
+      "temperature": 0,
+      "max_completion_tokens": 8
+    },
+    "request_count": 72,
+    "response_count": 72,
+    "api_or_transport_errors": 0,
+    "parse_errors": 0,
+    "returned_model_count": {
+      "gpt-5.6-luna": 72
+    }
+  },
+  "provenance": {
+    "request_pack_sha256": "67977e204aea5618e2683b0be42d33696e0d83885e64a79612186588e6c89ca7",
+    "execution_order_sha256": "26658b10589611a0d4a2f8271d63084d1d41301148b6b0d32713a5fcf1d13a49",
+    "config_sha256": "39736915c6033fe95bdf47f8b9aaa50daecd3b1452cf669511adddb9f9ece89d",
+    "artifact_id": 10785662652,
+    "artifact_digest": "sha256:719d7164090c6e8c12d54dd2bce71d2bb736b2087b3603107abe81fce5bd0ada",
+    "artifact_expires_at": "2026-12-23T00:59:50Z",
+    "raw_results_sha256": "8e57ffca476f44b1d52c0ad010b864a2a5c6fec377d780b411403c08d59bced1",
+    "evaluator_input_sha256": "76786042a11bd0d5582b05ef29f4fbb3d090793e738f1b94d9505e59d391f85e",
+    "evaluation_sha256": "18a4819beea2bd94865366da6a41f146f939bee0fa50b6fd9ba9e5942b58f77f"
+  },
+  "summaries": {
+    "no_context": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    },
+    "required_only": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    },
+    "full_context": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    },
+    "keyword_top2": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    },
+    "embedding_first512_top2": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    },
+    "embedding_chunked_top2": {
+      "correct": 12,
+      "total": 12,
+      "gold_action_accuracy": 1,
+      "wrong_action_rate": 0,
+      "abstention_rate": 0
+    }
+  },
+  "no_context_correct_rate_as_prompt_leakage_signal": 1,
+  "interpretation": "The v0.1 bounded-choice slice saturated without PDDR context. Treat it as a benchmark-design diagnostic, not as evidence that every retrieval arm preserved project decision behavior."
+}
