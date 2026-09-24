@@ -1,0 +1,91 @@
+name: Context selection downstream request pack v0.2 preview
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-cases.v0.2.json"
+      - "experiments/context_selection/downstream-arms.v0.2.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.2.json"
+      - "experiments/context_selection/build_downstream_requests_v0_2.py"
+      - "experiments/context_selection/downstream-request-pack.v0.2.json"
+      - "experiments/context_selection/validate_downstream_results_v0_2.py"
+      - "experiments/context_selection/prepare_downstream_evaluator_input_v0_2.py"
+      - "experiments/context_selection/evaluate_downstream_v0_2.py"
+      - ".github/workflows/context-selection-downstream-request-pack-v0-2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build deterministic v0.2 request pack
+        run: |
+          python experiments/context_selection/validate_downstream_v0_2_freeze.py
+          python experiments/context_selection/build_downstream_requests_v0_2.py --check
+          python experiments/context_selection/build_downstream_requests_v0_2.py \
+            --output "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
+          sha256sum "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
+          wc -l "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
+          wc -c "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
+      - name: Smoke v0.2 evaluator semantics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("experiments/context_selection")
+          cases = {c["case_id"]: c for c in json.loads((root / "downstream-cases.v0.2.json").read_text())}
+          arms = json.loads((root / "downstream-arms.v0.2.json").read_text())["arms"]
+
+          answers = {}
+          for arm_name, arm in arms.items():
+              rows = {}
+              for case_id, case in cases.items():
+                  gold = case["gold"]["choice"]
+                  required = case["gold"]["source_record"]
+                  if arm_name == "no_context":
+                      choice = "ABSTAIN"
+                  elif arm_name in {"required_only", "full_context"}:
+                      choice = gold
+                  else:
+                      choice = gold if required in arm["selections"][case_id] else "ABSTAIN"
+                  rows[case_id] = {"choice": choice}
+              answers[arm_name] = rows
+
+          Path("/tmp/downstream-v0.2-smoke.json").write_text(
+              json.dumps({"run": {"kind": "metric-semantics-smoke"}, "answers": answers}),
+              encoding="utf-8",
+          )
+          PY
+
+          python experiments/context_selection/evaluate_downstream_v0_2.py \
+            /tmp/downstream-v0.2-smoke.json > /tmp/downstream-v0.2-smoke-eval.json
+
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/downstream-v0.2-smoke-eval.json", encoding="utf-8"))
+          assert data["diagnostic_gate"]["pass"] is True
+          assert data["answerability"]["no_context_abstention_rate"] == 1.0
+          assert data["answerability"]["no_context_unsupported_commitment_rate"] == 0.0
+          assert data["summaries"]["required_only"]["gold_action_accuracy"] == 1.0
+          assert data["summaries"]["full_context"]["gold_action_accuracy"] == 1.0
+          for arm in ("keyword_top2", "embedding_first512_top2", "embedding_chunked_top2"):
+              assert data["summaries"][arm]["accuracy_when_required_record_present"] == 1.0
+              assert data["summaries"][arm]["accuracy_when_required_record_absent"] == 0.0
+          print("downstream v0.2 evaluator smoke valid")
+          PY
+      - name: Upload request-pack preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-downstream-request-pack-v0.2-preview
+          path: ${{ runner.temp }}/downstream-requests.v0.2.jsonl
+          if-no-files-found: error
+          retention-days: 7
