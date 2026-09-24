@@ -50,6 +50,7 @@ The individual Experiments remain useful as evaluation surfaces. The proposed ch
 - #10's broad high-level semantic planning + grounded low-level control pattern is established by embodied-agent work such as SayCan.
 - #81 is adjacent to growing typed-IR work; the useful research boundary is semantic/provider portability rather than the existence of an IR itself.
 - Patent publications also cover nearby routing, prompt compression, explicit approval gates, agent risk actions, and LLM-generated IR patterns. These references are landscape evidence only and are not a freedom-to-operate conclusion.
+- Recent Bonsai 2 ternary refusal/abliteration experiments provide adjacent robustness evidence that learned refusal behavior can shift sharply under targeted weight intervention while broad benchmark capability changes much less in the reported paired evaluations. The same work also exposed empty-completion and context-truncation evaluation traps. This does not equate refusal with authorization, but it strengthens the decision to keep semantic-model behavior separate from deterministic authorization and hard-safety authority.
 - Existing frozen experiment evidence must not be retroactively changed to incorporate newly discovered baselines.
 
 ## Options considered
@@ -150,6 +151,9 @@ Validation after acceptance should check that:
 - SayCan: https://arxiv.org/abs/2204.01691
 - SkCC: https://arxiv.org/abs/2605.03353
 - FAVA: https://arxiv.org/abs/2607.27267
+- Bonsai 2 uncensored shootout: https://huggingface.co/spaces/BoldingBuilds/bonsai-2-uncensored-shootout
+- Hikari ternary Bonsai 2 abliterated preview: https://huggingface.co/Hikari07jp/Ternary-Bonsai-2-27B-Abliterated-GGUF
+- BoldingBuilds ternary Bonsai 2 abliterated PTQ1_0: https://huggingface.co/BoldingBuilds/Ternary-Bonsai-2-27B-Abliterated-PTQ1_0-GGUF
 - Prompt routing patent publication: https://patents.google.com/patent/WO2025038558A1/en
 - Multi-stage prompt compression patent: https://patents.google.com/patent/US12632446B1/en
 - LLM-agent API approval patent: https://patents.google.com/patent/KR102707512B1/en
