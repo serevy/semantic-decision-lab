@@ -43,6 +43,11 @@
           "targetLang": "ja"
         },
         {
+          "source": "GitHub Issues",
+          "target": "GitHub Issues",
+          "targetLang": "ja"
+        },
+        {
           "source": "GitHub Issue",
           "target": "GitHub Issue",
           "targetLang": "ja"
@@ -68,6 +73,11 @@
           "targetLang": "zh-CN"
         },
         {
+          "source": "GitHub Issues",
+          "target": "GitHub Issues",
+          "targetLang": "zh-CN"
+        },
+        {
           "source": "GitHub Issue",
           "target": "GitHub Issue",
           "targetLang": "zh-CN"
@@ -93,6 +103,11 @@
           "targetLang": "ko"
         },
         {
+          "source": "GitHub Issues",
+          "target": "GitHub Issues",
+          "targetLang": "ko"
+        },
+        {
           "source": "GitHub Issue",
           "target": "GitHub Issue",
           "targetLang": "ko"
@@ -115,6 +130,11 @@
         {
           "source": "PDDR Kit",
           "target": "PDDR Kit",
+          "targetLang": "fr"
+        },
+        {
+          "source": "GitHub Issues",
+          "target": "GitHub Issues",
           "targetLang": "fr"
         },
         {

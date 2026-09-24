@@ -12,7 +12,7 @@ source = Path(sys.argv[1]).read_text(encoding="utf-8")
 translated = Path(sys.argv[2]).read_text(encoding="utf-8")
 errors: list[str] = []
 
-for term in ["semantic-decision-lab", "PDDR", "PDDR Kit", "GitHub Issue", "PDDR-0001"]:
+for term in ["semantic-decision-lab", "PDDR", "PDDR Kit", "GitHub Issues", "GitHub Issue", "PDDR-0001"]:
     if source.count(term) != translated.count(term):
         errors.append(
             f"protected term count changed: {term!r}: "

@@ -48,6 +48,7 @@ README翻訳では再翻訳が実APIへ届くようCLI cacheを無効にする�
 - `semantic-decision-lab`
 - `PDDR`
 - `PDDR Kit`
+- `GitHub Issues`
 - `GitHub Issue`
 - `PDDR-0001`
 
