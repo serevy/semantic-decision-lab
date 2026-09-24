@@ -35,6 +35,53 @@ jobs:
           sha256sum "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
           wc -l "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
           wc -c "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
+      - name: Smoke v0.2 evaluator semantics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("experiments/context_selection")
+          cases = {c["case_id"]: c for c in json.loads((root / "downstream-cases.v0.2.json").read_text())}
+          arms = json.loads((root / "downstream-arms.v0.2.json").read_text())["arms"]
+
+          answers = {}
+          for arm_name, arm in arms.items():
+              rows = {}
+              for case_id, case in cases.items():
+                  gold = case["gold"]["choice"]
+                  required = case["gold"]["source_record"]
+                  if arm_name == "no_context":
+                      choice = "ABSTAIN"
+                  elif arm_name in {"required_only", "full_context"}:
+                      choice = gold
+                  else:
+                      choice = gold if required in arm["selections"][case_id] else "ABSTAIN"
+                  rows[case_id] = {"choice": choice}
+              answers[arm_name] = rows
+
+          Path("/tmp/downstream-v0.2-smoke.json").write_text(
+              json.dumps({"run": {"kind": "metric-semantics-smoke"}, "answers": answers}),
+              encoding="utf-8",
+          )
+          PY
+
+          python experiments/context_selection/evaluate_downstream_v0_2.py \
+            /tmp/downstream-v0.2-smoke.json > /tmp/downstream-v0.2-smoke-eval.json
+
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/downstream-v0.2-smoke-eval.json", encoding="utf-8"))
+          assert data["diagnostic_gate"]["pass"] is True
+          assert data["answerability"]["no_context_abstention_rate"] == 1.0
+          assert data["answerability"]["no_context_unsupported_commitment_rate"] == 0.0
+          assert data["summaries"]["required_only"]["gold_action_accuracy"] == 1.0
+          assert data["summaries"]["full_context"]["gold_action_accuracy"] == 1.0
+          for arm in ("keyword_top2", "embedding_first512_top2", "embedding_chunked_top2"):
+              assert data["summaries"][arm]["accuracy_when_required_record_present"] == 1.0
+              assert data["summaries"][arm]["accuracy_when_required_record_absent"] == 0.0
+          print("downstream v0.2 evaluator smoke valid")
+          PY
       - name: Upload request-pack preview
         uses: actions/upload-artifact@v4
         with:
