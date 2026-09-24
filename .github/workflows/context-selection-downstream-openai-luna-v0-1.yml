@@ -21,12 +21,6 @@ on:
 permissions:
   contents: read
 
-# Reuse the README i18n concurrency group because both workflows share the
-# repository's OpenAI project / RPM budget.
-concurrency:
-  group: readme-i18n
-  cancel-in-progress: false
-
 jobs:
   validate-config:
     runs-on: ubuntu-latest
@@ -52,6 +46,11 @@ jobs:
   live-run:
     if: github.event_name == 'workflow_dispatch'
     needs: validate-config
+    # Only the paid API job shares the README i18n quota lock.
+    # PR dry-run validation does not call OpenAI and must not wait behind translations.
+    concurrency:
+      group: readme-i18n
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
