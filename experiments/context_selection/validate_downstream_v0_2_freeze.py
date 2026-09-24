@@ -35,6 +35,7 @@ assert len(audit) == 12
 audit_by_id = {a["case_id"]: a for a in audit}
 assert set(audit_by_id) == set(case_ids)
 tension = 0
+conflict_stress = 0
 for c in cases:
     a = audit_by_id[c["case_id"]]
     plausible = a["no_context_plausible_choices"]
@@ -44,6 +45,12 @@ for c in cases:
     assert a["required_record"] == c["gold"]["source_record"]
     assert a["decision_excerpt"].strip()
     assert a["context_dependency_reason"].strip()
+    assert a["no_context_expected_behavior"] == "ABSTAIN"
+    tags = set(a["stress_tags"])
+    assert "direct-answer-filter" in tags
+    assert "negative-rejection" in tags
+    if "project-context-vs-generic-prior" in tags:
+        conflict_stress += 1
     assert set(a["distractor_plausibility"]) == ({"A","B","C","D"} - {c["gold"]["choice"]})
     generic = a["generic_best_practice_choice"]
     if generic is not None:
@@ -51,6 +58,9 @@ for c in cases:
         if generic != c["gold"]["choice"]:
             tension += 1
 assert tension >= contract["context_dependence_audit"]["minimum_cases_with_generic_best_practice_tension"]
+assert conflict_stress >= 6
+assert contract["answerability_contract"]["no_context_expected_behavior"] == "ABSTAIN"
+assert len(contract["related_work_methodology"]["references"]) >= 4
 
 gate = contract["diagnostic_gate"]
 assert gate["frozen_before_output"] is True
@@ -67,7 +77,7 @@ for arm_name, arm in arms["arms"].items():
 print(
     "downstream v0.2 freeze valid: "
     f"{len(cases)} cases, balanced gold={dict(sorted(gold_counts.items()))}, "
-    f"generic-tension cases={tension}, "
+    f"generic-tension cases={tension}, conflict-stress cases={conflict_stress}, "
     f"gate=no_context<={gate['no_context_max_correct']}/12; "
     f"required_only>={gate['required_only_min_correct']}/12; "
     f"full_context>={gate['full_context_min_correct']}/12"
