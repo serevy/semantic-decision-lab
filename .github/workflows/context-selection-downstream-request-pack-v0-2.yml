@@ -7,6 +7,7 @@ on:
       - "experiments/context_selection/downstream-arms.v0.2.json"
       - "experiments/context_selection/downstream-evaluation-contract.v0.2.json"
       - "experiments/context_selection/build_downstream_requests_v0_2.py"
+      - "experiments/context_selection/downstream-request-pack.v0.2.json"
       - "experiments/context_selection/validate_downstream_results_v0_2.py"
       - "experiments/context_selection/prepare_downstream_evaluator_input_v0_2.py"
       - "experiments/context_selection/evaluate_downstream_v0_2.py"
@@ -28,6 +29,7 @@ jobs:
       - name: Build deterministic v0.2 request pack
         run: |
           python experiments/context_selection/validate_downstream_v0_2_freeze.py
+          python experiments/context_selection/build_downstream_requests_v0_2.py --check
           python experiments/context_selection/build_downstream_requests_v0_2.py \
             --output "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
           sha256sum "$RUNNER_TEMP/downstream-requests.v0.2.jsonl"
