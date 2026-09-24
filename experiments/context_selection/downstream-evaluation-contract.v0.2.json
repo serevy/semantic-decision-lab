@@ -62,12 +62,56 @@
     "behavior_preservation_vs_full_context",
     "per_case_failure_pattern",
     "no_context_correct_rate",
+    "no_context_unsupported_commitment_rate",
+    "no_context_abstention_rate",
+    "required_record_present_vs_action_accuracy",
     "context_dependence_gate_pass"
   ],
   "interpretation_limits": [
     "The benchmark is bounded-choice and does not establish open-ended software-engineering quality.",
     "A retrieval-preservation claim requires the frozen context-dependence diagnostic gate to pass.",
     "The required-only arm is an oracle/minimal-context diagnostic and is not a deployable selector.",
-    "Do not tune retrieval, cases, options, gold, or the diagnostic gate against observed v0.2 outputs."
-  ]
+    "Do not tune retrieval, cases, options, gold, or the diagnostic gate against observed v0.2 outputs.",
+    "No-context is intentionally an unanswerable project-policy condition in v0.2; a coincidentally correct A-D guess is still an unsupported commitment for the answerability diagnostic."
+  ],
+  "related_work_methodology": {
+    "note": "Borrow benchmark-construction principles, not benchmark answers. PDDR cases remain grounded in this repository's frozen decision corpora.",
+    "references": [
+      {
+        "name": "SWE-QA-Pro",
+        "url": "https://aclanthology.org/2026.findings-acl.837/",
+        "adopted_principle": "Use a direct/no-context condition as a difficulty-calibration signal; questions solvable without repository/project context are not strong evidence for context utility."
+      },
+      {
+        "name": "SWE-QA",
+        "url": "https://github.com/peng-weihan/SWE-QA-Bench",
+        "adopted_principle": "Derive question shapes from realistic developer/repository questions and keep human validation in the construction loop."
+      },
+      {
+        "name": "UAEval4RAG",
+        "url": "https://arxiv.org/abs/2412.12300",
+        "adopted_principle": "Treat missing required context as an answerability problem, not merely a wrong-answer problem; measure abstention and unsupported commitment."
+      },
+      {
+        "name": "RGB",
+        "url": "https://doi.org/10.1609/AAAI.V38I16.29728",
+        "adopted_principle": "Separate robustness dimensions such as noise, negative rejection, information integration, and counterfactual/context conflict instead of collapsing them into one accuracy number."
+      },
+      {
+        "name": "SafeRAG / MAGIC",
+        "url": "https://github.com/IAAR-Shanghai/SafeRAG",
+        "secondary_url": "https://arxiv.org/abs/2507.21544",
+        "adopted_principle": "Keep conflicting/near-miss context as a distinct stress-test family; do not assume that more retrieved context is always safer."
+      }
+    ]
+  },
+  "answerability_contract": {
+    "no_context_expected_behavior": "ABSTAIN",
+    "rationale": "Every v0.2 case is audited to leave at least two plausible project actions when the decision context is absent. Therefore committing to any A-D action in the no-context arm is an unsupported project-specific commitment even if it coincidentally matches the hidden gold action.",
+    "context_sufficient_controls": {
+      "required_only": "gold action expected",
+      "full_context": "gold action expected"
+    },
+    "retrieval_arms": "Score gold-action accuracy as before, but also report whether a selected context actually contains the required record and whether the model commits when that support is absent."
+  }
 }
