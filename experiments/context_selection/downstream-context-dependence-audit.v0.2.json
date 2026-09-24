@@ -13,7 +13,13 @@
       "A": "Shell plus separate CI tooling is a common bootstrap pattern.",
       "B": "A mature YAML library is a conventional extensibility choice.",
       "D": "Cross-language tooling is plausible for teams already using Node and Python."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-002",
@@ -29,7 +35,13 @@
       "B": "Loading all accepted records minimizes omission risk.",
       "C": "Recency filtering is a common heuristic when policy freshness matters.",
       "D": "Compiling history into policy can simplify downstream consumption."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "plausible-distractor-selection"
+    ]
   },
   {
     "case_id": "ds2-003",
@@ -46,7 +58,13 @@
       "A": "Three-way merge preserves local edits while accepting upstream changes.",
       "B": "Backup-and-replace is a simple package upgrade model.",
       "C": "Treating a dedicated tool directory as package-owned is common."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-004",
@@ -62,7 +80,13 @@
       "A": "A hosted service simplifies cross-project discovery.",
       "C": "A central monorepo creates one searchable source of truth.",
       "D": "Private incubation can reduce early compatibility commitments."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "plausible-distractor-selection"
+    ]
   },
   {
     "case_id": "ds2-005",
@@ -78,7 +102,14 @@
       "B": "One-command adoption reduces setup omissions.",
       "C": "A git hook can enforce usage without patching docs.",
       "D": "Minimal installers often leave integration conventions to adopters."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior",
+      "plausible-distractor-selection"
+    ]
   },
   {
     "case_id": "ds2-006",
@@ -94,7 +125,13 @@
       "A": "LLM judges handle semantically equivalent wording well.",
       "B": "Golden responses make regressions easy to diff.",
       "D": "State-only scoring is deterministic and compact."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-007",
@@ -110,7 +147,13 @@
       "A": "not-started is a common default workflow state.",
       "B": "Accepted decisions often imply planned implementation.",
       "C": "not-applicable can be used when a dimension cannot be assessed."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-008",
@@ -126,7 +169,13 @@
       "A": "Direct CI writes minimize maintenance overhead.",
       "C": "Generated PRs are a common automation boundary.",
       "D": "Confidence gating is a plausible additional publication signal."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-009",
@@ -143,7 +192,13 @@
       "B": "Fragment translation fixes token positions deterministically.",
       "C": "Prompt plus parser is simpler and preserves larger context.",
       "D": "AST transformation is a conventional structured-document approach."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-010",
@@ -159,7 +214,13 @@
       "A": "Boundary-aware replacement directly addresses substring collisions.",
       "B": "Letting the model handle short identities reduces masking complexity.",
       "D": "A final invariant check is a common validation-only design."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-011",
@@ -175,7 +236,13 @@
       "A": "Container isolation is a standard third-party-code control.",
       "B": "A relay can centralize retries and egress policy.",
       "C": "Configurable endpoints improve reuse while spend limits cap cost."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   },
   {
     "case_id": "ds2-012",
@@ -191,6 +258,12 @@
       "A": "Centralizing configuration reduces consumer boilerplate.",
       "C": "Tracking main propagates fixes immediately.",
       "D": "Central policy plus immutable pins maximizes consistency."
-    }
+    },
+    "no_context_expected_behavior": "ABSTAIN",
+    "stress_tags": [
+      "direct-answer-filter",
+      "negative-rejection",
+      "project-context-vs-generic-prior"
+    ]
   }
 ]
