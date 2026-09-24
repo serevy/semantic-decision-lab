@@ -1,0 +1,196 @@
+[
+  {
+    "case_id": "ds2-001",
+    "required_record": "PDDR-0002",
+    "decision_excerpt": "Use scripts/pddr.py for init and validate, depend only on the Python standard library, reuse the same CLI in GitHub Actions, and stop before writing on conflicts.",
+    "no_context_plausible_choices": [
+      "B",
+      "C"
+    ],
+    "generic_best_practice_choice": "B",
+    "context_dependency_reason": "A mature YAML dependency is a reasonable generic engineering choice; the project-specific decision deliberately accepts a narrower metadata grammar to preserve zero-extra-dependency portability.",
+    "distractor_plausibility": {
+      "A": "Shell plus separate CI tooling is a common bootstrap pattern.",
+      "B": "A mature YAML library is a conventional extensibility choice.",
+      "D": "Cross-language tooling is plausible for teams already using Node and Python."
+    }
+  },
+  {
+    "case_id": "ds2-002",
+    "required_record": "PDDR-0006",
+    "decision_excerpt": "Treat PDDRs as Decision Context/Evidence rather than executable policy; current instructions and approved policy take precedence; select only the minimum relevant records.",
+    "no_context_plausible_choices": [
+      "A",
+      "B"
+    ],
+    "generic_best_practice_choice": "B",
+    "context_dependency_reason": "Completeness-first institutional-memory retrieval is a defensible generic RAG strategy, while this project explicitly prioritizes policy separation and minimum relevant context.",
+    "distractor_plausibility": {
+      "B": "Loading all accepted records minimizes omission risk.",
+      "C": "Recency filtering is a common heuristic when policy freshness matters.",
+      "D": "Compiling history into policy can simplify downstream consumption."
+    }
+  },
+  {
+    "case_id": "ds2-003",
+    "required_record": "PDDR-0007",
+    "decision_excerpt": "Track only Kit-managed files by hash, support dry-run, stop all writes on a managed-file mismatch, and never auto-update project-owned config, records, docs, rules, or CI.",
+    "no_context_plausible_choices": [
+      "A",
+      "B",
+      "D"
+    ],
+    "generic_best_practice_choice": "A",
+    "context_dependency_reason": "A three-way merge is a normal upgrade strategy for locally edited generated files; this project deliberately chose a fail-closed hash contract instead.",
+    "distractor_plausibility": {
+      "A": "Three-way merge preserves local edits while accepting upstream changes.",
+      "B": "Backup-and-replace is a simple package upgrade model.",
+      "C": "Treating a dedicated tool directory as package-owned is common."
+    }
+  },
+  {
+    "case_id": "ds2-004",
+    "required_record": "PDDR-0001",
+    "decision_excerpt": "Publish PDDR Kit as MIT OSS; keep common specification/templates/Skill/validation in the kit, project-specific records in each project, coexist with ADR/DDR, and keep paid semantic services optional.",
+    "no_context_plausible_choices": [
+      "B",
+      "C"
+    ],
+    "generic_best_practice_choice": null,
+    "context_dependency_reason": "Both a central knowledge repository and project-local records are defensible organizational choices; the project-specific split must come from the decision history.",
+    "distractor_plausibility": {
+      "A": "A hosted service simplifies cross-project discovery.",
+      "C": "A central monorepo creates one searchable source of truth.",
+      "D": "Private incubation can reduce early compatibility commitments."
+    }
+  },
+  {
+    "case_id": "ds2-005",
+    "required_record": "PDDR-0003",
+    "decision_excerpt": "Keep init non-destructive; explicitly guide README discovery, AI/developer rules, CI connection, and Issue/PDDR boundaries; do not auto-edit project-specific files in v0.1.",
+    "no_context_plausible_choices": [
+      "A",
+      "B"
+    ],
+    "generic_best_practice_choice": "B",
+    "context_dependency_reason": "Auto-patching common README/CI patterns is a reasonable product-UX optimization, but the adoption evidence led this project to retain a manual project-specific integration boundary.",
+    "distractor_plausibility": {
+      "B": "One-command adoption reduces setup omissions.",
+      "C": "A git hook can enforce usage without patching docs.",
+      "D": "Minimal installers often leave integration conventions to adopters."
+    }
+  },
+  {
+    "case_id": "ds2-006",
+    "required_record": "PDDR-0004",
+    "decision_excerpt": "Evaluate the skill with structured behavior cases covering routing, record action, state, required behaviors, and forbidden behaviors; real-model execution is required before claiming validated.",
+    "no_context_plausible_choices": [
+      "A",
+      "C"
+    ],
+    "generic_best_practice_choice": "A",
+    "context_dependency_reason": "A strong-model judge is a common modern evaluation approach; the project instead chose a portable explicit behavior contract because certain failures must be hard failures.",
+    "distractor_plausibility": {
+      "A": "LLM judges handle semantically equivalent wording well.",
+      "B": "Golden responses make regressions easy to diff.",
+      "D": "State-only scoring is deterministic and compact."
+    }
+  },
+  {
+    "case_id": "ds2-007",
+    "required_record": "PDDR-0005",
+    "decision_excerpt": "Add delivery_status=unknown; absence of implementation evidence must not be converted into not-started.",
+    "no_context_plausible_choices": [
+      "A",
+      "D"
+    ],
+    "generic_best_practice_choice": "A",
+    "context_dependency_reason": "Many project trackers use not-started as the default when no work is visible; this project explicitly rejected that inference and added unknown.",
+    "distractor_plausibility": {
+      "A": "not-started is a common default workflow state.",
+      "B": "Accepted decisions often imply planned implementation.",
+      "C": "not-applicable can be used when a dimension cannot be assessed."
+    }
+  },
+  {
+    "case_id": "ds2-008",
+    "required_record": "PDDR-0001",
+    "decision_excerpt": "Generated translations are review artifacts, not publication actions; keep repository writes out of the translation workflow and require human review before publication.",
+    "no_context_plausible_choices": [
+      "B",
+      "C"
+    ],
+    "generic_best_practice_choice": "C",
+    "context_dependency_reason": "Automatically opening/merging a CI-green translation PR is a plausible docs-automation policy; this project intentionally retained a separate human publication checkpoint.",
+    "distractor_plausibility": {
+      "A": "Direct CI writes minimize maintenance overhead.",
+      "C": "Generated PRs are a common automation boundary.",
+      "D": "Confidence gating is a plausible additional publication signal."
+    }
+  },
+  {
+    "case_id": "ds2-009",
+    "required_record": "PDDR-0002",
+    "decision_excerpt": "Translate complete protected lines; allow inline-token reordering; deterministically restore line-leading Markdown syntax; retry bounded line failures; keep unresolved structural corruption as a hard failure.",
+    "no_context_plausible_choices": [
+      "A",
+      "B",
+      "D"
+    ],
+    "generic_best_practice_choice": "D",
+    "context_dependency_reason": "AST-based translation is a reasonable generic structural-safety design, while this project chose a targeted whole-line patch to preserve natural grammar with bounded repair.",
+    "distractor_plausibility": {
+      "B": "Fragment translation fixes token positions deterministically.",
+      "C": "Prompt plus parser is simpler and preserves larger context.",
+      "D": "AST transformation is a conventional structured-document approach."
+    }
+  },
+  {
+    "case_id": "ds2-010",
+    "required_record": "PDDR-0003",
+    "decision_excerpt": "Mask protected terms and source==target glossary identities before translation; restore them afterward; send only source!=target entries to glossary enforcement; mask longer literals first.",
+    "no_context_plausible_choices": [
+      "A",
+      "C"
+    ],
+    "generic_best_practice_choice": "A",
+    "context_dependency_reason": "Boundary-aware post-processing is a plausible generic fix for substring collisions; the project instead separated identity masking from translation preferences after dogfooding.",
+    "distractor_plausibility": {
+      "A": "Boundary-aware replacement directly addresses substring collisions.",
+      "B": "Letting the model handle short identities reduces masking complexity.",
+      "D": "A final invariant check is a common validation-only design."
+    }
+  },
+  {
+    "case_id": "ds2-011",
+    "required_record": "PDDR-0004",
+    "decision_excerpt": "Use one reviewed OpenAI profile, exact POST endpoint, no redirects/relay, paced and capped requests, narrow key exposure, pinned translator dependencies, and do not describe the fetch guard as a complete sandbox.",
+    "no_context_plausible_choices": [
+      "A",
+      "D"
+    ],
+    "generic_best_practice_choice": "A",
+    "context_dependency_reason": "Container isolation with short-lived credentials is a plausible generic security architecture; this project froze a narrower request-guard profile and explicitly documented its remaining process trust.",
+    "distractor_plausibility": {
+      "A": "Container isolation is a standard third-party-code control.",
+      "B": "A relay can centralize retries and egress policy.",
+      "C": "Configurable endpoints improve reuse while spend limits cap cost."
+    }
+  },
+  {
+    "case_id": "ds2-012",
+    "required_record": "PDDR-0005",
+    "decision_excerpt": "Caller owns canonical content, languages, terminology, provider secret/budget, repository-specific semantic checks, review and publication; kit owns generic mechanics; reviewed production use pins an immutable SHA or release tag.",
+    "no_context_plausible_choices": [
+      "B",
+      "C"
+    ],
+    "generic_best_practice_choice": "C",
+    "context_dependency_reason": "Following main while keeping caller policy local is a plausible continuous-delivery design; this project chose explicit immutable pins to make upgrades reviewed and reproducible.",
+    "distractor_plausibility": {
+      "A": "Centralizing configuration reduces consumer boilerplate.",
+      "C": "Tracking main propagates fixes immediately.",
+      "D": "Central policy plus immutable pins maximizes consistency."
+    }
+  }
+]
