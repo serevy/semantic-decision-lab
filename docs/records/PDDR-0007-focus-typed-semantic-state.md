@@ -20,6 +20,7 @@ evidence:
   - "https://github.com/serevy/semantic-decision-lab/issues/10"
   - "https://github.com/serevy/semantic-decision-lab/issues/81"
   - "Maintainer approval in project chat, 2026-09-25 (private)"
+  - "https://github.com/serevy/semantic-decision-lab/pull/101"
 related:
   - PDDR-0001
   - PDDR-0003
@@ -68,7 +69,7 @@ The individual Experiments remain useful as evaluation surfaces. The accepted ch
 - Description: Close or remove overlapping Experiments and keep only apparently novel topics.
 - Benefits: Narrow backlog and fewer experiments.
 - Costs / constraints: Loses valuable evaluation surfaces, domain evidence, and reusable baselines. Prior art does not make a bounded empirical question useless.
-- Status: rejected in this proposal
+- Status: rejected
 
 ### Keep the Experiments but move the common research boundary upward
 
@@ -80,7 +81,6 @@ The individual Experiments remain useful as evaluation surfaces. The accepted ch
 ## Decision
 
 **Accepted on 2026-09-25 by the maintainer.**
-
 
 - Treat established semantic primitives as building blocks, not project-level novelty claims.
 - Keep #1/#2/#3/#4/#5/#9/#10/#81 as bounded Experiments and evaluation surfaces.
@@ -159,6 +159,9 @@ Validation checks:
 - LLM-agent API approval patent: https://patents.google.com/patent/KR102707512B1/en
 - Agent-browser risk approval publication: https://patents.google.com/patent/US20260067335A1/en
 - LLM-generated IR publication: https://patents.google.com/patent/US20250306874A1/en
+
+- [PR #101: prior art scope refresh](https://github.com/serevy/semantic-decision-lab/pull/101)
+- `README.md` research boundary / research-map update
 
 ## Related records
 
