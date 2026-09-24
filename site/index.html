@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Provider-neutral experiments on semantic decision layers.">
+  <meta name="theme-color" content="#f6f8fa">
+  <title>Semantic Decision Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">SEMANTIC DECISION LAB</p>
+      <h1>Meaning as a small,<br>testable software primitive.</h1>
+      <p class="lede">
+        Provider-neutral experiments on turning ambiguous state into typed,
+        probabilistic decisions while deterministic code keeps control of execution,
+        policy, and safety.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/serevy/semantic-decision-lab">View on GitHub</a>
+        <a class="button" href="https://github.com/serevy/semantic-decision-lab#research-map">Research map</a>
+      </div>
+      <p class="languages">
+        README:
+        <a href="https://github.com/serevy/semantic-decision-lab/blob/main/README.md">English</a>
+        · <a href="https://github.com/serevy/semantic-decision-lab/blob/main/README.ja.md">日本語</a>
+        · <a href="https://github.com/serevy/semantic-decision-lab/blob/main/README.zh-CN.md">简体中文</a>
+        · <a href="https://github.com/serevy/semantic-decision-lab/blob/main/README.ko.md">한국어</a>
+        · <a href="https://github.com/serevy/semantic-decision-lab/blob/main/README.fr.md">Français</a>
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap section">
+      <div class="section-heading">
+        <p class="eyebrow">CORE IDEA</p>
+        <h2>Interpret meaning. Keep execution explicit.</h2>
+        <p>
+          The semantic layer answers what the current state means. Downstream code,
+          tools, policy, and safety remain deterministic and independently testable.
+        </p>
+      </div>
+      <figure class="diagram-card">
+        <img src="assets/semantic-decision-core.svg" alt="Ambiguous state flows through a semantic decision layer into a typed probabilistic result and deterministic execution.">
+      </figure>
+    </section>
+
+    <section class="section muted">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">RESEARCH MAP</p>
+          <h2>Small experiments, reusable boundaries.</h2>
+        </div>
+        <div class="grid">
+          <a class="card" href="https://github.com/serevy/semantic-decision-lab/issues/1">
+            <span class="number">#1</span>
+            <h3>AI Work Routing</h3>
+            <p>Route work across code, tools, models, review, and escalation.</p>
+          </a>
+          <a class="card featured" href="https://github.com/serevy/semantic-decision-lab/issues/2">
+            <span class="number">#2</span>
+            <h3>PDDR Context Selection</h3>
+            <p>Reduce context while preserving decision-critical information.</p>
+          </a>
+          <a class="card" href="https://github.com/serevy/semantic-decision-lab/issues/3">
+            <span class="number">#3</span>
+            <h3>Typed Handoff</h3>
+            <p>Compress free-form agent state into auditable typed handoffs.</p>
+          </a>
+          <a class="card" href="https://github.com/serevy/semantic-decision-lab/issues/10">
+            <span class="number">#10</span>
+            <h3>Real-time / Embodied</h3>
+            <p>Low-latency semantic decisions with independent hard safety.</p>
+          </a>
+          <a class="card featured" href="https://github.com/serevy/semantic-decision-lab/issues/81">
+            <span class="number">#81</span>
+            <h3>Provider Portability</h3>
+            <p>Separate API compatibility, quality, calibration, and runtime cost.</p>
+          </a>
+          <a class="card" href="https://github.com/serevy/semantic-decision-lab/issues/70">
+            <span class="number">#70</span>
+            <h3>Reference Radar</h3>
+            <p>Track related implementations, papers, and future experiment arms.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section">
+      <div class="section-heading">
+        <p class="eyebrow">PROVIDER-NEUTRAL</p>
+        <h2>The research is larger than one provider.</h2>
+        <p>
+          Applications target a typed decision boundary. Hosted, local, general-model,
+          and deterministic baselines can then be compared without rewriting downstream logic.
+        </p>
+      </div>
+      <figure class="diagram-card">
+        <img src="assets/provider-neutral-architecture.svg" alt="A common SemanticDecisionProvider connects the application to TypeSafe Jev, Kev, open local backends, general model baselines, and deterministic baselines.">
+      </figure>
+    </section>
+
+    <section class="section muted">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">METHOD</p>
+          <h2>Evidence first.</h2>
+          <p>
+            Freeze conditions before scored output, preserve first-run evidence,
+            version corrections explicitly, and analyze failure modes before optimizing.
+          </p>
+        </div>
+        <div class="principles">
+          <div><strong>Freeze</strong><span>protocol · dataset · baselines</span></div>
+          <div><strong>Preserve</strong><span>raw evidence before interpretation</span></div>
+          <div><strong>Separate</strong><span>compatibility · quality · calibration · cost</span></div>
+          <div><strong>Promote carefully</strong><span>only durable decisions become PDDR records</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p>This site is a map, not a leaderboard. Detailed evidence stays with the experiments until results are frozen and reproducible.</p>
+    <p><a href="https://github.com/serevy/semantic-decision-lab">github.com/serevy/semantic-decision-lab</a></p>
+  </footer>
+</body>
+</html>
