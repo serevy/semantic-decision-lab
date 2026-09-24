@@ -1,0 +1,36 @@
+name: Context selection downstream v0.2 freeze
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-cases.v0.2.json"
+      - "experiments/context_selection/downstream-context-dependence-audit.v0.2.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.2.json"
+      - "experiments/context_selection/downstream-arms.v0.2.json"
+      - "experiments/context_selection/validate_downstream_v0_2_freeze.py"
+      - ".github/workflows/context-selection-downstream-v0-2.yml"
+  push:
+    branches: [main]
+    paths:
+      - "experiments/context_selection/downstream-cases.v0.2.json"
+      - "experiments/context_selection/downstream-context-dependence-audit.v0.2.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.2.json"
+      - "experiments/context_selection/downstream-arms.v0.2.json"
+      - "experiments/context_selection/validate_downstream_v0_2_freeze.py"
+      - ".github/workflows/context-selection-downstream-v0-2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate frozen downstream v0.2 design
+        run: python experiments/context_selection/validate_downstream_v0_2_freeze.py
