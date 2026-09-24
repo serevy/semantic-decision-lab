@@ -93,4 +93,4 @@ README 有意**不是**实时排行榜。
 | GitHub Issue | 假设、协议、观察结果、原始证据、失败情况和后续跟进 |
 | PDDR | 有证据支持的采用、拒绝、推迟、范围、后果和重新审议条件 |
 
-此仓库使用 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`。[mcp__GitHub__PDDR-0001](docs/records/PDDR-0001-separate-experiments-from-decisions.md) 定义了实验性工作与持久决策记录之间的界限。
+此仓库使用 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) 定义了实验性工作与持久决策记录之间的界限。
