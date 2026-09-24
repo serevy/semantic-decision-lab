@@ -2,32 +2,95 @@
 
 [English](README.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | **한국어** | [Français](README.fr.md)
 
-AI 오케스트레이션, 컨텍스트 선택, 라우팅, 핸드오프, 실시간 시스템을 위한 시맨틱 의사결정 레이어 실험.
+> **의미 결정 계층에 대한 공급자 중립적 실험: 모호한 상태를 결정론적 시스템이 소비할 수 있는 타입화된 확률적 결정으로 전환.**
 
-## 운영 모델
+핵심 질문은 “LLM이 모든 것을 할 수 있는가?”가 아닙니다. 핵심은 다음과 같습니다.
 
-이 저장소에서는 실험 작업과 장기적으로 보존해야 할 프로젝트 의사결정을 분리합니다.
+> **의미론적 판단을 작고 테스트 가능한 소프트웨어 기본 단위로 격리하는 동시에, 결정론적 코드가 실행, 정책 및 안전에 대한 제어를 유지할 수 있을까요?**
 
-| 산출물 | 목적 | 주요 내용 |
+이 저장소는 오케스트레이션, 컨텍스트 선택, 타입이 지정된 핸드오프, 상태 해석, 도메인 게이트, 실시간 시스템, 그리고 상호 교체 가능한 의미 결정 제공업체 전반에 걸쳐 그 질문을 탐구합니다.
+
+## 핵심 아이디어
+
+시맨틱 계층은 **현재 상태가 무엇을 의미하는지**에 답해야 합니다. 결정론적 시스템은 여전히 **다음에 일어날 일을** 담당합니다.
+
+![의미 결정 코어 아키텍처](docs/assets/semantic-decision-core.svg)
+
+이러한 분리를 통해 실행 로직과 독립적으로 의미론적 판단을 테스트할 수 있습니다. 또한 불확실성, 기권, 에스컬레이션 및 제공자 교체를 모놀리식 에이전트 내부에 숨기는 대신 명시적으로 드러낼 수 있습니다.
+
+## 연구 지도
+
+| 영역 | 연구 질문 | 주요 논의 |
 |---|---|---|
-| GitHub Issue | 실험 백로그 및 작업 스레드 | 가설, 설정, 작업, 중간 관찰, 가공하지 않은 결과, 후속 조치 |
-| PDDR | 중요한 의사결정을 장기 보존하는 기록 | 근거에 따른 채택, 거부, 보류, 범위, 영향, 재검토 조건 |
+| 오케스트레이션 | 의미 기반 라우팅으로 성공적인 결과를 저해하지 않으면서 비용이나 지연 시간을 줄일 수 있는가? | [#1 AI 작업 라우팅](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| 맥락 및 메모리 | 의사 결정에 중요한 정보를 보존하면서 더 작은 맥락을 선택할 수 있는가? | [#2 PDDR 맥락 선택](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 다운스트림 작업 성공 평가](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| 핸드오프 | 자유 형식 에이전트 상태가 중요한 제약 조건을 잃지 않고 간결한 형식의 핸드오프로 변환될 수 있는가? | [#3 형식이 지정된 핸드오프](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| 상태 해석 | 지원되지 않는 확실성을 꾸며내지 않고 의사결정 상태, 화용론적 상태 및 의미적 궤적을 나타낼 수 있는가? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| 도메인 게이트 및 탐색 | 제한된 도메인 워크플로에서 의미론적 분류, 점수 산정, 검색 및 순위 지정은 어디에 도움이 됩니까? | [#6 트레이딩 전략 게이트](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 버튜버 탐색](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 취향 탐색](https://github.com/serevy/semantic-decision-lab/issues/8) |
+| 실시간 / 체화 | 낮은 지연 시간의 의미론적 결정이 대화형 시스템을 개선하는 동시에 하드 세이프티는 독립적으로 유지될 수 있는가? | [#10 실시간 / 체화 의사 결정 계층](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| 제공자 이식성 | 동일한 typed-decision 애플리케이션을 호스팅 제공자와 로컬 제공자 간에 이동할 때 제공자별 가정이 다운스트림으로 누출되지 않는가? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-실험을 실행하거나 완료했다는 이유만으로 PDDR이 자동 생성되지는 않습니다. 실험의 근거를 바탕으로, 그 이유를 Issue 수명 주기를 넘어 보존해야 하는 중요한 Project, Product 또는 Process 의사결정에 도달한 경우에만 PDDR을 생성하거나 업데이트합니다.
+이 저장소는 분류, 채점, 라우팅, 검색, 검증과 같은 확립된 작업 형태를 구성 요소로 취급합니다. 연구의 초점은 이러한 기본 요소가 신뢰할 수 있는 소프트웨어 아키텍처로 어떻게 구성되는지, 그리고 실제 평가 제약 조건에서 어떻게 작동하는지에 있습니다.
 
-의사결정을 내린 경우 Issue와 PDDR을 서로 연결하고, 가공하지 않은 실험 세부 정보는 Issue에 남깁니다.
+## 프로바이더 중립적으로 설계됨
 
-## PDDR
+Jev는 이 작업에서 중요한 제공자이자 기준점이지만, **연구의 정의는 아닙니다**. 실험은 가능한 경우 애플리케이션 로직을 공통의 타입 지정 결정 경계 뒤에 두는 것을 목표로 합니다.
 
-이 저장소에서는 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`을 사용합니다.
+![프로바이더 중립적 의미 결정 아키텍처](docs/assets/provider-neutral-architecture.svg)
 
-또한 hardened optional checkpoint CI를 도입했습니다. PR head를 관찰하는 signal workflow는 read-only이며, marker 쓰기는 trusted default-branch writer가 담당합니다. checkpoint signal은 bounded review를 요청하는 신호일 뿐 PDDR 생성을 의무화하지 않으며, routine 실험 완료를 자동으로 PDDR로 승격하지 않습니다.
+제공자 비교에서는 서로 다른 차원을 분리해 유지합니다:
 
-`.pddr/template.md`을 바탕으로 기록을 만들고, `docs/records/` 아래에 저장한 뒤 검토 전에 검증합니다.
+- **계약 호환성** — 동일한 요청/응답 형식을 사용할 수 있는가?
+- **의미적 품질** — 작업에 대한 결정이 올바른가?
+- **캘리브레이션** — 확률이 다운스트림 자동화에서 가정하는 의미를 실제로 뜻하는가?
+- **견고성** — 옵션 순서, 컨텍스트 길이, 패킹, 응답 보류 및 실패 동작
+- **시스템 비용** — 지연 시간, 메모리, 하드웨어, 처리량 및 외부 API 비용
 
-```bash
-cp .pddr/template.md docs/records/PDDR-0002-short-title.md
-python .pddr/pddr.py validate
-```
+**API 호환성은 의미적 동등성을 뜻하지 않습니다.** 제공자는 쉽게 교체할 수 있더라도 동작이 충분히 달라 다른 임계값이나 배포 제약 조건이 필요할 수 있습니다.
 
-첫 번째 기록인 [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)은 Issue와 의사결정 기록의 경계를 정의합니다.
+## 실험 작동 방식
+
+이 연구실은 증거를 최우선으로 합니다. 실험 설계와 원시 증거는 지속적으로 유지되는 프로젝트 결정과 분리됩니다.
+
+![실험 증거 및 PDDR 워크플로](docs/assets/experiment-evidence-pddr.svg)
+
+일반 규칙:
+
+- 점수가 매겨지는 제공자 출력 전에 평가 조건을 동결하십시오;
+- 실패가 발견된 후 다시 작성하지 말고 최초 실행 증거를 보존합니다;
+- 버전 프로토콜, 패키징, 데이터 세트 또는 프롬프트 변경 사항을 명시적으로 기록하세요;
+- 관련 있는 경우 결정론적 및/또는 기존 베이스라인과 비교하십시오;
+- 제공자가 입력을 거부하거나 잘라 내는 경우 적용 범위와 정확성을 구분합니다;
+- 상류 벤치마크 주장은 재현될 때까지 관련 연구의 근거로 취급합니다;
+- 제공업체별 벤치마크 결과를 게시하기 전에 제공업체 약관을 준수하세요.
+
+## 결과 및 시각화
+
+README는 의도적으로 **실시간 순위표가 아닙니다**.
+
+안정적이고 확정된 결과는 나중에 작은 차트나 요약 그림으로 여기에서 승격할 수 있습니다. 자세한 결과 분석, 출처 정보, 진단 및 대화형 보기는 실험 아티팩트, `docs/`, 또는 향후 GitHub Pages 사이트에 포함됩니다.
+
+이는 랜딩 페이지의 가독성을 유지하면서도 흔히 발생하는 문제, 즉 해당 차트를 생성한 실험 버전보다 매력적인 차트가 조용히 더 오래 존속하는 문제를 방지합니다.
+
+## 리포지토리 레이아웃
+
+| 경로 | 용도 |
+|---|---|
+| `experiments/` | 재현 가능한 실험 코드, 데이터 세트, 평가기 및 증거 중심 자산 |
+| `docs/records/` | 승인된 PDDR 결정 기록 |
+| `.pddr/` | PDDR Kit 도구, 스키마, 검증 및 체크포인트 지원 |
+| `docs/` | 랜딩 페이지에 포함되지 않는 보조 문서 및 조사 노트 |
+| GitHub Issues | 가설, 프로토콜, 중간 관찰 결과, 원시 결과, 실패 및 후속 조치 |
+
+향후 실험에 영향을 미칠 수 있는 외부 구현 및 논문은 [#70 외부 참고 자료 레이더](https://github.com/serevy/semantic-decision-lab/issues/70)를 참조하세요.
+
+## 연구 기록
+
+작업 중인 실험 세부 정보는 GitHub Issues에 남겨 둡니다. 실험 자체를 넘어 보존할 가치가 있는 지속 가능한 프로젝트, 제품 또는 프로세스 결정으로 증거가 이어질 때만 PDDR을 생성합니다.
+
+| 아티팩트 | 역할 |
+|---|---|
+| GitHub Issue | 가설, 프로토콜, 관찰 결과, 원시 증거, 실패 및 후속 조치 |
+| PDDR | 근거에 기반한 채택, 거부, 보류, 범위, 결과 및 재검토 조건 |
+
+이 저장소는 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`을(를) 사용합니다. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)은(는) 실험적 작업과 지속 가능한 의사 결정 기록 사이의 경계를 정의합니다.
