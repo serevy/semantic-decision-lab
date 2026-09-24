@@ -1,10 +1,10 @@
 ---
 id: PDDR-0007
 title: Focus research contribution on typed semantic state and downstream fidelity
-decision_date: unknown
+decision_date: 2026-09-25
 recorded_date: 2026-09-25
-decision_status: proposed
-delivery_status: in-progress
+decision_status: accepted
+delivery_status: implemented
 scope:
   - project
 owners:
@@ -19,6 +19,7 @@ evidence:
   - "https://github.com/serevy/semantic-decision-lab/issues/9"
   - "https://github.com/serevy/semantic-decision-lab/issues/10"
   - "https://github.com/serevy/semantic-decision-lab/issues/81"
+  - "Maintainer approval in project chat, 2026-09-25 (private)"
 related:
   - PDDR-0001
   - PDDR-0003
@@ -33,11 +34,11 @@ superseded_by: null
 
 A 2026-09-25 prior-art refresh across academic research, open-source implementations, and patent publications found that several primitives already used by Semantic Decision Lab have substantial existing work: model routing/cascading, context and prompt compression, structured agent handoff, dialogue/action-state tracking, pragmatic-language evaluation, trajectory/process supervision, high-level embodied planning with grounded control, and intermediate representations.
 
-This record proposes keeping those primitives as reusable building blocks and moving the Lab's project-level research boundary upward:
+This record keeps those primitives as reusable building blocks and moves the Lab's project-level research boundary upward:
 
 > Represent ambiguous semantic judgment as typed, uncertainty-aware state and transitions that preserve downstream behavior, remain provider-portable where practical, and stay subordinate to deterministic execution, authorization, and hard safety.
 
-The individual Experiments remain useful as evaluation surfaces. The proposed change is where the Lab claims research contribution and where new implementation effort should be spent.
+The individual Experiments remain useful as evaluation surfaces. The accepted change is where the Lab claims research contribution and where new implementation effort should be spent.
 
 ## Context and observations
 
@@ -60,7 +61,7 @@ The individual Experiments remain useful as evaluation surfaces. The proposed ch
 - Description: Keep routing, compression, typed handoff, trajectory evaluation, and IR boundaries as primary research claims.
 - Benefits: Minimal changes to current experiment titles and descriptions.
 - Costs / constraints: Duplicates mature external work, spends implementation time rebuilding available components, and weakens the Lab's shared research identity.
-- Status: rejected in this proposal
+- Status: rejected
 
 ### Drop Experiments that overlap prior art
 
@@ -74,13 +75,12 @@ The individual Experiments remain useful as evaluation surfaces. The proposed ch
 - Description: Reuse established routing, retrieval, compression, handoff, pragmatics, trajectory, embodied-planning, and IR techniques as baselines/building blocks while focusing on typed semantic state, uncertainty, transitions, downstream behavioral fidelity, provider portability, and deterministic authority boundaries.
 - Benefits: Reduces reinvention, preserves existing evidence, creates a clearer cross-domain Lab identity, and leaves individual Experiments useful as testbeds.
 - Costs / constraints: Requires careful wording so the repository does not imply novelty for established primitives; some Experiment protocols need future versioned baseline additions rather than retroactive edits.
-- Status: proposed
+- Status: accepted
 
 ## Decision
 
-**Proposed; maintainer confirmation is still required.**
+**Accepted on 2026-09-25 by the maintainer.**
 
-If accepted:
 
 - Treat established semantic primitives as building blocks, not project-level novelty claims.
 - Keep #1/#2/#3/#4/#5/#9/#10/#81 as bounded Experiments and evaluation surfaces.
@@ -97,7 +97,7 @@ If accepted:
 
 ## Delivery and validation
 
-In progress.
+Implemented.
 
 As part of the same prior-art refresh, Issues #1, #2, #3, #4, #5, #9, #10, #70, and #81 were updated with:
 - established-prior-art boundaries;
@@ -105,11 +105,11 @@ As part of the same prior-art refresh, Issues #1, #2, #3, #4, #5, #9, #10, #70, 
 - revised Lab-specific research focus;
 - explicit preservation of frozen evidence where applicable.
 
-This PDDR is intentionally proposed rather than accepted until maintainer review confirms the project-level scope change.
+Maintainer approval was confirmed on 2026-09-25. README/research-map wording is updated in the same PR to reflect the accepted project boundary.
 
-Validation after acceptance should check that:
+Validation checks:
 - README/research-map wording does not imply novelty for established primitives;
-- new Experiment versions cite/reuse appropriate prior work before custom implementation;
+- future Experiment versions should cite/reuse appropriate prior work before custom implementation;
 - frozen historical evidence remains unchanged;
 - downstream-fidelity and authority-boundary metrics appear in the relevant future protocols.
 
