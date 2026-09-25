@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "version": "v0.3",
+  "note": "Benchmark fixtures isolate downstream context fidelity. Real-derived cards are normalized from accepted PDDR decisions; synthetic siblings are explicit counterfactual fixtures and are not historical project claims. Provenance metadata is never rendered into model prompts.",
+  "pairs": [
+    {
+      "pair_id": "pair-dependency-profile",
+      "family": "dependency profile",
+      "cards": [
+        {
+          "card_id": "dep-stdlib",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Use one Python-standard-library CLI for initialization and validation, reuse that CLI in CI, and accept a deliberately narrow metadata grammar for v0.1.",
+          "rationale": "The project prioritizes zero extra runtime dependencies and one portable local/CI path over full YAML expressiveness.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0002",
+            "source_path": "experiments/context_selection/corpus/pddr-kit-v0.1/PDDR-0002-portable-init-and-validation.md",
+            "source_title": "Portable initialization and validation"
+          }
+        },
+        {
+          "card_id": "dep-yaml",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Use one Python CLI backed by a reviewed external YAML package for initialization and validation, and reuse the same CLI in CI.",
+          "rationale": "The project prioritizes mature YAML semantics and future metadata extensibility over a zero-dependency runtime.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0002",
+            "source_path": "experiments/context_selection/corpus/pddr-kit-v0.1/PDDR-0002-portable-init-and-validation.md",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-upgrade-conflict",
+      "family": "upgrade conflict policy",
+      "cards": [
+        {
+          "card_id": "upgrade-fail-closed",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Track only toolkit-managed files in a hash manifest, provide dry-run, and abort all writes when any managed file differs from its recorded hash.",
+          "rationale": "The project prioritizes non-destructive upgrades and explicit human resolution over automatic merging of locally edited managed files.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0007",
+            "source_path": "experiments/context_selection/corpus/pddr-kit-v0.1/PDDR-0007-safe-adoption-upgrades.md",
+            "source_title": "Safe upgrades for adopted projects"
+          }
+        },
+        {
+          "card_id": "upgrade-three-way",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Perform a best-effort three-way merge for locally edited managed files, continue updating files that merge cleanly, and surface only unresolved conflicts for human review.",
+          "rationale": "The project prioritizes automated upgrade continuity while preserving local edits through merge semantics.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0007",
+            "source_path": "experiments/context_selection/corpus/pddr-kit-v0.1/PDDR-0007-safe-adoption-upgrades.md",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-publication-boundary",
+      "family": "publication boundary",
+      "cards": [
+        {
+          "card_id": "publish-human-review",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Generate review artifacts only and require a human-reviewed publication change; the generation workflow itself does not commit, push, merge, or replace published files.",
+          "rationale": "Machine structural checks are useful but are not treated as proof of linguistic or semantic publication quality.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0001",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0001-review-artifacts-human-publication.md",
+            "source_title": "Review-only translation artifacts and human publication"
+          }
+        },
+        {
+          "card_id": "publish-auto-green",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Automatically publish generated translations when all configured structural and terminology gates pass.",
+          "rationale": "The project treats the reviewed machine gates as the publication boundary so routine translations do not require a separate human publication step.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0001",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0001-review-artifacts-human-publication.md",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-provider-scope",
+      "family": "provider scope",
+      "cards": [
+        {
+          "card_id": "provider-narrow",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Ship one narrow reviewed provider/model profile with an exact endpoint, explicit request guards, bounded request volume, and documented remaining trust boundaries.",
+          "rationale": "The project prioritizes a reproducible first path and a small trust surface over immediate provider generality.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0004",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0004-runtime-security-boundary.md",
+            "source_title": "Keep the initial provider profile narrow and enforce runtime request guards"
+          }
+        },
+        {
+          "card_id": "provider-neutral",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Define a provider-neutral interface first and require provider-specific adapters to normalize transport/model differences behind that contract.",
+          "rationale": "The project prioritizes provider portability and comparable downstream behavior over a single-provider first implementation.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0004",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0004-runtime-security-boundary.md",
+            "synthetic_counterfactual": true,
+            "related_real_pattern": "docs/records/PDDR-0003-provider-neutral-evaluation-contract.md"
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-production-version",
+      "family": "production version tracking",
+      "cards": [
+        {
+          "card_id": "version-immutable",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Production callers pin a reviewed immutable commit SHA or reviewed release tag and update that pin explicitly when a new workflow revision is approved.",
+          "rationale": "The project prioritizes reproducibility and reviewed upgrades over silently receiving upstream changes.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0005",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0005-caller-contract-pinning.md",
+            "source_title": "Keep repository-specific responsibility in the caller and pin reviewed workflow revisions"
+          }
+        },
+        {
+          "card_id": "version-main",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Production callers track the reusable workflow's main branch so reviewed upstream fixes propagate immediately without per-caller pin updates.",
+          "rationale": "The project prioritizes rapid fix rollout and low consumer maintenance over immutable run-to-run workflow identity.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0005",
+            "source_path": "experiments/context_selection/corpus/readme-i18n-kit-v0.1/PDDR-0005-caller-contract-pinning.md",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-backend-expansion",
+      "family": "backend expansion",
+      "cards": [
+        {
+          "card_id": "backend-freeze",
+          "snapshot_id": "snapshot-alpha",
+          "status": "accepted",
+          "decision": "Freeze backend expansion once methodologically distinct comparison arms are covered, and add another backend only when it fills an explicit research gap.",
+          "rationale": "The project prioritizes dataset depth, failure analysis, and downstream evaluation over collecting every newly discovered backend.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0002",
+            "source_path": "docs/records/PDDR-0002-freeze-backend-expansion.md",
+            "source_title": "Freeze backend expansion after methodologically distinct coverage"
+          }
+        },
+        {
+          "card_id": "backend-expand-all",
+          "snapshot_id": "snapshot-beta",
+          "status": "accepted",
+          "decision": "Add every credible newly discovered backend to the shared comparison matrix so landscape coverage remains as complete as practical.",
+          "rationale": "The project prioritizes breadth of backend coverage and current ecosystem representation over limiting comparison-arm growth.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0002",
+            "source_path": "docs/records/PDDR-0002-freeze-backend-expansion.md",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    }
+  ]
+}
