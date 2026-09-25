@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream task success",
+  "version": "v0.2",
+  "issue": 97,
+  "follow_up_issue": 102,
+  "run": {
+    "workflow_run_id": 36035143735,
+    "repository_head": "4ebbc459951370c27f7b5ceede89a460bd805a66",
+    "provider": "OpenAI",
+    "model": "gpt-5.6-luna",
+    "request_count": 72,
+    "response_count": 72,
+    "api_or_transport_errors": 0,
+    "parse_errors": 0
+  },
+  "provenance": {
+    "request_pack_sha256": "bb7eb5109f46c93dd2e4a8ca0ceb9a99b36c6f2bc4eecdf044ede6e40b84b325",
+    "execution_order_sha256": "d8fea40bd7118fcf420a23a700022c28bb504421d1f29d7f502139bda2765c33",
+    "artifact_id": 10825221547,
+    "artifact_digest": "sha256:b1e25f081d691b88af3930de255433b062a7c203476b3cf8867fc052691c035c",
+    "raw_results_sha256": "2333162a11934cd5187b0e89d95f1e3a425c60531a148769b383ef404f6cf983",
+    "evaluator_input_sha256": "613f1ef27017346e395b7d91f8e07762b3381fffdd4735ee43de31a725197a21",
+    "evaluation_sha256": "bae7533c465d0fa2311448d1c074808273be52d7c1ead71489d2a88cda5d8b2c"
+  },
+  "summaries": {
+    "no_context": {
+      "correct": 10,
+      "total": 12,
+      "abstain": 2,
+      "gold_action_accuracy": 0.8333333333333334,
+      "unsupported_commitment_rate": 0.8333333333333334
+    },
+    "required_only": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "gold_action_accuracy": 1,
+      "required_record_present_count": 12
+    },
+    "full_context": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "gold_action_accuracy": 1,
+      "required_record_present_count": 12
+    },
+    "keyword_top2": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "gold_action_accuracy": 1,
+      "required_record_present_count": 11
+    },
+    "embedding_first512_top2": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "gold_action_accuracy": 1,
+      "required_record_present_count": 10
+    },
+    "embedding_chunked_top2": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "gold_action_accuracy": 1,
+      "required_record_present_count": 9
+    }
+  },
+  "diagnostic_gate": {
+    "pass": false,
+    "checks": {
+      "no_context_max_correct": false,
+      "required_only_min_correct": true,
+      "full_context_min_correct": true,
+      "required_only_minus_no_context": true,
+      "full_context_minus_no_context": true
+    }
+  }
+}
