@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "dataset": "downstream-cases.v0.3.json",
+  "fixtures": "downstream-counterfactual-fixtures.v0.3.json",
+  "arms": {
+    "no_context": {
+      "role": "unanswerable negative control",
+      "selections": {
+        "ds3-001": [],
+        "ds3-002": [],
+        "ds3-003": [],
+        "ds3-004": [],
+        "ds3-005": [],
+        "ds3-006": [],
+        "ds3-007": [],
+        "ds3-008": [],
+        "ds3-009": [],
+        "ds3-010": [],
+        "ds3-011": [],
+        "ds3-012": []
+      }
+    },
+    "correct_context": {
+      "role": "matching decision context",
+      "selections": {
+        "ds3-001": [
+          "dep-stdlib"
+        ],
+        "ds3-002": [
+          "dep-yaml"
+        ],
+        "ds3-003": [
+          "upgrade-fail-closed"
+        ],
+        "ds3-004": [
+          "upgrade-three-way"
+        ],
+        "ds3-005": [
+          "publish-human-review"
+        ],
+        "ds3-006": [
+          "publish-auto-green"
+        ],
+        "ds3-007": [
+          "provider-narrow"
+        ],
+        "ds3-008": [
+          "provider-neutral"
+        ],
+        "ds3-009": [
+          "version-immutable"
+        ],
+        "ds3-010": [
+          "version-main"
+        ],
+        "ds3-011": [
+          "backend-freeze"
+        ],
+        "ds3-012": [
+          "backend-expand-all"
+        ]
+      }
+    },
+    "wrong_context": {
+      "role": "counterfactual sibling context",
+      "selections": {
+        "ds3-001": [
+          "dep-yaml"
+        ],
+        "ds3-002": [
+          "dep-stdlib"
+        ],
+        "ds3-003": [
+          "upgrade-three-way"
+        ],
+        "ds3-004": [
+          "upgrade-fail-closed"
+        ],
+        "ds3-005": [
+          "publish-auto-green"
+        ],
+        "ds3-006": [
+          "publish-human-review"
+        ],
+        "ds3-007": [
+          "provider-neutral"
+        ],
+        "ds3-008": [
+          "provider-narrow"
+        ],
+        "ds3-009": [
+          "version-main"
+        ],
+        "ds3-010": [
+          "version-immutable"
+        ],
+        "ds3-011": [
+          "backend-expand-all"
+        ],
+        "ds3-012": [
+          "backend-freeze"
+        ]
+      }
+    },
+    "both_contexts": {
+      "role": "explicit conflicting context",
+      "selections": {
+        "ds3-001": [
+          "dep-stdlib",
+          "dep-yaml"
+        ],
+        "ds3-002": [
+          "dep-stdlib",
+          "dep-yaml"
+        ],
+        "ds3-003": [
+          "upgrade-fail-closed",
+          "upgrade-three-way"
+        ],
+        "ds3-004": [
+          "upgrade-fail-closed",
+          "upgrade-three-way"
+        ],
+        "ds3-005": [
+          "publish-auto-green",
+          "publish-human-review"
+        ],
+        "ds3-006": [
+          "publish-auto-green",
+          "publish-human-review"
+        ],
+        "ds3-007": [
+          "provider-narrow",
+          "provider-neutral"
+        ],
+        "ds3-008": [
+          "provider-narrow",
+          "provider-neutral"
+        ],
+        "ds3-009": [
+          "version-immutable",
+          "version-main"
+        ],
+        "ds3-010": [
+          "version-immutable",
+          "version-main"
+        ],
+        "ds3-011": [
+          "backend-expand-all",
+          "backend-freeze"
+        ],
+        "ds3-012": [
+          "backend-expand-all",
+          "backend-freeze"
+        ]
+      }
+    }
+  }
+}

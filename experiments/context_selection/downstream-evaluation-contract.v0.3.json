@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream context fidelity",
+  "version": "v0.3",
+  "issue": 102,
+  "parent_issue": 2,
+  "predecessor_issue": 97,
+  "dataset": "downstream-cases.v0.3.json",
+  "fixtures": "downstream-counterfactual-fixtures.v0.3.json",
+  "arms": "downstream-arms.v0.3.json",
+  "freeze_rule": "Matched-pair scenarios/options, fixture cards, gold actions, arms, prompt contract, and diagnostic gate are frozen before any downstream-model output is observed.",
+  "prompt_contract": {
+    "system": "You are evaluating a project-specific decision. Use only the scenario, answer options, and Decision Context cards supplied in this request. The scenario and options may be compatible with multiple reasonable policies. If no Decision Context is supplied, or if supplied Decision Context cards conflict without a rule that resolves the conflict, return ABSTAIN. Otherwise follow the accepted decision in the supplied context. Return exactly one choice A, B, C, D, or ABSTAIN.",
+    "context_header": "Decision Context cards:",
+    "no_context_marker": "(none)",
+    "user_template": "Scenario: {scenario}\\n\\nQuestion: {question}\\n\\nOptions:\\nA: {A}\\nB: {B}\\nC: {C}\\nD: {D}",
+    "allowed_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "ABSTAIN"
+    ],
+    "provenance_must_not_be_prompted": true
+  },
+  "expected_behavior": {
+    "no_context": "ABSTAIN",
+    "correct_context": "project gold action",
+    "wrong_context": "diagnostic: measure whether output follows the supplied sibling decision",
+    "both_contexts": "ABSTAIN"
+  },
+  "primary_metrics": [
+    "correct_context_gold_accuracy",
+    "no_context_abstention_rate",
+    "matched_pair_flip_accuracy",
+    "wrong_context_supplied_context_follow_rate",
+    "both_contexts_abstention_rate"
+  ],
+  "diagnostic_gate": {
+    "frozen_before_output": true,
+    "correct_context_min_correct": 10,
+    "no_context_min_abstain": 10,
+    "matched_pair_min_correct_flips": 5,
+    "both_contexts_min_abstain": 8,
+    "note": "wrong-context following is reported but is not a pass/fail gate because it measures susceptibility to incorrect retrieved policy rather than benchmark validity."
+  },
+  "interpretation_limits": [
+    "v0.3 isolates downstream context fidelity and conflict handling; it is not a retrieval-quality benchmark.",
+    "Synthetic counterfactual cards are benchmark fixtures, not historical project decisions.",
+    "A later version may recouple a retrieval selector to near-neighbor/counterfactual records after v0.3 establishes context sensitivity."
+  ]
+}
