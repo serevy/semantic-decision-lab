@@ -16,7 +16,11 @@ evidence:
   - "https://github.com/serevy/semantic-decision-lab/pull/69"
   - "https://github.com/serevy/semantic-decision-lab/pull/72"
   - "https://github.com/serevy/semantic-decision-lab/pull/73"
-  - "Maintainer approval to merge PR #75, 2026-09-23 (private)"\n  - "https://github.com/serevy/semantic-decision-lab/actions/runs/35940937705"\n  - "https://github.com/serevy/semantic-decision-lab/issues/97"
+  - "Maintainer approval to merge PR #75, 2026-09-23 (private)"
+  - "https://github.com/serevy/semantic-decision-lab/actions/runs/35940937705"
+  - "https://github.com/serevy/semantic-decision-lab/issues/97"
+  - "https://github.com/serevy/semantic-decision-lab/actions/runs/36035143735"
+  - "https://github.com/serevy/semantic-decision-lab/issues/102"
 related:
   - PDDR-0002
   - PDDR-0003
@@ -79,6 +83,7 @@ PDDR Context Selectionをretrieval goldだけで評価し続けず、凍結済�
 - このbounded taskの結果だけでproduction selectorやopen-ended task qualityを一般化しない。
 - downstream accuracyをretrieval behavior preservationのEvidenceとして扱うには、no-context negative controlがscenario / optionsだけではgold actionを十分に決められないことを示す必要がある。
 - no-contextがsaturateした場合、そのrunはbenchmark-design diagnosticとしてfreezeし、同versionのcase/optionsをprovider outputへ合わせて修正しない。context dependenceをhardeningした新versionへ進む。
+- wording difficultyだけを上げてもno-context推論が残る場合は、matched counterfactual pairなどcontext dependenceを構造的に保証できる評価へ移行する。pair内のprompt-visible taskを同一にし、Decision Contextだけでaccepted actionが変わる設計を優先する。
 - 後続versionではlive output前にcaseごとのcontext-dependence auditと、no-context対context-bearing controlの意味ある分離を要求するnumeric diagnostic gateをfreezeする。
 
 ## Delivery and validation
@@ -87,17 +92,19 @@ Maintainer approval to merge PR #75 was given on 2026-09-23. The downstream v0.1
 
 The first live run completed on 2026-09-24 with OpenAI `gpt-5.6-luna`: 72/72 valid responses, 0 API/transport errors, and 0 exact-choice parse errors. All six arms scored 12/12, including the no-context negative control. This validates the execution/evaluation envelope and simultaneously triggers this record's benchmark-design revisit condition. Issue #97 owns the versioned context-dependence hardening; v0.1 remains frozen as diagnostic Evidence.
 
+The first v0.2 live run completed with the same downstream model and 72/72 valid responses. No-context improved to 10/12 with 2 ABSTAIN, while required-only/full-context and all three replayed retrieval arms still scored 12/12. The pre-output gate failed because no-context remained above the frozen 8/12 maximum. The retrieval arms also remained 12/12 despite required-record coverage of 11/12, 10/12, and 9/12 respectively. This shows that harder wording alone did not make downstream success sufficiently dependent on retrieved project context. Issue #102 owns the matched-counterfactual v0.3 follow-up.
+
 ## Consequences
 
 - retrieval recallと実decision behaviorを別レイヤーで比較できる。
-- no-context controlにより、task wordingだけで正解できるcaseをprompt leakage signalとして観測できる。v0.1では実際に1.0となり、retrieval差をmaskするbenchmark saturationを検出した。
+- no-context controlにより、task wordingだけで正解できるcaseをprompt leakage signalとして観測できる。v0.1では1.0、v0.2では0.8333となり改善したが、retrieval差をmaskするには依然高すぎることを検出した。
 - required-only controlにより、最小の正解contextがdownstream modelへ十分かを診断できる。
 - wrong actionとabstentionを分離でき、危険な誤判断と慎重な未回答を同一failureへ潰さない。
 - 初回sliceはbounded choiceであり、free-form implementation qualityは後続課題として残る。
 
 ## Revisit when
 
-- no-context正解率が高く、scenario / options自体が回答を強く示している場合。**2026-09-24にtriggered**: v0.1は12/12、follow-upはIssue #97。
+- no-context正解率が高く、scenario / options自体が回答を強く示している場合。**2026-09-24にtriggered**: v0.1は12/12 → Issue #97。**v0.2でも再triggered**: 10/12、frozen gate fail → Issue #102。
 - required-onlyでもdownstream behaviorが安定せず、taskまたはmodelが主要bottleneckになった場合。
 - free-form output、複数正解、複数required recordsを評価する必要が生じた場合。
 - downstream outputに合わせてselection policy自体を最適化する独立phaseへ進む場合。
@@ -109,7 +116,10 @@ The first live run completed on 2026-09-24 with OpenAI `gpt-5.6-luna`: 72/72 val
 - [PR #69: embedding input-length diagnostics](https://github.com/serevy/semantic-decision-lab/pull/69)
 - [PR #72: complete-record chunked embedding condition](https://github.com/serevy/semantic-decision-lab/pull/72)
 - [PR #73: chunked embedding Evidence freeze](https://github.com/serevy/semantic-decision-lab/pull/73)
-- Maintainer approval to merge PR #75, 2026-09-23 (private).\n- [Workflow run 35940937705: GPT-5.6 Luna downstream v0.1](https://github.com/serevy/semantic-decision-lab/actions/runs/35940937705)\n- [Issue #97: downstream v0.2 context-dependent benchmark hardening](https://github.com/serevy/semantic-decision-lab/issues/97)
+- Maintainer approval to merge PR #75, 2026-09-23 (private).
+- [Workflow run 35940937705: GPT-5.6 Luna downstream v0.1](https://github.com/serevy/semantic-decision-lab/actions/runs/35940937705)\n- [Issue #97: downstream v0.2 context-dependent benchmark hardening](https://github.com/serevy/semantic-decision-lab/issues/97)
+- [Workflow run 36035143735: GPT-5.6 Luna downstream v0.2](https://github.com/serevy/semantic-decision-lab/actions/runs/36035143735)
+- [Issue #102: downstream v0.3 matched counterfactual stress](https://github.com/serevy/semantic-decision-lab/issues/102)
 
 ## Related records
 
