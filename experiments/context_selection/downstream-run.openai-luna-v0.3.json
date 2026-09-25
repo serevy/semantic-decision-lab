@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "run_id": "openai-gpt-5.6-luna-v0.3",
+  "experiment": "PDDR Context Selection downstream context fidelity",
+  "issue": 102,
+  "request_pack": {
+    "manifest": "downstream-request-pack.v0.3.json",
+    "file_sha256": "9d4a78f8a39bc7ecdf2d209780f48d5b7a9dd2c5dae345bd0454c0eb97ae92ef",
+    "request_count": 48
+  },
+  "provider": {
+    "name": "OpenAI",
+    "api": "Chat Completions",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "model": "gpt-5.6-luna"
+  },
+  "sampling": {
+    "reasoning_effort": "none",
+    "temperature": 0,
+    "max_completion_tokens": 8
+  },
+  "execution": {
+    "concurrency": 1,
+    "minimum_request_start_interval_seconds": 8.1,
+    "request_timeout_seconds": 120,
+    "transport_retries": 0,
+    "order": "sha256-ranked request_id",
+    "order_salt": "semantic-decision-lab/downstream/openai-gpt-5.6-luna-v0.3",
+    "stop_on_transport_error": true,
+    "continue_on_parse_error": true
+  },
+  "parsing": {
+    "allowed_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "ABSTAIN"
+    ],
+    "normalization": "strip surrounding whitespace; uppercase; no punctuation or prose accepted",
+    "invalid_output": "record parse_error; keep raw response; run is not evaluable until every response has an allowed exact choice"
+  },
+  "provenance": {
+    "required_response_fields": [
+      "provider response id",
+      "returned model id",
+      "system_fingerprint when present",
+      "finish_reason",
+      "usage",
+      "raw_response",
+      "prompt_sha256"
+    ],
+    "note": "GPT-5.6 Luna is intentionally reused from v0.1/v0.2 so v0.3 changes the context-fidelity benchmark, not the downstream model family."
+  },
+  "freeze_rule": "This configuration is reviewed and merged before workflow_dispatch is used. No downstream v0.3 model output may be observed on the PR-validation path."
+}
