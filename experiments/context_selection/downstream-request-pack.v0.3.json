@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream context fidelity",
+  "version": "v0.3",
+  "issue": 102,
+  "request_count": 48,
+  "request_file_sha256": "9d4a78f8a39bc7ecdf2d209780f48d5b7a9dd2c5dae345bd0454c0eb97ae92ef",
+  "request_file_bytes": 90188,
+  "preview_evidence": {
+    "workflow_run_id": 36098682182,
+    "workflow_url": "https://github.com/serevy/semantic-decision-lab/actions/runs/36098682182",
+    "head_sha": "f258534fd58a4f6840c4bedf720d7a1a6e5b83dc",
+    "artifact_id": 10848990207,
+    "artifact_digest": "sha256:b764a55b46b543b8406c2523e152e6f2c681e822c9062a6334747542b0bed52e"
+  },
+  "freeze_rule": "The exact deterministic request-pack digest was observed and frozen on the PR validation path before any live downstream-model output for v0.3."
+}
