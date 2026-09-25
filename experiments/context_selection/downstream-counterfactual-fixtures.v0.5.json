@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "version": "v0.5",
+  "note": "Real-derived cards trace to frozen historical PDDR decisions. Synthetic siblings are benchmark fixtures only and are never represented as project history.",
+  "pairs": [
+    {
+      "pair_id": "pair-portable-validation",
+      "source_case_id": "ctx-001",
+      "corpus_snapshot": "pddr-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "portable-stdlib",
+          "status": "accepted",
+          "decision": "Use one Python-standard-library CLI for initialization and validation, reuse that CLI in GitHub Actions, and accept a deliberately narrow metadata grammar for v0.1.",
+          "rationale": "The project prioritizes zero extra runtime dependencies and one portable local/CI path over full YAML expressiveness.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0002",
+            "source_case_id": "ctx-001",
+            "corpus_snapshot": "pddr-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "portable-yaml",
+          "status": "accepted",
+          "decision": "Use one Python CLI backed by a reviewed external YAML package for initialization and validation, and reuse the same CLI in CI.",
+          "rationale": "The project prioritizes mature YAML semantics and future metadata extensibility over a zero-dependency runtime.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0002",
+            "source_case_id": "ctx-001",
+            "corpus_snapshot": "pddr-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-context-consumption",
+      "source_case_id": "ctx-002",
+      "corpus_snapshot": "pddr-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "consume-minimal",
+          "status": "accepted",
+          "decision": "Treat decision records as Decision Context and Evidence rather than executable policy; prioritize current instructions and approved policy, and select only the minimum records relevant to the current task.",
+          "rationale": "The project separates historical decision evidence from current authority and avoids loading every accepted record by default.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0006",
+            "source_case_id": "ctx-002",
+            "corpus_snapshot": "pddr-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "consume-all",
+          "status": "accepted",
+          "decision": "Load all accepted decision records for every task so no historical decision can be omitted, then let the downstream model resolve applicability and conflicts.",
+          "rationale": "The project prioritizes complete institutional memory over minimizing context size or pre-filtering applicability.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0006",
+            "source_case_id": "ctx-002",
+            "corpus_snapshot": "pddr-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-safe-upgrade",
+      "source_case_id": "ctx-003",
+      "corpus_snapshot": "pddr-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "upgrade-fail-closed-v5",
+          "status": "accepted",
+          "decision": "Track only toolkit-managed files in a hash manifest, provide dry-run, and abort all writes when any managed file differs from its recorded hash.",
+          "rationale": "The project prioritizes non-destructive upgrades and explicit human resolution over automatic merging of locally edited managed files.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0007",
+            "source_case_id": "ctx-003",
+            "corpus_snapshot": "pddr-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "upgrade-three-way-v5",
+          "status": "accepted",
+          "decision": "Perform a best-effort three-way merge for locally edited managed files, continue updating files that merge cleanly, and surface only unresolved conflicts for human review.",
+          "rationale": "The project prioritizes automated upgrade continuity while preserving local edits through merge semantics.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0007",
+            "source_case_id": "ctx-003",
+            "corpus_snapshot": "pddr-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-skill-evaluation",
+      "source_case_id": "ctx-006",
+      "corpus_snapshot": "pddr-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "eval-structured",
+          "status": "accepted",
+          "decision": "Evaluate the skill with structured cases covering routing, record action, state, required behaviors, and forbidden behaviors; fail forbidden actions and require real-model execution before claiming validated.",
+          "rationale": "The project prioritizes portable behavioral invariants over exact wording or a judge-only score.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0004",
+            "source_case_id": "ctx-006",
+            "corpus_snapshot": "pddr-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "eval-judge",
+          "status": "accepted",
+          "decision": "Use a strong second language model as the primary holistic judge for each response and treat the judge score as the pass/fail contract.",
+          "rationale": "The project prioritizes semantic flexibility and low rubric-maintenance cost over explicit behavioral hard-failure fields.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0004",
+            "source_case_id": "ctx-006",
+            "corpus_snapshot": "pddr-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-delivery-unknown",
+      "source_case_id": "ctx-007",
+      "corpus_snapshot": "pddr-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "delivery-unknown",
+          "status": "accepted",
+          "decision": "Use delivery_status=unknown when implementation status cannot be verified; absence of implementation evidence must not be converted into not-started.",
+          "rationale": "The project avoids inventing delivery facts from missing evidence.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0005",
+            "source_case_id": "ctx-007",
+            "corpus_snapshot": "pddr-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "delivery-not-started",
+          "status": "accepted",
+          "decision": "Use delivery_status=not-started when there is no implementation evidence, and update the state later if delivery activity is discovered.",
+          "rationale": "The project uses a simple workflow default so accepted decisions without visible delivery evidence start from not-started.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0005",
+            "source_case_id": "ctx-007",
+            "corpus_snapshot": "pddr-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-human-publication",
+      "source_case_id": "ctx-008",
+      "corpus_snapshot": "readme-i18n-kit-v0.1",
+      "cards": [
+        {
+          "card_id": "publish-human-v5",
+          "status": "accepted",
+          "decision": "Generate review artifacts only and require a human-reviewed publication change; the generation workflow itself does not commit, push, merge, or replace published files.",
+          "rationale": "Machine structural checks are useful but are not treated as proof of linguistic or semantic publication quality.",
+          "provenance": {
+            "kind": "real-derived",
+            "source_record": "PDDR-0001",
+            "source_case_id": "ctx-008",
+            "corpus_snapshot": "readme-i18n-kit-v0.1"
+          }
+        },
+        {
+          "card_id": "publish-auto-v5",
+          "status": "accepted",
+          "decision": "Automatically publish generated translations when all configured structural and terminology gates pass.",
+          "rationale": "The project treats the reviewed machine gates as the publication boundary so routine translations do not require a separate human publication step.",
+          "provenance": {
+            "kind": "synthetic-counterfactual",
+            "source_record": "PDDR-0001",
+            "source_case_id": "ctx-008",
+            "corpus_snapshot": "readme-i18n-kit-v0.1",
+            "synthetic_counterfactual": true
+          }
+        }
+      ]
+    }
+  ]
+}

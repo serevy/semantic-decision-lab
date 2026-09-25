@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "version": "v0.5",
+  "dataset": "downstream-cases.v0.5.json",
+  "fixtures": "downstream-counterfactual-fixtures.v0.5.json",
+  "pair_controls": {
+    "no_context": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-002",
+        "ds5-003",
+        "ds5-004",
+        "ds5-005",
+        "ds5-006",
+        "ds5-007",
+        "ds5-008",
+        "ds5-009",
+        "ds5-010",
+        "ds5-011",
+        "ds5-012"
+      ]
+    },
+    "correct_card": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-002",
+        "ds5-003",
+        "ds5-004",
+        "ds5-005",
+        "ds5-006",
+        "ds5-007",
+        "ds5-008",
+        "ds5-009",
+        "ds5-010",
+        "ds5-011",
+        "ds5-012"
+      ]
+    }
+  },
+  "real_side_controls": {
+    "required_full_pddr": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-003",
+        "ds5-005",
+        "ds5-007",
+        "ds5-009",
+        "ds5-011"
+      ],
+      "selections": {
+        "ds5-001": [
+          "PDDR-0002"
+        ],
+        "ds5-003": [
+          "PDDR-0006"
+        ],
+        "ds5-005": [
+          "PDDR-0007"
+        ],
+        "ds5-007": [
+          "PDDR-0004"
+        ],
+        "ds5-009": [
+          "PDDR-0005"
+        ],
+        "ds5-011": [
+          "PDDR-0001"
+        ]
+      }
+    },
+    "full_corpus": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-003",
+        "ds5-005",
+        "ds5-007",
+        "ds5-009",
+        "ds5-011"
+      ],
+      "selections": {
+        "ds5-001": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds5-003": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds5-005": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds5-007": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds5-009": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005",
+          "PDDR-0006",
+          "PDDR-0007"
+        ],
+        "ds5-011": [
+          "PDDR-0001",
+          "PDDR-0002",
+          "PDDR-0003",
+          "PDDR-0004",
+          "PDDR-0005"
+        ]
+      }
+    }
+  },
+  "historical_retrieval": {
+    "keyword_top2": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-003",
+        "ds5-005",
+        "ds5-007",
+        "ds5-009",
+        "ds5-011"
+      ],
+      "provenance": "downstream-arms.v0.1.json / keyword_top2",
+      "selections": {
+        "ds5-001": [
+          "PDDR-0002",
+          "PDDR-0003"
+        ],
+        "ds5-003": [
+          "PDDR-0005",
+          "PDDR-0006"
+        ],
+        "ds5-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds5-007": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds5-009": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ],
+        "ds5-011": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ]
+      }
+    },
+    "embedding_first512_top2": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-003",
+        "ds5-005",
+        "ds5-007",
+        "ds5-009",
+        "ds5-011"
+      ],
+      "provenance": "downstream-arms.v0.1.json / embedding_first512_top2",
+      "selections": {
+        "ds5-001": [
+          "PDDR-0002",
+          "PDDR-0001"
+        ],
+        "ds5-003": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds5-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds5-007": [
+          "PDDR-0004",
+          "PDDR-0005"
+        ],
+        "ds5-009": [
+          "PDDR-0005",
+          "PDDR-0003"
+        ],
+        "ds5-011": [
+          "PDDR-0001",
+          "PDDR-0005"
+        ]
+      }
+    },
+    "embedding_chunked_top2": {
+      "case_ids": [
+        "ds5-001",
+        "ds5-003",
+        "ds5-005",
+        "ds5-007",
+        "ds5-009",
+        "ds5-011"
+      ],
+      "provenance": "downstream-arms.v0.1.json / embedding_chunked_top2",
+      "selections": {
+        "ds5-001": [
+          "PDDR-0003",
+          "PDDR-0002"
+        ],
+        "ds5-003": [
+          "PDDR-0003",
+          "PDDR-0006"
+        ],
+        "ds5-005": [
+          "PDDR-0001",
+          "PDDR-0003"
+        ],
+        "ds5-007": [
+          "PDDR-0006",
+          "PDDR-0003"
+        ],
+        "ds5-009": [
+          "PDDR-0006",
+          "PDDR-0004"
+        ],
+        "ds5-011": [
+          "PDDR-0001",
+          "PDDR-0004"
+        ]
+      }
+    }
+  }
+}
