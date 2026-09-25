@@ -1,0 +1,83 @@
+name: Context selection downstream request pack v0.3 preview
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-counterfactual-fixtures.v0.3.json"
+      - "experiments/context_selection/downstream-cases.v0.3.json"
+      - "experiments/context_selection/downstream-arms.v0.3.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.3.json"
+      - "experiments/context_selection/build_downstream_requests_v0_3.py"
+      - "experiments/context_selection/validate_downstream_results_v0_3.py"
+      - "experiments/context_selection/prepare_downstream_evaluator_input_v0_3.py"
+      - "experiments/context_selection/evaluate_downstream_v0_3.py"
+      - ".github/workflows/context-selection-downstream-request-pack-v0-3.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build deterministic v0.3 request pack
+        run: |
+          python experiments/context_selection/validate_downstream_v0_3_freeze.py
+          python experiments/context_selection/build_downstream_requests_v0_3.py \
+            --output "$RUNNER_TEMP/downstream-requests.v0.3.jsonl"
+          sha256sum "$RUNNER_TEMP/downstream-requests.v0.3.jsonl"
+          wc -l "$RUNNER_TEMP/downstream-requests.v0.3.jsonl"
+          wc -c "$RUNNER_TEMP/downstream-requests.v0.3.jsonl"
+
+      - name: Smoke v0.3 evaluator semantics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("experiments/context_selection")
+          cases=json.loads((root/"downstream-cases.v0.3.json").read_text())
+          arms=json.loads((root/"downstream-arms.v0.3.json").read_text())["arms"]
+          card_choice={c["gold"]["card_id"]:c["gold"]["choice"] for c in cases}
+          answers={}
+          for arm_name,arm in arms.items():
+              rows={}
+              for case in cases:
+                  cid=case["case_id"]
+                  if arm_name in {"no_context","both_contexts"}:
+                      choice="ABSTAIN"
+                  elif arm_name=="correct_context":
+                      choice=case["gold"]["choice"]
+                  else:
+                      choice=card_choice[arm["selections"][cid][0]]
+                  rows[cid]={"choice":choice}
+              answers[arm_name]=rows
+          Path("/tmp/v03-smoke.json").write_text(
+              json.dumps({"run":{"kind":"metric-semantics-smoke"},"answers":answers})
+          )
+          PY
+          python experiments/context_selection/evaluate_downstream_v0_3.py \
+            /tmp/v03-smoke.json > /tmp/v03-eval.json
+          python - <<'PY'
+          import json
+          data=json.load(open("/tmp/v03-eval.json"))
+          assert data["diagnostic_gate"]["pass"] is True
+          assert data["matched_pair"]["correct_flip_count"] == 6
+          assert data["wrong_context"]["supplied_context_follow_count"] == 12
+          assert data["summaries"]["no_context"]["abstain"] == 12
+          assert data["summaries"]["both_contexts"]["abstain"] == 12
+          print("downstream v0.3 evaluator smoke valid")
+          PY
+
+      - name: Upload request-pack preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-downstream-request-pack-v0.3-preview
+          path: ${{ runner.temp }}/downstream-requests.v0.3.jsonl
+          if-no-files-found: error
+          retention-days: 7
