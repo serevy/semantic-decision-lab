@@ -1,0 +1,218 @@
+[
+  {
+    "case_id": "ds4-001",
+    "source_case_id": "ds3-001",
+    "pair_id": "pair-dependency-profile",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "A reusable metadata-validation CLI must run on developer machines and CI. The current metadata needs only top-level scalars and lists, but future extensibility is plausible. The team wants one supported local-and-CI path.",
+    "question": "Which dependency strategy did this project adopt for v0.1?",
+    "choices": {
+      "A": "Use one Python-standard-library CLI and deliberately keep the supported metadata grammar narrow.",
+      "B": "Use one Python CLI with a reviewed external YAML package so full YAML semantics are available from the start.",
+      "C": "Use a shell-based local initializer and a separate Python CI validator optimized for each environment.",
+      "D": "Use a Node.js CLI with a schema package and wrap it separately for CI."
+    },
+    "gold": {
+      "choice": "A",
+      "required_card": "dep-stdlib"
+    }
+  },
+  {
+    "case_id": "ds4-002",
+    "source_case_id": "ds3-002",
+    "pair_id": "pair-dependency-profile",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "A reusable metadata-validation CLI must run on developer machines and CI. The current metadata needs only top-level scalars and lists, but future extensibility is plausible. The team wants one supported local-and-CI path.",
+    "question": "Which dependency strategy did this project adopt for v0.1?",
+    "choices": {
+      "A": "Use one Python-standard-library CLI and deliberately keep the supported metadata grammar narrow.",
+      "B": "Use one Python CLI with a reviewed external YAML package so full YAML semantics are available from the start.",
+      "C": "Use a shell-based local initializer and a separate Python CI validator optimized for each environment.",
+      "D": "Use a Node.js CLI with a schema package and wrap it separately for CI."
+    },
+    "gold": {
+      "choice": "B",
+      "required_card": "dep-yaml"
+    }
+  },
+  {
+    "case_id": "ds4-003",
+    "source_case_id": "ds3-003",
+    "pair_id": "pair-upgrade-conflict",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "A reusable toolkit updates files it manages in adopter repositories. Adopters may edit those managed files locally, while project-owned configuration, records, documentation, rules, and CI remain outside toolkit ownership.",
+    "question": "Which conflict policy did this project adopt for upgrades?",
+    "choices": {
+      "A": "Back up toolkit-managed files and overwrite them from the new release, leaving project-owned files untouched.",
+      "B": "Treat the entire toolkit directory as package-owned and replace it atomically during upgrades.",
+      "C": "Use best-effort three-way merge, continue updating cleanly merged files, and surface unresolved conflicts.",
+      "D": "Track toolkit-managed files by hash, support dry-run, and abort all writes if any managed file differs from its recorded hash."
+    },
+    "gold": {
+      "choice": "D",
+      "required_card": "upgrade-fail-closed"
+    }
+  },
+  {
+    "case_id": "ds4-004",
+    "source_case_id": "ds3-004",
+    "pair_id": "pair-upgrade-conflict",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "A reusable toolkit updates files it manages in adopter repositories. Adopters may edit those managed files locally, while project-owned configuration, records, documentation, rules, and CI remain outside toolkit ownership.",
+    "question": "Which conflict policy did this project adopt for upgrades?",
+    "choices": {
+      "A": "Back up toolkit-managed files and overwrite them from the new release, leaving project-owned files untouched.",
+      "B": "Treat the entire toolkit directory as package-owned and replace it atomically during upgrades.",
+      "C": "Use best-effort three-way merge, continue updating cleanly merged files, and surface unresolved conflicts.",
+      "D": "Track toolkit-managed files by hash, support dry-run, and abort all writes if any managed file differs from its recorded hash."
+    },
+    "gold": {
+      "choice": "C",
+      "required_card": "upgrade-three-way"
+    }
+  },
+  {
+    "case_id": "ds4-005",
+    "source_case_id": "ds3-005",
+    "pair_id": "pair-publication-boundary",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "An automation workflow generates translated documentation and all configured structural and terminology checks pass. The generated text may still contain semantic or stylistic issues outside those machine checks.",
+    "question": "Which publication boundary did this project adopt?",
+    "choices": {
+      "A": "Produce review artifacts and require a human-reviewed publication change; the generation workflow itself does not publish.",
+      "B": "Open a draft pull request automatically but always require a human merge before publication.",
+      "C": "Publish automatically when all configured structural and terminology gates pass.",
+      "D": "Publish automatically only when the machine gates pass and the translator also reports high confidence."
+    },
+    "gold": {
+      "choice": "A",
+      "required_card": "publish-human-review"
+    }
+  },
+  {
+    "case_id": "ds4-006",
+    "source_case_id": "ds3-006",
+    "pair_id": "pair-publication-boundary",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "An automation workflow generates translated documentation and all configured structural and terminology checks pass. The generated text may still contain semantic or stylistic issues outside those machine checks.",
+    "question": "Which publication boundary did this project adopt?",
+    "choices": {
+      "A": "Produce review artifacts and require a human-reviewed publication change; the generation workflow itself does not publish.",
+      "B": "Open a draft pull request automatically but always require a human merge before publication.",
+      "C": "Publish automatically when all configured structural and terminology gates pass.",
+      "D": "Publish automatically only when the machine gates pass and the translator also reports high confidence."
+    },
+    "gold": {
+      "choice": "C",
+      "required_card": "publish-auto-green"
+    }
+  },
+  {
+    "case_id": "ds4-007",
+    "source_case_id": "ds3-007",
+    "pair_id": "pair-provider-scope",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "A reusable AI-backed workflow is being stabilized. Multiple providers may be useful later, while the current release also needs reproducible behavior, explicit request controls, and a reviewable trust boundary.",
+    "question": "Which provider boundary did this project adopt for the initial release?",
+    "choices": {
+      "A": "Allow caller-configured HTTPS endpoints and models immediately, with provider-side budgets as the main safety boundary.",
+      "B": "Define a provider-neutral interface first and require provider-specific adapters behind that shared contract.",
+      "C": "Hard-code two supported providers so the workflow has redundancy without a general adapter layer.",
+      "D": "Ship one narrow reviewed provider/model profile first with explicit endpoint and request guards."
+    },
+    "gold": {
+      "choice": "D",
+      "required_card": "provider-narrow"
+    }
+  },
+  {
+    "case_id": "ds4-008",
+    "source_case_id": "ds3-008",
+    "pair_id": "pair-provider-scope",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "A reusable AI-backed workflow is being stabilized. Multiple providers may be useful later, while the current release also needs reproducible behavior, explicit request controls, and a reviewable trust boundary.",
+    "question": "Which provider boundary did this project adopt for the initial release?",
+    "choices": {
+      "A": "Allow caller-configured HTTPS endpoints and models immediately, with provider-side budgets as the main safety boundary.",
+      "B": "Define a provider-neutral interface first and require provider-specific adapters behind that shared contract.",
+      "C": "Hard-code two supported providers so the workflow has redundancy without a general adapter layer.",
+      "D": "Ship one narrow reviewed provider/model profile first with explicit endpoint and request guards."
+    },
+    "gold": {
+      "choice": "B",
+      "required_card": "provider-neutral"
+    }
+  },
+  {
+    "case_id": "ds4-009",
+    "source_case_id": "ds3-009",
+    "pair_id": "pair-production-version",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "Multiple repositories consume one reusable workflow. Upstream fixes arrive frequently, while production consumers need predictable behavior and a controlled way to receive changes.",
+    "question": "Which production version-tracking policy did this project adopt?",
+    "choices": {
+      "A": "Pin a reviewed immutable commit SHA or reviewed release tag and update it explicitly after review.",
+      "B": "Track a moving major-version tag and rely on compatibility guarantees within that major line.",
+      "C": "Let automation update consumers on a fixed schedule after CI succeeds.",
+      "D": "Track the upstream main branch so fixes propagate immediately without per-consumer pin changes."
+    },
+    "gold": {
+      "choice": "A",
+      "required_card": "version-immutable"
+    }
+  },
+  {
+    "case_id": "ds4-010",
+    "source_case_id": "ds3-010",
+    "pair_id": "pair-production-version",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "Multiple repositories consume one reusable workflow. Upstream fixes arrive frequently, while production consumers need predictable behavior and a controlled way to receive changes.",
+    "question": "Which production version-tracking policy did this project adopt?",
+    "choices": {
+      "A": "Pin a reviewed immutable commit SHA or reviewed release tag and update it explicitly after review.",
+      "B": "Track a moving major-version tag and rely on compatibility guarantees within that major line.",
+      "C": "Let automation update consumers on a fixed schedule after CI succeeds.",
+      "D": "Track the upstream main branch so fixes propagate immediately without per-consumer pin changes."
+    },
+    "gold": {
+      "choice": "D",
+      "required_card": "version-main"
+    }
+  },
+  {
+    "case_id": "ds4-011",
+    "source_case_id": "ds3-011",
+    "pair_id": "pair-backend-expansion",
+    "snapshot_id": "snapshot-alpha",
+    "scenario": "A research project already compares several methodologically distinct semantic backends. New credible backends with partially overlapping methods continue to appear.",
+    "question": "Which backend-expansion policy did this project adopt for the current phase?",
+    "choices": {
+      "A": "Replace the weakest existing backend whenever a stronger new implementation appears.",
+      "B": "Freeze expansion after distinct methodological coverage and add a backend only for an explicit research gap.",
+      "C": "Add every credible newly discovered backend so ecosystem coverage remains as complete as practical.",
+      "D": "Add one new backend on a fixed quarterly cadence regardless of methodological overlap."
+    },
+    "gold": {
+      "choice": "B",
+      "required_card": "backend-freeze"
+    }
+  },
+  {
+    "case_id": "ds4-012",
+    "source_case_id": "ds3-012",
+    "pair_id": "pair-backend-expansion",
+    "snapshot_id": "snapshot-beta",
+    "scenario": "A research project already compares several methodologically distinct semantic backends. New credible backends with partially overlapping methods continue to appear.",
+    "question": "Which backend-expansion policy did this project adopt for the current phase?",
+    "choices": {
+      "A": "Replace the weakest existing backend whenever a stronger new implementation appears.",
+      "B": "Freeze expansion after distinct methodological coverage and add a backend only for an explicit research gap.",
+      "C": "Add every credible newly discovered backend so ecosystem coverage remains as complete as practical.",
+      "D": "Add one new backend on a fixed quarterly cadence regardless of methodological overlap."
+    },
+    "gold": {
+      "choice": "C",
+      "required_card": "backend-expand-all"
+    }
+  }
+]

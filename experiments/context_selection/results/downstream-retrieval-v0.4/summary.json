@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "version": "v0.4-retrieval-preflight",
+  "issue": 106,
+  "downstream_called": false,
+  "workflow_run_id": 36158498159,
+  "repository_head": "8856d23c27c577f26b765c282e30dcdca7a54eeb",
+  "result_sha256": "70f36d4602732e047986906fe541dc0fc812bde59c7ccfef3ccbbf0d34656efb",
+  "artifact": {
+    "id": 10874457247,
+    "digest": "sha256:2664810f0d4c4fcba4bc115603a3bf9c53e6df014c0132026130ddb2f85927ad",
+    "expires_at": "2026-10-09T16:07:22Z"
+  },
+  "selectors": {
+    "keyword_top1": {
+      "required_hits": 12,
+      "total": 12,
+      "required_hit_rate": 1
+    },
+    "keyword_top2": {
+      "required_hits": 12,
+      "total": 12,
+      "required_hit_rate": 1
+    },
+    "embedding_top1": {
+      "required_hits": 12,
+      "total": 12,
+      "required_hit_rate": 1
+    },
+    "embedding_top2": {
+      "required_hits": 12,
+      "total": 12,
+      "required_hit_rate": 1
+    }
+  },
+  "disposition": "stop-before-downstream; retrieval hit/miss coupling is not identifiable because every selector is 12/12"
+}
