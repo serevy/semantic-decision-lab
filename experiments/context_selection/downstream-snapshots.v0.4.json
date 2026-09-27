@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "version": "v0.4",
+  "note": "Each active project snapshot contains exactly one accepted decision card from each v0.3 decision family. Snapshot scoping happens before ranking.",
+  "snapshots": {
+    "snapshot-alpha": [
+      "backend-freeze",
+      "dep-stdlib",
+      "provider-narrow",
+      "publish-human-review",
+      "upgrade-fail-closed",
+      "version-immutable"
+    ],
+    "snapshot-beta": [
+      "backend-expand-all",
+      "dep-yaml",
+      "provider-neutral",
+      "publish-auto-green",
+      "upgrade-three-way",
+      "version-main"
+    ]
+  }
+}

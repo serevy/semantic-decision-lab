@@ -1,0 +1,49 @@
+name: Context selection downstream v0.4 retrieval freeze
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-cases.v0.4.json"
+      - "experiments/context_selection/downstream-snapshots.v0.4.json"
+      - "experiments/context_selection/downstream-retrieval-contract.v0.4.json"
+      - "experiments/context_selection/run_downstream_retrieval_v0_4.py"
+      - "experiments/context_selection/validate_downstream_v0_4_freeze.py"
+      - "experiments/context_selection/requirements-embedding.txt"
+      - ".github/workflows/context-selection-downstream-v0-4-retrieval.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  retrieval-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate frozen v0.4 retrieval design
+        run: python experiments/context_selection/validate_downstream_v0_4_freeze.py
+      - name: Install frozen embedding dependencies
+        run: pip install -r experiments/context_selection/requirements-embedding.txt
+      - name: Run frozen retrieval only
+        run: |
+          python experiments/context_selection/run_downstream_retrieval_v0_4.py \
+            --output "$RUNNER_TEMP/downstream-retrieval-v0.4.json"
+          sha256sum "$RUNNER_TEMP/downstream-retrieval-v0.4.json"
+          python - "$RUNNER_TEMP/downstream-retrieval-v0.4.json" <<'PY'
+          import json,sys
+          data=json.load(open(sys.argv[1],encoding="utf-8"))
+          for name,row in data["selectors"].items():
+              print(f"{name}: {row['required_hits']}/12")
+          PY
+      - name: Upload retrieval preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-selection-downstream-retrieval-v0.4-preview
+          path: ${{ runner.temp }}/downstream-retrieval-v0.4.json
+          if-no-files-found: error
+          retention-days: 14

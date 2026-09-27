@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection retrieval-coupled matched-snapshot evaluation",
+  "version": "v0.4",
+  "issue": 106,
+  "parent_issue": 2,
+  "predecessor_issue": 102,
+  "dataset": "downstream-cases.v0.4.json",
+  "snapshots": "downstream-snapshots.v0.4.json",
+  "fixtures": "downstream-counterfactual-fixtures.v0.3.json",
+  "freeze_rule": "Cases, snapshot membership, retrieval query/passage text, selector algorithms, model/revision, Top-k values, tie-breaking, and evaluation semantics are frozen before any downstream v0.4 model output is observed.",
+  "retrieval_contract": {
+    "snapshot_scope": "Rank only cards in the active case snapshot before Top-k selection.",
+    "query": "scenario + '\\n\\n' + question",
+    "query_must_not_include": [
+      "answer options",
+      "gold action",
+      "required card id",
+      "snapshot id",
+      "fixture provenance",
+      "source PDDR/path"
+    ],
+    "passage_fields": [
+      "status",
+      "decision",
+      "rationale"
+    ],
+    "passage_must_not_include": [
+      "card id",
+      "snapshot id",
+      "real-derived/synthetic identity",
+      "source PDDR/path"
+    ],
+    "tie_break": "card_id ascending"
+  },
+  "selectors": {
+    "keyword_top1": {
+      "method": "set-token overlap after frozen stopword filtering",
+      "top_k": 1
+    },
+    "keyword_top2": {
+      "method": "set-token overlap after frozen stopword filtering",
+      "top_k": 2
+    },
+    "embedding_top1": {
+      "model": "intfloat/multilingual-e5-small",
+      "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+      "sentence_transformers": "6.1.0",
+      "similarity": "normalized cosine",
+      "query_prefix": "query: ",
+      "passage_prefix": "passage: ",
+      "top_k": 1
+    },
+    "embedding_top2": {
+      "model": "intfloat/multilingual-e5-small",
+      "model_revision": "fd1525a9fd15316a2d503bf26ab031a61d056e98",
+      "sentence_transformers": "6.1.0",
+      "similarity": "normalized cosine",
+      "query_prefix": "query: ",
+      "passage_prefix": "passage: ",
+      "top_k": 2
+    }
+  },
+  "downstream_controls": [
+    "no_context",
+    "required_only",
+    "full_snapshot"
+  ],
+  "downstream_metrics": [
+    "required_card_hit_rate",
+    "gold_action_accuracy",
+    "matched_pair_correct_flip_rate",
+    "accuracy_when_required_card_present",
+    "abstention_rate_when_required_card_absent",
+    "wrong_action_rate_when_required_card_absent",
+    "behavior_preservation_vs_required_only"
+  ],
+  "control_gate": {
+    "frozen_before_output": true,
+    "no_context_min_abstain": 10,
+    "required_only_min_correct": 10,
+    "full_snapshot_min_correct": 10,
+    "required_only_min_pair_flips": 5
+  },
+  "interpretation_limits": [
+    "v0.4 uses two bounded six-card project snapshots and is not representative of every PDDR corpus.",
+    "snapshot-beta contains explicit synthetic counterfactual benchmark fixtures, not historical project decisions.",
+    "retrieval-arm performance is descriptive evidence; selectors are not tuned against downstream v0.4 output."
+  ]
+}
