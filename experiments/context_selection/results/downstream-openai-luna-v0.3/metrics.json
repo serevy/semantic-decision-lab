@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection downstream context fidelity",
+  "version": "v0.3",
+  "issue": 102,
+  "follow_up_issue": 106,
+  "run": {
+    "workflow_run_id": 36099039635,
+    "repository_head": "05170ffccafecf7e894c695a7dd8ea997a166c97",
+    "provider": "OpenAI",
+    "model": "gpt-5.6-luna",
+    "request_count": 48,
+    "response_count": 48,
+    "api_or_transport_errors": 0,
+    "parse_errors": 0,
+    "executed_at": "2026-09-25T05:33:22.021393+00:00",
+    "completed_at": "2026-09-25T05:39:43.711068+00:00"
+  },
+  "provenance": {
+    "request_pack_sha256": "9d4a78f8a39bc7ecdf2d209780f48d5b7a9dd2c5dae345bd0454c0eb97ae92ef",
+    "execution_order_sha256": "16539e09e0ac0df5e5846fdea209aab3d5ebd162b7364fd30678eb307283a00f",
+    "config_sha256": "fcd542edeb4275a00db101e1a69314b4cd0671a50e2d97fc131ee1ba807da141",
+    "artifact_id": 10848421945,
+    "artifact_digest": "sha256:932f135bb9ec3a0e6e916267e7dc6a8c942bd7de4bc9523d11e624e99bfab845",
+    "raw_results_sha256": "3cfde78ac7faaea625ef797d7f6340269b80a657daaa72ff94f1c3331746ffb3",
+    "evaluator_input_sha256": "e0cfe042ae0fbf37cb4e2d2401fa670f58d8f5577c3d235e31e8c93f7d3c1051",
+    "evaluation_sha256": "b0c9a8a0c673eb262d199a8a966b6d4c1a9bac83c84e6f08f5d3afe22a394649"
+  },
+  "summaries": {
+    "no_context": {
+      "correct": 0,
+      "total": 12,
+      "abstain": 12,
+      "wrong_action": 0,
+      "abstention_rate": 1
+    },
+    "correct_context": {
+      "correct": 12,
+      "total": 12,
+      "abstain": 0,
+      "wrong_action": 0,
+      "gold_action_accuracy": 1
+    },
+    "wrong_context": {
+      "correct": 0,
+      "total": 12,
+      "abstain": 0,
+      "wrong_action": 12
+    },
+    "both_contexts": {
+      "correct": 0,
+      "total": 12,
+      "abstain": 12,
+      "wrong_action": 0,
+      "abstention_rate": 1
+    }
+  },
+  "matched_pair": {
+    "correct_flip_count": 6,
+    "pair_count": 6,
+    "correct_flip_rate": 1
+  },
+  "wrong_context": {
+    "supplied_context_follow_count": 12,
+    "total": 12,
+    "supplied_context_follow_rate": 1
+  },
+  "diagnostic_gate": {
+    "pass": true
+  }
+}
