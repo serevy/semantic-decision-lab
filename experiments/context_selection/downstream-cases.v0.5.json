@@ -1,0 +1,242 @@
+[
+  {
+    "case_id": "ds5-001",
+    "pair_id": "pair-portable-validation",
+    "side": "real",
+    "source_case_id": "ctx-001",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A reusable metadata-validation CLI must run on developer machines and CI. The current metadata needs only top-level scalars and lists, but future extensibility is plausible. The team wants one supported local-and-CI path.",
+    "question": "Which dependency strategy did this project adopt for v0.1?",
+    "choices": {
+      "A": "Use one Python-standard-library CLI and deliberately keep the supported metadata grammar narrow.",
+      "B": "Use one Python CLI with a reviewed external YAML package so full YAML semantics are available from the start.",
+      "C": "Use a shell-based local initializer and a separate Python CI validator optimized for each environment.",
+      "D": "Use a Node.js CLI with a schema package and wrap it separately for CI."
+    },
+    "gold": {
+      "choice": "A",
+      "context_card": "portable-stdlib",
+      "required_record": "PDDR-0002"
+    }
+  },
+  {
+    "case_id": "ds5-002",
+    "pair_id": "pair-portable-validation",
+    "side": "synthetic",
+    "source_case_id": "ctx-001",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A reusable metadata-validation CLI must run on developer machines and CI. The current metadata needs only top-level scalars and lists, but future extensibility is plausible. The team wants one supported local-and-CI path.",
+    "question": "Which dependency strategy did this project adopt for v0.1?",
+    "choices": {
+      "A": "Use one Python-standard-library CLI and deliberately keep the supported metadata grammar narrow.",
+      "B": "Use one Python CLI with a reviewed external YAML package so full YAML semantics are available from the start.",
+      "C": "Use a shell-based local initializer and a separate Python CI validator optimized for each environment.",
+      "D": "Use a Node.js CLI with a schema package and wrap it separately for CI."
+    },
+    "gold": {
+      "choice": "B",
+      "context_card": "portable-yaml",
+      "required_record": null
+    }
+  },
+  {
+    "case_id": "ds5-003",
+    "pair_id": "pair-context-consumption",
+    "side": "real",
+    "source_case_id": "ctx-002",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "An agent can access accepted historical decision records while working on a current task. The current task also has explicit user/project instructions, and context budget is limited.",
+    "question": "Which decision-record consumption rule did this project adopt?",
+    "choices": {
+      "A": "Use only the newest accepted records because recency is the strongest applicability signal.",
+      "B": "Compile accepted records into standing executable policy so later agents do not need to reinterpret them.",
+      "C": "Follow current instructions and approved policy first, then select only task-relevant records and interpret them using status, scope, assumptions, and evidence.",
+      "D": "Load all accepted records into context so completeness is prioritized over context minimization."
+    },
+    "gold": {
+      "choice": "C",
+      "context_card": "consume-minimal",
+      "required_record": "PDDR-0006"
+    }
+  },
+  {
+    "case_id": "ds5-004",
+    "pair_id": "pair-context-consumption",
+    "side": "synthetic",
+    "source_case_id": "ctx-002",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "An agent can access accepted historical decision records while working on a current task. The current task also has explicit user/project instructions, and context budget is limited.",
+    "question": "Which decision-record consumption rule did this project adopt?",
+    "choices": {
+      "A": "Use only the newest accepted records because recency is the strongest applicability signal.",
+      "B": "Compile accepted records into standing executable policy so later agents do not need to reinterpret them.",
+      "C": "Follow current instructions and approved policy first, then select only task-relevant records and interpret them using status, scope, assumptions, and evidence.",
+      "D": "Load all accepted records into context so completeness is prioritized over context minimization."
+    },
+    "gold": {
+      "choice": "D",
+      "context_card": "consume-all",
+      "required_record": null
+    }
+  },
+  {
+    "case_id": "ds5-005",
+    "pair_id": "pair-safe-upgrade",
+    "side": "real",
+    "source_case_id": "ctx-003",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A reusable toolkit updates files it manages in adopter repositories. Adopters may edit those managed files locally, while project-owned configuration, records, documentation, rules, and CI remain outside toolkit ownership.",
+    "question": "Which conflict policy did this project adopt for upgrades?",
+    "choices": {
+      "A": "Track toolkit-managed files by hash, support dry-run, and abort all writes if any managed file differs from its recorded hash.",
+      "B": "Back up toolkit-managed files and overwrite them from the new release, leaving project-owned files untouched.",
+      "C": "Use best-effort three-way merge, continue updating cleanly merged files, and surface unresolved conflicts.",
+      "D": "Treat the entire toolkit directory as package-owned and replace it atomically during upgrades."
+    },
+    "gold": {
+      "choice": "A",
+      "context_card": "upgrade-fail-closed-v5",
+      "required_record": "PDDR-0007"
+    }
+  },
+  {
+    "case_id": "ds5-006",
+    "pair_id": "pair-safe-upgrade",
+    "side": "synthetic",
+    "source_case_id": "ctx-003",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A reusable toolkit updates files it manages in adopter repositories. Adopters may edit those managed files locally, while project-owned configuration, records, documentation, rules, and CI remain outside toolkit ownership.",
+    "question": "Which conflict policy did this project adopt for upgrades?",
+    "choices": {
+      "A": "Track toolkit-managed files by hash, support dry-run, and abort all writes if any managed file differs from its recorded hash.",
+      "B": "Back up toolkit-managed files and overwrite them from the new release, leaving project-owned files untouched.",
+      "C": "Use best-effort three-way merge, continue updating cleanly merged files, and surface unresolved conflicts.",
+      "D": "Treat the entire toolkit directory as package-owned and replace it atomically during upgrades."
+    },
+    "gold": {
+      "choice": "C",
+      "context_card": "upgrade-three-way-v5",
+      "required_record": null
+    }
+  },
+  {
+    "case_id": "ds5-007",
+    "pair_id": "pair-skill-evaluation",
+    "side": "real",
+    "source_case_id": "ctx-006",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "The team is evaluating an AI skill whose valid answers can be phrased many ways. The important failures are semantic and behavioral, including invented approval, history rewriting, disclosure, or unauthorized actions.",
+    "question": "Which evaluation contract did this project adopt?",
+    "choices": {
+      "A": "Maintain one reviewed golden response per case and compare normalized text for regressions.",
+      "B": "Define structured behavior cases with routing, record action, state, required behaviors, and forbidden behaviors; require real-model execution before claiming validation.",
+      "C": "Score only final state fields because detailed behavior is too model-specific for a portable contract.",
+      "D": "Use a strong second language model as a holistic judge and make its scalar score the primary pass/fail signal."
+    },
+    "gold": {
+      "choice": "B",
+      "context_card": "eval-structured",
+      "required_record": "PDDR-0004"
+    }
+  },
+  {
+    "case_id": "ds5-008",
+    "pair_id": "pair-skill-evaluation",
+    "side": "synthetic",
+    "source_case_id": "ctx-006",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "The team is evaluating an AI skill whose valid answers can be phrased many ways. The important failures are semantic and behavioral, including invented approval, history rewriting, disclosure, or unauthorized actions.",
+    "question": "Which evaluation contract did this project adopt?",
+    "choices": {
+      "A": "Maintain one reviewed golden response per case and compare normalized text for regressions.",
+      "B": "Define structured behavior cases with routing, record action, state, required behaviors, and forbidden behaviors; require real-model execution before claiming validation.",
+      "C": "Score only final state fields because detailed behavior is too model-specific for a portable contract.",
+      "D": "Use a strong second language model as a holistic judge and make its scalar score the primary pass/fail signal."
+    },
+    "gold": {
+      "choice": "D",
+      "context_card": "eval-judge",
+      "required_record": null
+    }
+  },
+  {
+    "case_id": "ds5-009",
+    "pair_id": "pair-delivery-unknown",
+    "side": "real",
+    "source_case_id": "ctx-007",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A decision is accepted, but the available evidence does not establish whether implementation work has started in the delivery system.",
+    "question": "Which delivery state did this project adopt for this situation?",
+    "choices": {
+      "A": "unknown, preserving the distinction between missing evidence and evidence that implementation has not started.",
+      "B": "planned, because an accepted decision implies intended implementation.",
+      "C": "not-applicable, because delivery cannot be evaluated from the current evidence.",
+      "D": "not-started, using absence of implementation evidence as the default."
+    },
+    "gold": {
+      "choice": "A",
+      "context_card": "delivery-unknown",
+      "required_record": "PDDR-0005"
+    }
+  },
+  {
+    "case_id": "ds5-010",
+    "pair_id": "pair-delivery-unknown",
+    "side": "synthetic",
+    "source_case_id": "ctx-007",
+    "corpus_snapshot": "pddr-kit-v0.1",
+    "scenario": "A decision is accepted, but the available evidence does not establish whether implementation work has started in the delivery system.",
+    "question": "Which delivery state did this project adopt for this situation?",
+    "choices": {
+      "A": "unknown, preserving the distinction between missing evidence and evidence that implementation has not started.",
+      "B": "planned, because an accepted decision implies intended implementation.",
+      "C": "not-applicable, because delivery cannot be evaluated from the current evidence.",
+      "D": "not-started, using absence of implementation evidence as the default."
+    },
+    "gold": {
+      "choice": "D",
+      "context_card": "delivery-not-started",
+      "required_record": null
+    }
+  },
+  {
+    "case_id": "ds5-011",
+    "pair_id": "pair-human-publication",
+    "side": "real",
+    "source_case_id": "ctx-008",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "An automation workflow generates translated documentation and all configured structural and terminology checks pass. The generated text may still contain semantic or stylistic issues outside those machine checks.",
+    "question": "Which publication boundary did this project adopt?",
+    "choices": {
+      "A": "Open a draft pull request automatically but always require a human merge before publication.",
+      "B": "Produce review artifacts and require a human-reviewed publication change; the generation workflow itself does not publish.",
+      "C": "Publish automatically when all configured structural and terminology gates pass.",
+      "D": "Publish automatically only when the machine gates pass and the translator also reports high confidence."
+    },
+    "gold": {
+      "choice": "B",
+      "context_card": "publish-human-v5",
+      "required_record": "PDDR-0001"
+    }
+  },
+  {
+    "case_id": "ds5-012",
+    "pair_id": "pair-human-publication",
+    "side": "synthetic",
+    "source_case_id": "ctx-008",
+    "corpus_snapshot": "readme-i18n-kit-v0.1",
+    "scenario": "An automation workflow generates translated documentation and all configured structural and terminology checks pass. The generated text may still contain semantic or stylistic issues outside those machine checks.",
+    "question": "Which publication boundary did this project adopt?",
+    "choices": {
+      "A": "Open a draft pull request automatically but always require a human merge before publication.",
+      "B": "Produce review artifacts and require a human-reviewed publication change; the generation workflow itself does not publish.",
+      "C": "Publish automatically when all configured structural and terminology gates pass.",
+      "D": "Publish automatically only when the machine gates pass and the translator also reports high confidence."
+    },
+    "gold": {
+      "choice": "C",
+      "context_card": "publish-auto-v5",
+      "required_record": null
+    }
+  }
+]

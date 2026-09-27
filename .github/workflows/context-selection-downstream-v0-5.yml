@@ -1,0 +1,64 @@
+name: Context selection downstream v0.5 freeze
+
+on:
+  pull_request:
+    paths:
+      - "experiments/context_selection/downstream-counterfactual-fixtures.v0.5.json"
+      - "experiments/context_selection/downstream-cases.v0.5.json"
+      - "experiments/context_selection/downstream-arms.v0.5.json"
+      - "experiments/context_selection/downstream-evaluation-contract.v0.5.json"
+      - "experiments/context_selection/validate_downstream_v0_5_freeze.py"
+      - "experiments/context_selection/evaluate_downstream_v0_5.py"
+      - ".github/workflows/context-selection-downstream-v0-5.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate frozen v0.5 design
+        run: python experiments/context_selection/validate_downstream_v0_5_freeze.py
+      - name: Smoke evaluator semantics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("experiments/context_selection")
+          cases={c["case_id"]:c for c in json.loads((root/"downstream-cases.v0.5.json").read_text())}
+          arms=json.loads((root/"downstream-arms.v0.5.json").read_text())
+          answers={}
+          answers["no_context"]={cid:{"choice":"ABSTAIN"} for cid in arms["pair_controls"]["no_context"]["case_ids"]}
+          answers["correct_card"]={cid:{"choice":cases[cid]["gold"]["choice"]} for cid in arms["pair_controls"]["correct_card"]["case_ids"]}
+          for name,spec in arms["real_side_controls"].items():
+              answers[name]={cid:{"choice":cases[cid]["gold"]["choice"]} for cid in spec["case_ids"]}
+          for name,spec in arms["historical_retrieval"].items():
+              rows={}
+              for cid in spec["case_ids"]:
+                  required=cases[cid]["gold"]["required_record"]
+                  choice=cases[cid]["gold"]["choice"] if required in spec["selections"][cid] else "ABSTAIN"
+                  rows[cid]={"choice":choice}
+              answers[name]=rows
+          Path("/tmp/v05-smoke.json").write_text(json.dumps({"run":{"kind":"metric-semantics-smoke"},"answers":answers}))
+          PY
+          python experiments/context_selection/evaluate_downstream_v0_5.py /tmp/v05-smoke.json > /tmp/v05-eval.json
+          python - <<'PY'
+          import json
+          data=json.load(open("/tmp/v05-eval.json"))
+          assert data["control_gate"]["pass"] is True
+          assert data["correct_card_matched_pair_flips"]["count"] == 6
+          expected={"keyword_top2":5,"embedding_first512_top2":4,"embedding_chunked_top2":3}
+          for name,hits in expected.items():
+              row=data["historical_retrieval_coupling"][name]
+              assert row["required_hits"] == hits
+              assert row["accuracy_when_required_present"] == 1.0
+              assert row["abstention_rate_when_required_absent"] == 1.0
+          print("downstream v0.5 evaluator smoke valid")
+          PY
