@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection historical-miss downstream coupling",
+  "version": "v0.5",
+  "issue": 109,
+  "parent_issue": 2,
+  "predecessor_issues": [
+    102,
+    106
+  ],
+  "dataset": "downstream-cases.v0.5.json",
+  "fixtures": "downstream-counterfactual-fixtures.v0.5.json",
+  "arms": "downstream-arms.v0.5.json",
+  "freeze_rule": "Matched tasks, synthetic siblings, historical retrieval selections, full-corpus controls, prompt contract, and evaluator semantics are frozen before any v0.5 downstream-model output.",
+  "selected_source_cases": [
+    "ctx-001",
+    "ctx-002",
+    "ctx-003",
+    "ctx-006",
+    "ctx-007",
+    "ctx-008"
+  ],
+  "historical_expected_required_hits": {
+    "keyword_top2": {
+      "hits": 5,
+      "total": 6
+    },
+    "embedding_first512_top2": {
+      "hits": 4,
+      "total": 6
+    },
+    "embedding_chunked_top2": {
+      "hits": 3,
+      "total": 6
+    }
+  },
+  "prompt_contract": {
+    "system": "You are evaluating a project-specific decision. Use only the scenario, answer options, and Decision Context records supplied in this request. The scenario and options may be compatible with multiple reasonable policies. If the supplied Decision Context is insufficient to determine the project's accepted action, return ABSTAIN. Otherwise follow the applicable accepted decision. Return exactly one choice A, B, C, D, or ABSTAIN.",
+    "allowed_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "ABSTAIN"
+    ],
+    "pair_control_context": "normalized decision card",
+    "retrieval_context": "original frozen PDDR Markdown"
+  },
+  "control_gate": {
+    "frozen_before_output": true,
+    "no_context_min_abstain": 10,
+    "correct_card_min_correct": 10,
+    "correct_card_min_pair_flips": 5,
+    "required_full_pddr_min_correct": 5,
+    "full_corpus_min_correct": 5
+  },
+  "primary_metrics": [
+    "historical_required_hit_count",
+    "downstream_gold_accuracy",
+    "accuracy_when_required_record_present",
+    "gold_accuracy_when_required_record_absent",
+    "abstention_rate_when_required_record_absent",
+    "wrong_action_rate_when_required_record_absent",
+    "behavior_preservation_vs_required_full_pddr"
+  ],
+  "interpretation_limits": [
+    "Retrieval selections are exact replays of pre-existing frozen v0.2 evidence; no v0.5 retrieval is rerun or tuned.",
+    "Synthetic siblings are control fixtures only and are not historical project decisions.",
+    "Historical retrieval coupling is measured only on the six real-side cases; pair controls use all twelve matched cases."
+  ]
+}
