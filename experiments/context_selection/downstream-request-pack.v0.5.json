@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment": "PDDR Context Selection historical-miss downstream coupling",
+  "version": "v0.5",
+  "issue": 109,
+  "request_count": 54,
+  "request_file_sha256": "67f7a0b2f282246b62fb8fd8358517eb50ca03ce429487532d5a7e6114e35d1a",
+  "request_file_bytes": 509138,
+  "preview_evidence": {
+    "workflow_run_id": 36332932773,
+    "workflow_url": "https://github.com/serevy/semantic-decision-lab/actions/runs/36332932773",
+    "head_sha": "23cb8c24ef422b8dc9a5ea7e516ad9397d4fb948",
+    "artifact_id": 10936440791,
+    "artifact_digest": "sha256:24bc27e7067aef1493d68b2ddf0e519020f2d6ace0821abe49382d2ee39c6a90"
+  },
+  "freeze_rule": "The exact deterministic 54-request pack digest was observed and frozen on the PR validation path before any live downstream-model output for v0.5."
+}
