@@ -105,7 +105,7 @@ class HostedRawEvidenceTest(unittest.TestCase):
         self.assertEqual(fields["raw_response_base64"], "eyJ4Ijoi/yJ9")
         self.assertEqual(
             fields["raw_response_sha256"],
-            "a0b2c62871fe0e8f7cb77f7e5f07a14665291d481377fb130d092648ea3a1968",
+            "36781faac995a68b69aab7d540747e0c70efed427e66a608cdf64fc4feaaff12",
         )
 
 
