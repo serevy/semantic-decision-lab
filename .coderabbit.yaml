@@ -1,0 +1,86 @@
+language: "ja-JP"
+
+tone_instructions: >-
+  簡潔で平易な日本語で、観察した事実・発生条件・影響・修正方向を分けて説明してください。
+  推測は断定せず、スタイルだけの指摘は具体的な保守・品質リスクがある場合に限定してください。
+
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  high_level_summary_instructions: >-
+    変更目的、主要な影響、確認すべきリスクだけを簡潔な日本語で要約してください。
+    実装詳細の列挙より、レビュー判断に必要な情報を優先してください。
+  collapse_walkthrough: true
+  changed_files_summary: false
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  related_issues: false
+  related_prs: false
+  suggested_labels: false
+  suggested_reviewers: false
+  in_progress_fortune: false
+  enable_prompt_for_ai_agents: false
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+
+  path_filters:
+    - "!experiments/**/results/**/*.zip"
+
+  path_instructions:
+    - path: "**/*"
+      instructions: |
+        Evidence-driven reviewを優先してください。
+        各findingは、可能な限り次の4点がコード・設定・文書から確認できる場合だけ報告してください。
+        1. 観察した挙動または破られる契約
+        2. 問題が発生する具体的な入力・状態・タイミング
+        3. 利用者・システム・研究Evidenceへの具体的な影響
+        4. 過大な再設計を要求しない修正方向
+
+        不確実な内容はfindingとして断定せず、必要なら質問として示してください。
+        個人的な好みやstyle-onlyの指摘は、具体的な保守・正確性・運用上のコストがない限り不要です。
+        同じ根本原因を複数コメントへ分割しないでください。
+
+    - path: "experiments/**"
+      instructions: |
+        研究再現性とEvidence integrityを重点確認してください。
+        - provider/model/source revision、runtime、dtype、hardware、input hash等のprovenanceが必要十分か
+        - 最初の出力を見る前にfreezeすべき条件が後から変更可能になっていないか
+        - 成功結果だけでなくfailure/raw responseも失われないか
+        - upstreamのbenchmark/claimと、このrepositoryで再現したEvidenceを混同していないか
+        - frozen dataset / request / evidenceを後から上書き・汚染していないか
+        - silent truncation、fallback、retry、packing変更が実験条件を暗黙に変えていないか
+        - 外部API・課金・不可逆なside effectより前にvalidationできるものを確認しているか
+
+    - path: "experiments/provider_portability/**"
+      instructions: |
+        provider portabilityでは次を別々の軸としてレビューしてください。
+        - request/response schema compatibility
+        - HTTP/SDK transport compatibility
+        - semantic/calibration parity
+        - hosted/local/runtime-lowering parity
+        API互換だけをsemantic equivalenceの根拠にしないでください。
+        provider固有処理がdownstream application logicへ漏れていないかも確認してください。
+
+    - path: "docs/records/**"
+      instructions: |
+        PDDRはdurableなProject / Product / Process decisionのみを記録する方針です。
+        単なる実験開始・raw result・一時的な実装詳細をPDDRへ昇格させていないか確認してください。
+        proposed / accepted / superseded等のdecision state、Evidenceへのlink、現在のdelivery stateを混同していないか確認してください。
+        PDDRを実行policyそのものとして扱う変更は指摘してください。
+
+    - path: ".github/workflows/**"
+      instructions: |
+        CI / workflowでは特に次を確認してください。
+        - secretやcredentialを不要なstepへ渡していないか
+        - paid/external actionの前に可能なvalidationを済ませているか
+        - failure時も必要なEvidence/artifactを保存できるか
+        - immutable revisionやdigestを意図せずfloating refへ戻していないか
+        - concurrency / retry / cancellationでfirst-run Evidenceが失われたり上書きされないか
+
+    - path: "README*.md"
+      instructions: |
+        文体や言い回しの好みより、手順の正確性、現在の実装との不一致、危険な例、古い設定を重点確認してください。
+        日本語の読みやすさ自体は別の文章品質ツールで扱う予定なので、意味や運用に影響しないstyle指摘は不要です。
