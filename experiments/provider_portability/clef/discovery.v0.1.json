@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.1",
+  "observed_date_jst": "2026-10-02",
+  "issue": "https://github.com/serevy/semantic-decision-lab/issues/118",
+  "sources": {
+    "announcement": "https://blog.cloudflare.com/clef-decision-models/",
+    "workers_ai_model": "https://developers.cloudflare.com/workers-ai/models/clef/",
+    "workers_ai_changelog": "https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/",
+    "hf_clef": "https://huggingface.co/Cloudflare/clef",
+    "hf_clef_flash": "https://huggingface.co/Cloudflare/clef-flash",
+    "hf_systemone_commit": "https://huggingface.co/Cloudflare/clef/commit/a20e258b170e7f7a9fae1fb58d7bb6e089f2ce29"
+  },
+  "family": {
+    "license": "Apache-2.0",
+    "question_types": [
+      "noul",
+      "choice",
+      "score"
+    ],
+    "free_form_generation_required_for_decision_path": false,
+    "architecture_note": "Released decision path uses a Qwen backbone plus a joint schema head and custom joint_schema_model.py."
+  },
+  "models": {
+    "clef": {
+      "parameter_class": "27B",
+      "workers_ai_id": "@cf/cloudflare/clef",
+      "systemone_model_selector": "clef",
+      "hf_repo": "Cloudflare/clef",
+      "observed_hf_revision": "2f3de3dd85f379784083b0814d997ab627200f0c",
+      "revision_precision": "full",
+      "hf_tree_size_observed": "55 GB"
+    },
+    "clef_flash": {
+      "parameter_class": "9B",
+      "workers_ai_id": "@cf/cloudflare/clef-flash",
+      "systemone_model_selector": "clef-flash",
+      "hf_repo": "Cloudflare/clef-flash",
+      "observed_hf_revision": "17f0b0a",
+      "revision_precision": "short-only",
+      "hf_tree_size_observed": "19.1 GB",
+      "freeze_gate": "Resolve and record the full immutable HF commit SHA before the first local model output."
+    }
+  },
+  "hosted_workers_ai": {
+    "documented_context_window_tokens": 65536,
+    "documented_max_questions": 64,
+    "documented_state_types": [
+      "string",
+      "object",
+      "array"
+    ],
+    "documented_long_state_behavior": "Long text state is truncated to fit the model token limit.",
+    "image_extension": {
+      "max_images": 4,
+      "accepted_formats": [
+        "PNG",
+        "JPEG",
+        "WebP"
+      ],
+      "remote_urls_accepted": false,
+      "max_each_mib": 4,
+      "max_each_megapixels": 16,
+      "max_total_decoded_mib": 8,
+      "max_request_body_mib": 13
+    },
+    "underlying_model_revision_pin_exposed": false,
+    "provenance_note": "Hosted runs can freeze alias, request, API surface and observation time, but not an immutable underlying model revision unless Cloudflare exposes one."
+  },
+  "local_release": {
+    "decision_entrypoint": "joint_schema_model.py:systemone",
+    "model_loader": "joint_schema_model.py:load_release_model",
+    "local_encode_default_max_length_tokens": 16384,
+    "upstream_tested_stack": {
+      "torch": "2.11",
+      "transformers": "5.10.2",
+      "gpu": "single H200"
+    },
+    "runtime_boundary": "Generic chat-generation examples are not treated as evidence that vLLM/SGLang exercise the Clef joint decision head."
+  },
+  "upstream_benchmarks": {
+    "status": "related-work-only",
+    "note": "Do not report Cloudflare/TypeSafe head-to-head numbers as Lab reproduction."
+  }
+}
