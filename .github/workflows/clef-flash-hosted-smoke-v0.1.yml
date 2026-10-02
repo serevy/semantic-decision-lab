@@ -1,0 +1,82 @@
+name: Clef-Flash hosted smoke v0.1
+
+on:
+  push:
+    branches:
+      - "experiment/clef-flash-hosted-smoke-v0-1"
+    paths:
+      - ".github/workflows/clef-flash-hosted-smoke-v0.1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hosted-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_AUTH_TOKEN: ${{ secrets.CLOUDFLARE_AUTH_TOKEN }}
+      EVIDENCE_PATH: evidence/clef-flash-workers-ai-v0.1.json
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Verify live-run credentials are configured
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID}" || -z "${CLOUDFLARE_AUTH_TOKEN}" ]]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID and/or CLOUDFLARE_AUTH_TOKEN repository secrets are not configured."
+            exit 2
+          fi
+
+      - name: Run frozen Clef-Flash Workers AI smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python experiments/provider_portability/clef/run_workers_ai_smoke.py \
+            --model clef-flash \
+            --output "${EVIDENCE_PATH}"
+
+      - name: Write sanitized smoke summary
+        if: success()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          p = Path(os.environ["EVIDENCE_PATH"])
+          data = json.loads(p.read_text(encoding="utf-8"))
+          summary = {
+              "stage": data.get("stage"),
+              "provider": data.get("provider"),
+              "model_id": data.get("model_id"),
+              "request_sha256": data.get("request_sha256"),
+              "http_status": data.get("http_status"),
+              "elapsed_ms_client_observed": data.get("elapsed_ms_client_observed"),
+              "normalized_systemone_response": data.get("normalized_systemone_response"),
+          }
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("## Clef-Flash hosted smoke v0.1\n\n")
+              out.write(json.dumps(summary, ensure_ascii=False, indent=2))
+              out.write("\n")
+          PY
+
+      - name: Upload first-run evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: clef-flash-workers-ai-v0.1-evidence
+          path: evidence/clef-flash-workers-ai-v0.1.json
+          if-no-files-found: warn
+          retention-days: 30
