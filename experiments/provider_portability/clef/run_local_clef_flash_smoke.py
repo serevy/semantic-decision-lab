@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parent
 HF_REPO = "Cloudflare/clef-flash"
 APPROVED_REVISION_PREFIX = "17f0b0a"
 FULL_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+FROZEN_MAX_LENGTH = 16384
 
 
 def sha256_file(path: Path) -> str:
@@ -129,7 +130,6 @@ def main() -> int:
         default=str(ROOT / "systemone-contract.v0.1.json"),
     )
     parser.add_argument("--output", required=True)
-    parser.add_argument("--max-length", type=int, default=16384)
     args = parser.parse_args()
 
     output = Path(args.output)
@@ -145,7 +145,7 @@ def main() -> int:
         "hf_repo": HF_REPO,
         "hf_revision_requested": args.hf_revision,
         "approved_revision_prefix": APPROVED_REVISION_PREFIX,
-        "max_length": args.max_length,
+        "max_length": FROZEN_MAX_LENGTH,
         "request": request,
         "stage": "reserved-before-validation",
     }
@@ -250,7 +250,7 @@ def main() -> int:
             module,
             processor,
             request,
-            max_length=args.max_length,
+            max_length=FROZEN_MAX_LENGTH,
         )
         evidence.update(
             {
@@ -289,7 +289,7 @@ def main() -> int:
             model,
             processor,
             request,
-            max_length=args.max_length,
+            max_length=FROZEN_MAX_LENGTH,
         )
     except Exception as exc:
         if evidence.get("stage") not in {
