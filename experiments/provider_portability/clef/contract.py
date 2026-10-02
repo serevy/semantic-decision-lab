@@ -44,6 +44,9 @@ def _validate_distribution(
 
 
 def validate_request(request: Mapping[str, Any]) -> None:
+    if not isinstance(request, Mapping):
+        raise ValueError("request must be an object")
+
     model = request.get("model")
     if model not in MODEL_SELECTORS:
         raise ValueError(f"model must be one of {sorted(MODEL_SELECTORS)}")
@@ -87,6 +90,8 @@ def validate_request(request: Mapping[str, Any]) -> None:
 
 
 def unwrap_cloudflare_rest(payload: Mapping[str, Any]) -> Mapping[str, Any]:
+    if not isinstance(payload, Mapping):
+        raise ValueError("response payload must be a JSON object")
     if "success" not in payload:
         return payload
     if payload.get("success") is not True:

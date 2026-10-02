@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import tempfile
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -28,8 +29,24 @@ def reserve_evidence(path: Path, payload: Mapping[str, Any]) -> None:
 
 
 def update_evidence(path: Path, payload: Mapping[str, Any]) -> None:
-    """Atomically update evidence while preserving the last complete JSON."""
+    """Atomically update evidence without using a predictable temporary path."""
 
-    temp = path.with_name(f".{path.name}.tmp")
-    temp.write_text(_serialized(payload), encoding="utf-8")
-    os.replace(temp, path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temp_name = tempfile.mkstemp(
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        dir=path.parent,
+        text=True,
+    )
+    temp = Path(temp_name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(_serialized(payload))
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp, path)
+    finally:
+        try:
+            temp.unlink()
+        except FileNotFoundError:
+            pass

@@ -60,6 +60,12 @@ class ClefContractTest(unittest.TestCase):
         self.assertIs(unwrap_cloudflare_rest(wrapped), response)
         validate_response(wrapped, REQUEST)
 
+    def test_non_object_response_is_rejected_with_contract_error(self):
+        for payload in (None, [], "not-an-object"):
+            with self.subTest(payload=payload):
+                with self.assertRaisesRegex(ValueError, "JSON object"):
+                    unwrap_cloudflare_rest(payload)
+
     def test_missing_answer_is_rejected(self):
         response = valid_response()
         del response["answers"]["owner"]
@@ -87,9 +93,7 @@ class ClefContractTest(unittest.TestCase):
     def test_more_than_64_questions_is_rejected(self):
         request = json.loads(json.dumps(REQUEST))
         prototype = request["questions"]["outage"]
-        request["questions"] = {
-            f"q{i}": prototype for i in range(65)
-        }
+        request["questions"] = {f"q{i}": prototype for i in range(65)}
         with self.assertRaises(ValueError):
             validate_request(request)
 

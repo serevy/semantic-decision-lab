@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
+import http.client
 import json
 import os
 import time
@@ -10,7 +12,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-from contract import load_fixture, validate_response
+from contract import load_fixture, validate_request, validate_response
 from evidence_io import reserve_evidence, update_evidence
 
 
@@ -24,6 +26,14 @@ def canonical_json(value) -> bytes:
         sort_keys=True,
         separators=(",", ":"),
     ).encode("utf-8")
+
+
+def raw_body_evidence(raw_body: bytes) -> dict[str, str]:
+    return {
+        "raw_response_base64": base64.b64encode(raw_body).decode("ascii"),
+        "raw_response_sha256": hashlib.sha256(raw_body).hexdigest(),
+        "raw_response_body": raw_body.decode("utf-8", errors="replace"),
+    }
 
 
 def main() -> int:
@@ -45,6 +55,7 @@ def main() -> int:
     model_id = f"@cf/cloudflare/{args.model}"
 
     if args.dry_run:
+        validate_request(request_body)
         print(
             json.dumps(
                 {
@@ -68,12 +79,6 @@ def main() -> int:
         )
         return 0
 
-    account_id = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
-    auth_token = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
-    if not account_id or not auth_token:
-        raise SystemExit(
-            "CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_AUTH_TOKEN are required for a live run"
-        )
     if not args.output:
         raise SystemExit("--output is required for a live run")
 
@@ -98,6 +103,34 @@ def main() -> int:
     except FileExistsError as exc:
         raise SystemExit(f"refusing to overwrite existing evidence: {output}") from exc
 
+    try:
+        validate_request(request_body)
+    except Exception as exc:
+        evidence.update(
+            {
+                "stage": "request-validation-error",
+                "validation_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Workers AI request validation failed; evidence: {output}") from exc
+
+    account_id = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+    auth_token = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+    if not account_id or not auth_token:
+        evidence.update(
+            {
+                "stage": "configuration-error",
+                "configuration_error": (
+                    "CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_AUTH_TOKEN are required"
+                ),
+            }
+        )
+        update_evidence(output, evidence)
+        raise SystemExit(
+            "CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_AUTH_TOKEN are required for a live run"
+        )
+
     url = (
         f"https://api.cloudflare.com/client/v4/accounts/{account_id}"
         f"/ai/run/{model_id}"
@@ -115,19 +148,59 @@ def main() -> int:
     started = time.perf_counter()
     try:
         with urllib.request.urlopen(request, timeout=args.timeout) as response:
-            raw_body = response.read()
             http_status = response.status
+            try:
+                raw_body = response.read()
+            except http.client.IncompleteRead as exc:
+                raw_body = exc.partial or b""
+                evidence.update(
+                    {
+                        "stage": "response-read-error",
+                        "http_status": http_status,
+                        "elapsed_ms_client_observed": (
+                            time.perf_counter() - started
+                        ) * 1000.0,
+                        "response_read_error": f"IncompleteRead: {exc}",
+                        **raw_body_evidence(raw_body),
+                    }
+                )
+                update_evidence(output, evidence)
+                raise RuntimeError(
+                    f"Workers AI response was incomplete; evidence: {output}"
+                ) from exc
+            except (http.client.HTTPException, OSError) as exc:
+                evidence.update(
+                    {
+                        "stage": "response-read-error",
+                        "http_status": http_status,
+                        "elapsed_ms_client_observed": (
+                            time.perf_counter() - started
+                        ) * 1000.0,
+                        "response_read_error": f"{type(exc).__name__}: {exc}",
+                    }
+                )
+                update_evidence(output, evidence)
+                raise RuntimeError(
+                    f"Workers AI response read failed; evidence: {output}"
+                ) from exc
     except urllib.error.HTTPError as exc:
-        raw_body = exc.read()
+        try:
+            raw_body = exc.read()
+            read_error = None
+        except http.client.IncompleteRead as read_exc:
+            raw_body = read_exc.partial or b""
+            read_error = f"IncompleteRead while reading HTTP error body: {read_exc}"
         evidence.update(
             {
                 "stage": "http-error",
                 "http_status": exc.code,
                 "elapsed_ms_client_observed": (time.perf_counter() - started) * 1000.0,
-                "raw_response_body": raw_body.decode("utf-8", errors="replace"),
                 "transport_error": f"HTTPError: {exc}",
+                **raw_body_evidence(raw_body),
             }
         )
+        if read_error:
+            evidence["response_read_error"] = read_error
         update_evidence(output, evidence)
         raise RuntimeError(
             f"Workers AI returned HTTP {exc.code}; raw failure evidence: {output}"
@@ -144,25 +217,37 @@ def main() -> int:
         raise RuntimeError(f"Workers AI transport failed; evidence: {output}") from exc
 
     elapsed_ms = (time.perf_counter() - started) * 1000.0
-    raw_text = raw_body.decode("utf-8", errors="replace")
     evidence.update(
         {
             "stage": "raw-response-received",
             "http_status": http_status,
             "elapsed_ms_client_observed": elapsed_ms,
-            "raw_response_body": raw_text,
+            **raw_body_evidence(raw_body),
         }
     )
-    # Preserve the raw response before JSON parsing or schema validation.
     update_evidence(output, evidence)
 
     try:
+        raw_text = raw_body.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        evidence.update(
+            {
+                "stage": "response-decode-error",
+                "validation_error": f"UnicodeDecodeError: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(
+            f"Workers AI response was not valid UTF-8; evidence: {output}"
+        ) from exc
+
+    try:
         payload = json.loads(raw_text)
-    except (json.JSONDecodeError, UnicodeError) as exc:
+    except json.JSONDecodeError as exc:
         evidence.update(
             {
                 "stage": "response-parse-error",
-                "validation_error": f"{type(exc).__name__}: {exc}",
+                "validation_error": f"JSONDecodeError: {exc}",
             }
         )
         update_evidence(output, evidence)

@@ -55,20 +55,26 @@ python experiments/provider_portability/clef/run_local_clef_flash_smoke.py \
   --output "/tmp/clef-flash-local-v0.1.json"
 ```
 
-The runner:
+Before loading the 9B model, the runner:
 
-- reserves the evidence destination before network/model work and refuses a
-  concurrent or overwrite attempt;
-- verifies and records the full immutable Hugging Face revision before inference;
-- downloads the exact approved snapshot itself;
-- requires the released joint-head artifacts;
-- calls `load_release_model(..., device="cuda")`;
-- calls the released `systemone(...)` helper;
-- keeps the local helper default `max_length=16384`;
-- preserves raw/failure evidence before contract validation;
-- records runtime versions, GPU, and hashes of the decision-head code/weights.
+- reserves the evidence destination exclusively;
+- validates the frozen System One request;
+- verifies and records the immutable Hugging Face revision;
+- downloads the exact approved snapshot;
+- loads only the processor plus released `joint_schema_model.py` for an
+  encoding preflight;
+- records original/retained state token counts and the encoded-input hash;
+- **rejects the first exact smoke if upstream `encode_record` would truncate
+  any state tokens**;
+- records Python / torch / transformers / CUDA / GPU before model inference.
 
-The first smoke checks **contract execution**, not semantic quality.
+Only after those gates pass does it load the released model and call
+`systemone(..., max_length=16384)`. It preserves raw/failure evidence before
+contract validation and records the loaded model dtype before inference.
+
+The first smoke checks **contract execution**, not semantic quality. A later
+long-context/truncation experiment must use a separately versioned condition
+instead of weakening this gate.
 
 ## After the run
 
