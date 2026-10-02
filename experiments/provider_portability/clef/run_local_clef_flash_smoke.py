@@ -5,14 +5,19 @@ import hashlib
 import importlib.util
 import json
 import platform
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from contract import load_fixture, validate_response
+from evidence_io import reserve_evidence, update_evidence
 
 
 ROOT = Path(__file__).resolve().parent
+HF_REPO = "Cloudflare/clef-flash"
+APPROVED_REVISION_PREFIX = "17f0b0a"
+FULL_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 
 
 def sha256_file(path: Path) -> str:
@@ -23,13 +28,23 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def validate_approved_revision(revision: str) -> None:
+    if not FULL_SHA_RE.fullmatch(revision):
+        raise ValueError("hf revision must be a full 40-character lowercase commit SHA")
+    if not revision.startswith(APPROVED_REVISION_PREFIX):
+        raise ValueError(
+            "hf revision does not match the discovery-time approved prefix "
+            f"{APPROVED_REVISION_PREFIX}"
+        )
+
+
 def load_joint_schema_module(snapshot: Path):
     module_path = snapshot / "joint_schema_model.py"
     if not module_path.is_file():
-        raise SystemExit(f"missing released joint_schema_model.py: {module_path}")
+        raise RuntimeError(f"missing released joint_schema_model.py: {module_path}")
     spec = importlib.util.spec_from_file_location("clef_joint_schema_model", module_path)
     if spec is None or spec.loader is None:
-        raise SystemExit("could not load joint_schema_model.py")
+        raise RuntimeError("could not load joint_schema_model.py")
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
@@ -38,7 +53,12 @@ def load_joint_schema_module(snapshot: Path):
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--snapshot", required=True)
+    parser.add_argument(
+        "--hf-revision",
+        required=True,
+        help="Full immutable Cloudflare/clef-flash commit SHA approved before inference.",
+    )
+    parser.add_argument("--cache-dir")
     parser.add_argument(
         "--fixture",
         default=str(ROOT / "systemone-contract.v0.1.json"),
@@ -47,10 +67,66 @@ def main() -> int:
     parser.add_argument("--max-length", type=int, default=16384)
     args = parser.parse_args()
 
-    snapshot = Path(args.snapshot).resolve()
+    validate_approved_revision(args.hf_revision)
+
     output = Path(args.output)
-    if output.exists():
-        raise SystemExit(f"refusing to overwrite existing evidence: {output}")
+    fixture = load_fixture(args.fixture)
+    request = json.loads(json.dumps(fixture["request"]))
+    request["model"] = "clef-flash"
+
+    evidence = {
+        "schema_version": "0.1",
+        "observed_at_utc": datetime.now(timezone.utc).isoformat(),
+        "provider": "cloudflare-clef-local-release",
+        "model": "clef-flash",
+        "hf_repo": HF_REPO,
+        "hf_revision_requested": args.hf_revision,
+        "approved_revision_prefix": APPROVED_REVISION_PREFIX,
+        "max_length": args.max_length,
+        "request": request,
+        "stage": "reserved-before-model-resolution",
+    }
+    try:
+        reserve_evidence(output, evidence)
+    except FileExistsError as exc:
+        raise SystemExit(f"refusing to overwrite existing evidence: {output}") from exc
+
+    try:
+        from huggingface_hub import model_info, snapshot_download
+
+        info = model_info(HF_REPO, revision=args.hf_revision)
+        resolved_revision = info.sha
+        if resolved_revision != args.hf_revision:
+            raise ValueError(
+                "Hugging Face resolved a different revision: "
+                f"requested={args.hf_revision} resolved={resolved_revision}"
+            )
+        validate_approved_revision(resolved_revision)
+        evidence.update(
+            {
+                "hf_revision": resolved_revision,
+                "stage": "revision-validated-before-inference",
+            }
+        )
+        # Persist the immutable revision before download/model inference.
+        update_evidence(output, evidence)
+
+        snapshot = Path(
+            snapshot_download(
+                HF_REPO,
+                revision=resolved_revision,
+                cache_dir=args.cache_dir,
+            )
+        ).resolve()
+    except Exception as exc:
+        evidence.update(
+            {
+                "stage": "revision-or-snapshot-error",
+                "pre_inference_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Clef-Flash revision/snapshot preparation failed; evidence: {output}") from exc
 
     required_files = [
         "joint_schema_model.py",
@@ -61,55 +137,89 @@ def main() -> int:
     ]
     missing = [name for name in required_files if not (snapshot / name).is_file()]
     if missing:
-        raise SystemExit(f"snapshot is incomplete: missing={missing}")
+        evidence.update(
+            {
+                "stage": "snapshot-incomplete",
+                "snapshot_path": str(snapshot),
+                "pre_inference_error": f"snapshot is incomplete: missing={missing}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Clef-Flash snapshot is incomplete; evidence: {output}")
 
-    fixture = load_fixture(args.fixture)
-    request = json.loads(json.dumps(fixture["request"]))
-    request["model"] = "clef-flash"
+    evidence.update(
+        {
+            "snapshot_path": str(snapshot),
+            "joint_schema_model_sha256": sha256_file(snapshot / "joint_schema_model.py"),
+            "joint_head_sha256": sha256_file(snapshot / "joint_head.safetensors"),
+            "stage": "snapshot-validated-before-inference",
+        }
+    )
+    update_evidence(output, evidence)
 
-    module = load_joint_schema_module(snapshot)
-    model, processor = module.load_release_model(str(snapshot), device="cuda")
-    response = module.systemone(
-        model,
-        processor,
-        request,
-        max_length=args.max_length,
+    try:
+        module = load_joint_schema_module(snapshot)
+        model, processor = module.load_release_model(str(snapshot), device="cuda")
+        response = module.systemone(
+            model,
+            processor,
+            request,
+            max_length=args.max_length,
+        )
+    except Exception as exc:
+        evidence.update(
+            {
+                "stage": "inference-error",
+                "inference_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Clef-Flash local inference failed; evidence: {output}") from exc
+
+    evidence.update(
+        {
+            "stage": "raw-response-received",
+            "raw_response": response,
+        }
     )
-    validate_response(
-        response,
-        request,
-        probability_tolerance=float(
-            fixture["contract_expectations"]["probability_tolerance_after_rounding"]
-        ),
-    )
+    # Preserve the raw model response before validating its contract.
+    update_evidence(output, evidence)
+
+    try:
+        validate_response(
+            response,
+            request,
+            probability_tolerance=float(
+                fixture["contract_expectations"]["probability_tolerance_after_rounding"]
+            ),
+        )
+    except Exception as exc:
+        evidence.update(
+            {
+                "stage": "contract-validation-error",
+                "validation_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Clef-Flash contract validation failed; evidence: {output}") from exc
 
     import torch
     import transformers
 
-    evidence = {
-        "schema_version": "0.1",
-        "observed_at_utc": datetime.now(timezone.utc).isoformat(),
-        "provider": "cloudflare-clef-local-release",
-        "model": "clef-flash",
-        "snapshot_path": str(snapshot),
-        "joint_schema_model_sha256": sha256_file(snapshot / "joint_schema_model.py"),
-        "joint_head_sha256": sha256_file(snapshot / "joint_head.safetensors"),
-        "max_length": args.max_length,
-        "runtime": {
-            "python": platform.python_version(),
-            "torch": torch.__version__,
-            "transformers": transformers.__version__,
-            "cuda": torch.version.cuda,
-            "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
-        },
-        "request": request,
-        "raw_response": response,
-    }
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(evidence, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    evidence.update(
+        {
+            "stage": "validated",
+            "runtime": {
+                "python": platform.python_version(),
+                "torch": torch.__version__,
+                "transformers": transformers.__version__,
+                "cuda": torch.version.cuda,
+                "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+            },
+            "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+        }
     )
+    update_evidence(output, evidence)
     print(output)
     return 0
 

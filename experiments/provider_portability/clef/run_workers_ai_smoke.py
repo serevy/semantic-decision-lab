@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from contract import load_fixture, validate_response
+from evidence_io import reserve_evidence, update_evidence
 
 
 ROOT = Path(__file__).resolve().parent
@@ -76,6 +77,27 @@ def main() -> int:
     if not args.output:
         raise SystemExit("--output is required for a live run")
 
+    output = Path(args.output)
+    evidence = {
+        "schema_version": "0.1",
+        "observed_at_utc": datetime.now(timezone.utc).isoformat(),
+        "provider": "cloudflare-workers-ai",
+        "model_id": model_id,
+        "model_selector": args.model,
+        "hosted_model_revision": None,
+        "hosted_revision_note": (
+            "Workers AI exposes a model alias here; no immutable underlying model "
+            "revision is recorded by this runner."
+        ),
+        "request_sha256": request_sha256,
+        "request": request_body,
+        "stage": "reserved-before-request",
+    }
+    try:
+        reserve_evidence(output, evidence)
+    except FileExistsError as exc:
+        raise SystemExit(f"refusing to overwrite existing evidence: {output}") from exc
+
     url = (
         f"https://api.cloudflare.com/client/v4/accounts/{account_id}"
         f"/ai/run/{model_id}"
@@ -97,48 +119,84 @@ def main() -> int:
             http_status = response.status
     except urllib.error.HTTPError as exc:
         raw_body = exc.read()
+        evidence.update(
+            {
+                "stage": "http-error",
+                "http_status": exc.code,
+                "elapsed_ms_client_observed": (time.perf_counter() - started) * 1000.0,
+                "raw_response_body": raw_body.decode("utf-8", errors="replace"),
+                "transport_error": f"HTTPError: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
         raise RuntimeError(
-            f"Workers AI returned HTTP {exc.code}: "
-            f"{raw_body.decode('utf-8', errors='replace')}"
+            f"Workers AI returned HTTP {exc.code}; raw failure evidence: {output}"
         ) from exc
+    except urllib.error.URLError as exc:
+        evidence.update(
+            {
+                "stage": "transport-error",
+                "elapsed_ms_client_observed": (time.perf_counter() - started) * 1000.0,
+                "transport_error": f"URLError: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Workers AI transport failed; evidence: {output}") from exc
+
     elapsed_ms = (time.perf_counter() - started) * 1000.0
-
-    payload = json.loads(raw_body)
-    normalized = validate_response(
-        payload,
-        request_body,
-        probability_tolerance=float(
-            fixture["contract_expectations"]["probability_tolerance_after_rounding"]
-        ),
+    raw_text = raw_body.decode("utf-8", errors="replace")
+    evidence.update(
+        {
+            "stage": "raw-response-received",
+            "http_status": http_status,
+            "elapsed_ms_client_observed": elapsed_ms,
+            "raw_response_body": raw_text,
+        }
     )
+    # Preserve the raw response before JSON parsing or schema validation.
+    update_evidence(output, evidence)
 
-    evidence = {
-        "schema_version": "0.1",
-        "observed_at_utc": datetime.now(timezone.utc).isoformat(),
-        "provider": "cloudflare-workers-ai",
-        "model_id": model_id,
-        "model_selector": args.model,
-        "hosted_model_revision": None,
-        "hosted_revision_note": (
-            "Workers AI exposes a model alias here; no immutable underlying model "
-            "revision is recorded by this runner."
-        ),
-        "request_sha256": request_sha256,
-        "http_status": http_status,
-        "elapsed_ms_client_observed": elapsed_ms,
-        "request": request_body,
-        "raw_response": payload,
-        "normalized_systemone_response": normalized,
-    }
+    try:
+        payload = json.loads(raw_text)
+    except (json.JSONDecodeError, UnicodeError) as exc:
+        evidence.update(
+            {
+                "stage": "response-parse-error",
+                "validation_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Workers AI response was not valid JSON; evidence: {output}") from exc
 
-    output = Path(args.output)
-    if output.exists():
-        raise SystemExit(f"refusing to overwrite existing evidence: {output}")
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(evidence, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    evidence["raw_response"] = payload
+    update_evidence(output, evidence)
+
+    try:
+        normalized = validate_response(
+            payload,
+            request_body,
+            probability_tolerance=float(
+                fixture["contract_expectations"]["probability_tolerance_after_rounding"]
+            ),
+        )
+    except Exception as exc:
+        evidence.update(
+            {
+                "stage": "contract-validation-error",
+                "validation_error": f"{type(exc).__name__}: {exc}",
+            }
+        )
+        update_evidence(output, evidence)
+        raise RuntimeError(f"Workers AI contract validation failed; evidence: {output}") from exc
+
+    evidence.update(
+        {
+            "stage": "validated",
+            "normalized_systemone_response": normalized,
+            "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+        }
     )
+    update_evidence(output, evidence)
     print(output)
     return 0
 
