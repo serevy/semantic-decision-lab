@@ -100,5 +100,13 @@
       "Option/field order sensitivity remains a measured property even though upstream synthetic data permuted order.",
       "Score/ordinal calibration deserves separate analysis from Choice/Noul."
     ]
+  },
+  "compatibility_boundary": {
+    "upstream_claim": "Cloudflare states Clef follows the System One API and existing Jev integrations can switch by changing endpoint and model.",
+    "local_body_compatibility": "Released joint_schema_model.py:systemone explicitly accepts a Jev/SystemOne POST /v1/systemone request body and returns the same response-body shape.",
+    "workers_ai_transport": "Direct hosted examples use Workers AI binding AI.run(...) or the Cloudflare REST /accounts/{account_id}/ai/run/@cf/cloudflare/{model} transport.",
+    "exact_typesafe_sdk_base_url_drop_in": "unverified",
+    "classification_until_verified": "System One request/response compatible; hosted transport adapter expected unless an exact /v1/systemone-compatible endpoint is independently verified.",
+    "research_implication": "Measure application changes, adapter-only changes, and provider/runtime configuration changes separately. Do not collapse schema compatibility into HTTP endpoint compatibility."
   }
 }
