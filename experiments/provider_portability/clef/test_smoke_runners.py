@@ -5,7 +5,11 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from evidence_io import reserve_evidence, update_evidence
-from run_local_clef_flash_smoke import inspect_state_encoding, validate_approved_revision
+from run_local_clef_flash_smoke import (
+    FROZEN_MAX_LENGTH,
+    inspect_state_encoding,
+    validate_approved_revision,
+)
 from run_workers_ai_smoke import raw_body_evidence
 
 
@@ -32,6 +36,11 @@ class EvidenceIoTest(unittest.TestCase):
                 predictable_old_temp.read_text(encoding="utf-8"),
                 "must survive",
             )
+
+
+class ClefFrozenConditionTest(unittest.TestCase):
+    def test_first_smoke_max_length_is_frozen(self):
+        self.assertEqual(FROZEN_MAX_LENGTH, 16384)
 
 
 class ClefRevisionGateTest(unittest.TestCase):
