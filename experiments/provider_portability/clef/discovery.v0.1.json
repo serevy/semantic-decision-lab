@@ -80,5 +80,25 @@
   "upstream_benchmarks": {
     "status": "related-work-only",
     "note": "Do not report Cloudflare/TypeSafe head-to-head numbers as Lab reproduction."
+  },
+  "architecture_training": {
+    "backbone_policy": "Cloudflare states the Qwen backbone is frozen while the routing head and rank-256 low-rank adapters are jointly optimized.",
+    "inference_shape": "A specialized two-stage attention routing process scores schema choices directly from internal representations rather than autoregressive answer text.",
+    "joint_cross_field_attention": "Upstream states field parameters may cross-attend with other fields and back to the payload before scoring. Treat question isolation as an empirical property, not an assumption.",
+    "calibration_objective": [
+      "label-smoothed cross-entropy",
+      "Brier loss"
+    ],
+    "synthetic_training_variation": [
+      "field order",
+      "prompt variation",
+      "schema structure"
+    ],
+    "rlcd": "Cloudflare describes a secondary Reinforcement Learning for Calibrated Decisions stage with partial credit for adjacent ordinal choices, exact-record reward, and a reference penalty against distribution shift.",
+    "research_implications": [
+      "Packed-vs-separate question stability is high priority.",
+      "Option/field order sensitivity remains a measured property even though upstream synthetic data permuted order.",
+      "Score/ordinal calibration deserves separate analysis from Choice/Noul."
+    ]
   }
 }
