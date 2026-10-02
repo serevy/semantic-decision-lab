@@ -59,7 +59,7 @@ jobs:
             --model-dir /tmp/typed-decision-bert-tokenizer \
             --output /tmp/typed-decision-bert-v0.1-input-preflight.json
       - name: Upload preflight
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: typed-decision-bert-v0.1-input-preflight
           path: /tmp/typed-decision-bert-v0.1-input-preflight.json

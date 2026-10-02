@@ -66,7 +66,7 @@ jobs:
           print("downstream v0.5 evaluator smoke valid")
           PY
       - name: Upload request-pack preview
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: context-selection-downstream-request-pack-v0.5-preview
           path: ${{ runner.temp }}/downstream-requests.v0.5.jsonl
