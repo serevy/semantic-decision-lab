@@ -32,6 +32,10 @@ downloads that exact snapshot before inference.
 Changing the approved prefix requires a reviewed repository change rather than
 a command-line override.
 
+The first exact smoke also freezes `max_length` at **16,384** in the runner.
+There is no command-line override for this value. Any later context-length arm
+must use a separately versioned experiment instead of changing this condition.
+
 ## Hardware boundary
 
 The model card reports Clef-Flash as a 9B BF16 release and says Cloudflare
