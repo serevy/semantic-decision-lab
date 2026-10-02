@@ -22,6 +22,10 @@ reviews:
   in_progress_fortune: false
   enable_prompt_for_ai_agents: false
 
+  pre_merge_checks:
+    docstrings:
+      mode: "off"
+
   auto_review:
     enabled: true
     auto_incremental_review: true
