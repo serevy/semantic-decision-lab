@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase1a-order-and-packing",
+  "baseline_variant": "packed-canonical",
+  "comparisons": {
+    "packed-qorder-outage-severity-owner": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0030000000000000027},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.005900000000000016, "jensen_shannon_divergence_base2": 0.00032339740526292934, "top_choice_flip": false, "confidence_absolute_delta": 0.017000000000000015},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0010999999999996568, "expected_score_absolute_delta": 0.001100000000000101, "per_bin_max_absolute_delta": 0.008700000000000041, "jensen_shannon_divergence_base2": 0.00018663622962074625, "confidence_absolute_delta": 0.0017999999999999683}
+    },
+    "packed-qorder-owner-outage-severity": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.00040000000000006697},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0048000000000000265, "jensen_shannon_divergence_base2": 0.00019897753725748733, "top_choice_flip": false, "confidence_absolute_delta": 0.014000000000000012},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.03639999999999999, "expected_score_absolute_delta": 0.036499999999999755, "per_bin_max_absolute_delta": 0.033299999999999996, "jensen_shannon_divergence_base2": 0.0008919806987042894, "confidence_absolute_delta": 0.03180000000000005}
+    },
+    "packed-qorder-owner-severity-outage": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0040999999999999925},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.008399999999999963, "jensen_shannon_divergence_base2": 0.00044021634172829193, "top_choice_flip": false, "confidence_absolute_delta": 0.02410000000000001},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.023100000000000342, "expected_score_absolute_delta": 0.02320000000000011, "per_bin_max_absolute_delta": 0.02180000000000004, "jensen_shannon_divergence_base2": 0.00040046743871678496, "confidence_absolute_delta": 0.023499999999999965}
+    },
+    "packed-qorder-severity-outage-owner": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.010399999999999965},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0014999999999999996, "jensen_shannon_divergence_base2": 0.00004904732902795352, "top_choice_flip": false, "confidence_absolute_delta": 0.0010000000000000009},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.014499999999999957, "expected_score_absolute_delta": 0.014499999999999957, "per_bin_max_absolute_delta": 0.011099999999999999, "jensen_shannon_divergence_base2": 0.0009390752169898866, "confidence_absolute_delta": 0.007400000000000018}
+    },
+    "packed-qorder-severity-owner-outage": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0046999999999999265},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0020999999999999908, "jensen_shannon_divergence_base2": 0.00004351913366234317, "top_choice_flip": false, "confidence_absolute_delta": 0.006300000000000083},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.005799999999999805, "expected_score_absolute_delta": 0.005899999999999572, "per_bin_max_absolute_delta": 0.0030999999999999917, "jensen_shannon_divergence_base2": 0.00016231975324746604, "confidence_absolute_delta": 0.0038000000000000256}
+    },
+    "packed-choice-payments-support-storefront": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "top_choice_flip": false, "confidence_absolute_delta": 0.0},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0, "expected_score_absolute_delta": 0.0, "per_bin_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "confidence_absolute_delta": 0.0}
+    },
+    "packed-choice-storefront-payments-support": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "top_choice_flip": false, "confidence_absolute_delta": 0.0},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0, "expected_score_absolute_delta": 0.0, "per_bin_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "confidence_absolute_delta": 0.0}
+    },
+    "packed-choice-storefront-support-payments": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "top_choice_flip": false, "confidence_absolute_delta": 0.0},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0, "expected_score_absolute_delta": 0.0, "per_bin_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "confidence_absolute_delta": 0.0}
+    },
+    "packed-choice-support-payments-storefront": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "top_choice_flip": false, "confidence_absolute_delta": 0.0},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0, "expected_score_absolute_delta": 0.0, "per_bin_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "confidence_absolute_delta": 0.0}
+    },
+    "packed-choice-support-storefront-payments": {
+      "outage": {"type": "noul", "absolute_probability_delta": 0.0},
+      "owner": {"type": "choice", "per_option_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "top_choice_flip": false, "confidence_absolute_delta": 0.0},
+      "severity": {"type": "score", "reported_score_absolute_delta": 0.0, "expected_score_absolute_delta": 0.0, "per_bin_max_absolute_delta": 0.0, "jensen_shannon_divergence_base2": 0.0, "confidence_absolute_delta": 0.0}
+    },
+    "single-outage": {"outage": {"type": "noul", "absolute_probability_delta": 0.02090000000000003}},
+    "single-owner": {"owner": {"type": "choice", "per_option_max_absolute_delta": 0.0012999999999999678, "jensen_shannon_divergence_base2": 0.000019549973976641958, "top_choice_flip": false, "confidence_absolute_delta": 0.0040000000000000036}},
+    "single-severity": {"severity": {"type": "score", "reported_score_absolute_delta": 0.01429999999999998, "expected_score_absolute_delta": 0.014199999999999768, "per_bin_max_absolute_delta": 0.06920000000000001, "jensen_shannon_divergence_base2": 0.006824827151687168, "confidence_absolute_delta": 0.03919999999999996}}
+  }
+}
