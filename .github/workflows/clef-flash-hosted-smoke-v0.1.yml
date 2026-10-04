@@ -18,7 +18,7 @@ jobs:
     env:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_AUTH_TOKEN: ${{ secrets.CLOUDFLARE_AUTH_TOKEN }}
-      EVIDENCE_PATH: evidence/clef-flash-workers-ai-v0.1.json
+      EVIDENCE_PATH: evidence/clef-flash-workers-ai-v0.1-validation-2.json
 
     steps:
       - uses: actions/checkout@v7
@@ -76,7 +76,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: clef-flash-workers-ai-v0.1-evidence
-          path: evidence/clef-flash-workers-ai-v0.1.json
+          name: clef-flash-workers-ai-v0.1-validation-2-evidence
+          path: evidence/clef-flash-workers-ai-v0.1-validation-2.json
           if-no-files-found: warn
           retention-days: 30
