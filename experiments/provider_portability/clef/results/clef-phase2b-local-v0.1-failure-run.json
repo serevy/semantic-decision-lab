@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase2b-question-order-source-localization",
+  "stage": "failed",
+  "started_at_utc": "2026-10-04T22:56:21.826774+00:00",
+  "provider": {
+    "kind": "local-inference",
+    "entrypoint": "joint_schema_model.py:systemone"
+  },
+  "hf_repo": "Cloudflare/clef-flash",
+  "hf_revision_requested": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "traced_actual_conditions": 18,
+  "head_only_counterfactuals": 15,
+  "source_blob_shas": {
+    "manifest": "f56bbd721c96a45560c9ea1b7b38695082677bf5",
+    "phase2b/run_local.py": "4a7c65bc3d88c431751c66b2c842271af3fb7eb1",
+    "phase2b/probes.py": "8a6799048c4d30752958406a7300ff1708743864",
+    "phase2b/analyze.py": "9f7b00d74f785ccb7a3c4586f8257c885247a21a",
+    "phase2a/run_local.py": "485a9ff3d1407f0acfcc55970da2dbae9c51caf9"
+  },
+  "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "snapshot_path": "/root/.cache/huggingface/hub/models--Cloudflare--clef-flash/snapshots/17f0b0ad64efb65d273590632833508766b2aae6",
+  "joint_schema_model_sha256": "0e304cf7c6500e8bb59bef7e2afd2c6373f82596dfb3b57d1aa93c175e2dc3a3",
+  "joint_head_sha256": "19cdcec8c81dc9212be320fff47462ab342fbc1278be4368fb3da71241cf5ba0",
+  "runtime": {
+    "python": "3.13.15",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.10.2",
+    "cuda": "13.0",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "bf16_supported": true,
+    "requested_device": "cuda",
+    "requested_dtype": "bfloat16",
+    "upstream_hardware_match_h100_h200": false,
+    "hardware_condition": "explicit-non-upstream-hardware:NVIDIA A100-SXM4-80GB",
+    "loaded_parameter_devices": [
+      "cuda:0"
+    ],
+    "loaded_model_first_parameter_dtype": "torch.bfloat16"
+  },
+  "error": "RuntimeError: Inference tensors cannot be saved for backward. Please do not use Tensors created in inference mode in computation tracked by autograd. To work around this, you can make a clone to get a normal tensor and use it in autograd, or use `torch.no_grad()` instead of `torch.inference_mode()`.",
+  "failed_at_utc": "2026-10-04T22:57:41.769145+00:00"
+}
