@@ -1,0 +1,3945 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase2a-local-hosted-isolation",
+  "runtime": {
+    "python": "3.13.15",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.10.2",
+    "cuda": "13.0",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "bf16_supported": true,
+    "requested_device": "cuda",
+    "requested_dtype": "bfloat16",
+    "upstream_hardware_match_h100_h200": false,
+    "hardware_condition": "explicit-non-upstream-hardware:NVIDIA A100-SXM4-80GB",
+    "loaded_parameter_devices": [
+      "cuda:0"
+    ],
+    "loaded_model_first_parameter_dtype": "torch.bfloat16"
+  },
+  "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "canary": {
+    "stage": "validated",
+    "local_response_sha256": "fd21091004fa3ecae1fff5a4c2f756729bedb000fb94c7acf22fdf21aabd2626"
+  },
+  "local_repeatability_summary": {
+    "byte_identical_repeat_conditions": 18,
+    "total_conditions": 18
+  },
+  "local_fixtures": {
+    "payments-partial": {
+      "conditions": {
+        "packed-canonical": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "ba2db69107ac21385caf1fc04a6057d1f0676fc13cf28689475788846006f9a5",
+            "ba2db69107ac21385caf1fc04a6057d1f0676fc13cf28689475788846006f9a5",
+            "ba2db69107ac21385caf1fc04a6057d1f0676fc13cf28689475788846006f9a5"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-outage-severity-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "7efefa00fab2b150f2cb869248edf986142c8e9b109129693c2d1a576437ca77",
+            "7efefa00fab2b150f2cb869248edf986142c8e9b109129693c2d1a576437ca77",
+            "7efefa00fab2b150f2cb869248edf986142c8e9b109129693c2d1a576437ca77"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "5c38362ac14ac3ef59fe2bd1cec61f095843ca63dd9ca08bd6d8a0a796ac1996",
+            "5c38362ac14ac3ef59fe2bd1cec61f095843ca63dd9ca08bd6d8a0a796ac1996",
+            "5c38362ac14ac3ef59fe2bd1cec61f095843ca63dd9ca08bd6d8a0a796ac1996"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "06019d56119a26aea86c78032fa4b62d1e169ac76bc6610ed411ccc7044bfe2a",
+            "06019d56119a26aea86c78032fa4b62d1e169ac76bc6610ed411ccc7044bfe2a",
+            "06019d56119a26aea86c78032fa4b62d1e169ac76bc6610ed411ccc7044bfe2a"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "16a85a5e1d76ef19d5b12e5fbe18272d6c83f56a0308c539b9c75c229e8bca9c",
+            "16a85a5e1d76ef19d5b12e5fbe18272d6c83f56a0308c539b9c75c229e8bca9c",
+            "16a85a5e1d76ef19d5b12e5fbe18272d6c83f56a0308c539b9c75c229e8bca9c"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "330602ae62fee4df29244a9d5b33b5c29955136d3c8fe839419a21b899001bb8",
+            "330602ae62fee4df29244a9d5b33b5c29955136d3c8fe839419a21b899001bb8",
+            "330602ae62fee4df29244a9d5b33b5c29955136d3c8fe839419a21b899001bb8"
+          ],
+          "observed_owner_choices": [
+            "payments",
+            "payments",
+            "payments"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      },
+      "canonical_vs_question_order": {
+        "packed-qorder-outage-severity-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 9.99999999999994e-05,
+                "mean": 9.99999999999994e-05,
+                "max": 9.99999999999994e-05
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0014999999999999458,
+                "mean": 0.0014999999999999458,
+                "max": 0.0014999999999999458
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 2.2787253208919243e-05,
+                "mean": 2.2787253208919243e-05,
+                "max": 2.2787253208919243e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0014999999999999458,
+                "mean": 0.0014999999999999458,
+                "max": 0.0014999999999999458
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0050000000000001155,
+                "mean": 0.0050000000000001155,
+                "max": 0.0050000000000001155
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0052000000000000934,
+                "mean": 0.0052000000000000934,
+                "max": 0.0052000000000000934
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.009199999999999986,
+                "mean": 0.009199999999999986,
+                "max": 0.009199999999999986
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00038559400272111604,
+                "mean": 0.00038559400272111604,
+                "max": 0.00038559400272111604
+              },
+              "confidence_absolute_delta": {
+                "min": 0.009199999999999986,
+                "mean": 0.009199999999999986,
+                "max": 0.009199999999999986
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0040999999999999995,
+                "mean": 0.0040999999999999995,
+                "max": 0.0040999999999999995
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.007400000000000073,
+                "mean": 0.007400000000000073,
+                "max": 0.007400000000000073
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0005227445137780712,
+                "mean": 0.0005227445137780712,
+                "max": 0.0005227445137780712
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.007400000000000073,
+                "mean": 0.007400000000000073,
+                "max": 0.007400000000000073
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.006900000000000128,
+                "mean": 0.006900000000000128,
+                "max": 0.006900000000000128
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.006799999999999917,
+                "mean": 0.006799999999999917,
+                "max": 0.006799999999999917
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0059000000000000025,
+                "mean": 0.0059000000000000025,
+                "max": 0.0059000000000000025
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00019429831603574605,
+                "mean": 0.00019429831603574605,
+                "max": 0.00019429831603574605
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0047999999999999154,
+                "mean": 0.0047999999999999154,
+                "max": 0.0047999999999999154
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0011000000000000003,
+                "mean": 0.0011000000000000003,
+                "max": 0.0011000000000000003
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.00660000000000005,
+                "mean": 0.00660000000000005,
+                "max": 0.00660000000000005
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00033678050892369687,
+                "mean": 0.00033678050892369687,
+                "max": 0.00033678050892369687
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.00660000000000005,
+                "mean": 0.00660000000000005,
+                "max": 0.00660000000000005
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.00019999999999997797,
+                "mean": 0.00019999999999997797,
+                "max": 0.00019999999999997797
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.00029999999999996696,
+                "mean": 0.00029999999999996696,
+                "max": 0.00029999999999996696
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0026000000000000467,
+                "mean": 0.0026000000000000467,
+                "max": 0.0026000000000000467
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 2.042767680247848e-05,
+                "mean": 2.042767680247848e-05,
+                "max": 2.042767680247848e-05
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0026000000000000467,
+                "mean": 0.0026000000000000467,
+                "max": 0.0026000000000000467
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.005500000000000001,
+                "mean": 0.005500000000000001,
+                "max": 0.005500000000000001
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.00770000000000004,
+                "mean": 0.00770000000000004,
+                "max": 0.00770000000000004
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00043335938467744584,
+                "mean": 0.00043335938467744584,
+                "max": 0.00043335938467744584
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.00770000000000004,
+                "mean": 0.00770000000000004,
+                "max": 0.00770000000000004
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0017000000000000348,
+                "mean": 0.0017000000000000348,
+                "max": 0.0017000000000000348
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0016000000000000458,
+                "mean": 0.0016000000000000458,
+                "max": 0.0016000000000000458
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0044000000000000705,
+                "mean": 0.0044000000000000705,
+                "max": 0.0044000000000000705
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 7.957360745950425e-05,
+                "mean": 7.957360745950425e-05,
+                "max": 7.957360745950425e-05
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0044000000000000705,
+                "mean": 0.0044000000000000705,
+                "max": 0.0044000000000000705
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0024999999999999988,
+                "mean": 0.0024999999999999988,
+                "max": 0.0024999999999999988
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0025000000000000577,
+                "mean": 0.0025000000000000577,
+                "max": 0.0025000000000000577
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 6.447651333925419e-05,
+                "mean": 6.447651333925419e-05,
+                "max": 6.447651333925419e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0025000000000000577,
+                "mean": 0.0025000000000000577,
+                "max": 0.0025000000000000577
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.00029999999999996696,
+                "mean": 0.00029999999999996696,
+                "max": 0.00029999999999996696
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.000500000000000167,
+                "mean": 0.000500000000000167,
+                "max": 0.000500000000000167
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.006700000000000039,
+                "mean": 0.006700000000000039,
+                "max": 0.006700000000000039
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00015446755423141273,
+                "mean": 0.00015446755423141273,
+                "max": 0.00015446755423141273
+              },
+              "confidence_absolute_delta": {
+                "min": 0.006700000000000039,
+                "mean": 0.006700000000000039,
+                "max": 0.006700000000000039
+              }
+            }
+          }
+        }
+      }
+    },
+    "storefront-hard": {
+      "conditions": {
+        "packed-canonical": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "5aac468b54f91c83c8d7222347047a2b4ce7bd3b1e378725ef273d2aa5dc409e",
+            "5aac468b54f91c83c8d7222347047a2b4ce7bd3b1e378725ef273d2aa5dc409e",
+            "5aac468b54f91c83c8d7222347047a2b4ce7bd3b1e378725ef273d2aa5dc409e"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-outage-severity-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "3fc8375a422428f7703dad4d40a54213b9c1bc27f43ddd6cc68dd9d94b30c563",
+            "3fc8375a422428f7703dad4d40a54213b9c1bc27f43ddd6cc68dd9d94b30c563",
+            "3fc8375a422428f7703dad4d40a54213b9c1bc27f43ddd6cc68dd9d94b30c563"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "5b4b0217dcf31214429a42950e08f538e1ebf091e17b978034cda4e63bd36ec7",
+            "5b4b0217dcf31214429a42950e08f538e1ebf091e17b978034cda4e63bd36ec7",
+            "5b4b0217dcf31214429a42950e08f538e1ebf091e17b978034cda4e63bd36ec7"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "08b7ba4986708551d3a95cee7df5b5c8c455fe958ef42bca09c00c994a4d13f0",
+            "08b7ba4986708551d3a95cee7df5b5c8c455fe958ef42bca09c00c994a4d13f0",
+            "08b7ba4986708551d3a95cee7df5b5c8c455fe958ef42bca09c00c994a4d13f0"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "21738f05b3de68383126ac83f8d235006d662c28c6fb441fbd19b9fbbfc29d7a",
+            "21738f05b3de68383126ac83f8d235006d662c28c6fb441fbd19b9fbbfc29d7a",
+            "21738f05b3de68383126ac83f8d235006d662c28c6fb441fbd19b9fbbfc29d7a"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "1f993690e104d180de545b523ddc594042f2e008382fce738158709622b595bd",
+            "1f993690e104d180de545b523ddc594042f2e008382fce738158709622b595bd",
+            "1f993690e104d180de545b523ddc594042f2e008382fce738158709622b595bd"
+          ],
+          "observed_owner_choices": [
+            "storefront",
+            "storefront",
+            "storefront"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      },
+      "canonical_vs_question_order": {
+        "packed-qorder-outage-severity-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.006699999999999928,
+                "mean": 0.006699999999999928,
+                "max": 0.006699999999999928
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0019000000000000128,
+                "mean": 0.0019000000000000128,
+                "max": 0.0019000000000000128
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 6.903967520285648e-05,
+                "mean": 6.903967520285648e-05,
+                "max": 6.903967520285648e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0019000000000000128,
+                "mean": 0.0019000000000000128,
+                "max": 0.0019000000000000128
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.020500000000000185,
+                "mean": 0.020500000000000185,
+                "max": 0.020500000000000185
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.02069999999999972,
+                "mean": 0.02069999999999972,
+                "max": 0.02069999999999972
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.03520000000000001,
+                "mean": 0.03520000000000001,
+                "max": 0.03520000000000001
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0019536058710633367,
+                "mean": 0.0019536058710633367,
+                "max": 0.0019536058710633367
+              },
+              "confidence_absolute_delta": {
+                "min": 0.03520000000000001,
+                "mean": 0.03520000000000001,
+                "max": 0.03520000000000001
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.011099999999999999,
+                "mean": 0.011099999999999999,
+                "max": 0.011099999999999999
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0033999999999999586,
+                "mean": 0.0033999999999999586,
+                "max": 0.0033999999999999586
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0001737308180626019,
+                "mean": 0.0001737308180626019,
+                "max": 0.0001737308180626019
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0033999999999999586,
+                "mean": 0.0033999999999999586,
+                "max": 0.0033999999999999586
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.03710000000000013,
+                "mean": 0.03710000000000013,
+                "max": 0.03710000000000013
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.03730000000000011,
+                "mean": 0.03730000000000011,
+                "max": 0.03730000000000011
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.03720000000000001,
+                "mean": 0.03720000000000001,
+                "max": 0.03720000000000001
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0032689729371967544,
+                "mean": 0.0032689729371967544,
+                "max": 0.0032689729371967544
+              },
+              "confidence_absolute_delta": {
+                "min": 0.03720000000000001,
+                "mean": 0.03720000000000001,
+                "max": 0.03720000000000001
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.02400000000000002,
+                "mean": 0.02400000000000002,
+                "max": 0.02400000000000002
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0027999999999999137,
+                "mean": 0.0027999999999999137,
+                "max": 0.0027999999999999137
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00012705160043493006,
+                "mean": 0.00012705160043493006,
+                "max": 0.00012705160043493006
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0027999999999999137,
+                "mean": 0.0027999999999999137,
+                "max": 0.0027999999999999137
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.12440000000000007,
+                "mean": 0.12440000000000007,
+                "max": 0.12440000000000007
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.12460000000000004,
+                "mean": 0.12460000000000004,
+                "max": 0.12460000000000004
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.06709999999999999,
+                "mean": 0.06709999999999999,
+                "max": 0.06709999999999999
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.007447600708615991,
+                "mean": 0.007447600708615992,
+                "max": 0.007447600708615991
+              },
+              "confidence_absolute_delta": {
+                "min": 0.029100000000000015,
+                "mean": 0.029100000000000015,
+                "max": 0.029100000000000015
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.02169999999999994,
+                "mean": 0.02169999999999994,
+                "max": 0.02169999999999994
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0015000000000000568,
+                "mean": 0.0015000000000000568,
+                "max": 0.0015000000000000568
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 4.232680055948223e-05,
+                "mean": 4.232680055948223e-05,
+                "max": 4.232680055948223e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0015000000000000568,
+                "mean": 0.0015000000000000568,
+                "max": 0.0015000000000000568
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0878000000000001,
+                "mean": 0.0878000000000001,
+                "max": 0.0878000000000001
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.08789999999999987,
+                "mean": 0.08789999999999987,
+                "max": 0.08789999999999987
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.05279999999999996,
+                "mean": 0.05279999999999996,
+                "max": 0.05279999999999996
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0031684543561221676,
+                "mean": 0.0031684543561221676,
+                "max": 0.0031684543561221676
+              },
+              "confidence_absolute_delta": {
+                "min": 0.029900000000000038,
+                "mean": 0.029900000000000038,
+                "max": 0.029900000000000038
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.008899999999999908,
+                "mean": 0.008899999999999908,
+                "max": 0.008899999999999908
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0010000000000000009,
+                "mean": 0.0010000000000000009,
+                "max": 0.0010000000000000009
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 3.38223352589677e-05,
+                "mean": 3.38223352589677e-05,
+                "max": 3.38223352589677e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0010000000000000009,
+                "mean": 0.0010000000000000009,
+                "max": 0.0010000000000000009
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.10060000000000002,
+                "mean": 0.10060000000000002,
+                "max": 0.10060000000000002
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.10069999999999979,
+                "mean": 0.10069999999999979,
+                "max": 0.10069999999999979
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.056400000000000006,
+                "mean": 0.056400000000000006,
+                "max": 0.056400000000000006
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.004383929190713565,
+                "mean": 0.004383929190713565,
+                "max": 0.004383929190713565
+              },
+              "confidence_absolute_delta": {
+                "min": 0.02760000000000007,
+                "mean": 0.02760000000000007,
+                "max": 0.02760000000000007
+              }
+            }
+          }
+        }
+      }
+    },
+    "support-info": {
+      "conditions": {
+        "packed-canonical": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "c91635062432f4a4ce0d0f9f22b790222b68dbf5936dc8879555c43c7d1559eb",
+            "c91635062432f4a4ce0d0f9f22b790222b68dbf5936dc8879555c43c7d1559eb",
+            "c91635062432f4a4ce0d0f9f22b790222b68dbf5936dc8879555c43c7d1559eb"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-outage-severity-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "866908cb801bb3902083d92678b86cfc7ca6e5cc1cedf765638f56a3e3977e79",
+            "866908cb801bb3902083d92678b86cfc7ca6e5cc1cedf765638f56a3e3977e79",
+            "866908cb801bb3902083d92678b86cfc7ca6e5cc1cedf765638f56a3e3977e79"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "46a5558e032389a74c589248211588451d318d96e6d4edf670696417f4c80bd9",
+            "46a5558e032389a74c589248211588451d318d96e6d4edf670696417f4c80bd9",
+            "46a5558e032389a74c589248211588451d318d96e6d4edf670696417f4c80bd9"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "b9ca15160f185fb6694425440b7f14a5dcba233975421e82b5401473331ec272",
+            "b9ca15160f185fb6694425440b7f14a5dcba233975421e82b5401473331ec272",
+            "b9ca15160f185fb6694425440b7f14a5dcba233975421e82b5401473331ec272"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "4cbf6c332094354bfa249e3f3b6bfb2c2695de1c6304614fad81618fae9a39f0",
+            "4cbf6c332094354bfa249e3f3b6bfb2c2695de1c6304614fad81618fae9a39f0",
+            "4cbf6c332094354bfa249e3f3b6bfb2c2695de1c6304614fad81618fae9a39f0"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "unique_local_response_sha256_count": 1,
+          "local_response_sha256": [
+            "741b446eaa86df157f6bd4a8c39b73b0a038325a08c641c02c5fb035dbc69f0c",
+            "741b446eaa86df157f6bd4a8c39b73b0a038325a08c641c02c5fb035dbc69f0c",
+            "741b446eaa86df157f6bd4a8c39b73b0a038325a08c641c02c5fb035dbc69f0c"
+          ],
+          "observed_owner_choices": [
+            "support",
+            "support",
+            "support"
+          ],
+          "repeat1_vs_repeat2_and_3": {
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            },
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.0,
+                "mean": 0.0,
+                "max": 0.0
+              }
+            }
+          }
+        }
+      },
+      "canonical_vs_question_order": {
+        "packed-qorder-outage-severity-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.004700000000000003,
+                "mean": 0.004700000000000003,
+                "max": 0.004700000000000003
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0005999999999999339,
+                "mean": 0.0005999999999999339,
+                "max": 0.0005999999999999339
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 4.242770903957265e-06,
+                "mean": 4.242770903957265e-06,
+                "max": 4.242770903957265e-06
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0005999999999999339,
+                "mean": 0.0005999999999999339,
+                "max": 0.0005999999999999339
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.013800000000000034,
+                "mean": 0.013800000000000034,
+                "max": 0.013800000000000034
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.013700000000000045,
+                "mean": 0.013700000000000045,
+                "max": 0.013700000000000045
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.024900000000000033,
+                "mean": 0.024900000000000033,
+                "max": 0.024900000000000033
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0012050963187486344,
+                "mean": 0.0012050963187486344,
+                "max": 0.0012050963187486344
+              },
+              "confidence_absolute_delta": {
+                "min": 0.024900000000000033,
+                "mean": 0.024900000000000033,
+                "max": 0.024900000000000033
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-outage-severity": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.042600000000000006,
+                "mean": 0.042600000000000006,
+                "max": 0.042600000000000006
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0025000000000000577,
+                "mean": 0.0025000000000000577,
+                "max": 0.0025000000000000577
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 6.549181788094004e-05,
+                "mean": 6.549181788094004e-05,
+                "max": 6.549181788094004e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0025000000000000577,
+                "mean": 0.0025000000000000577,
+                "max": 0.0025000000000000577
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.013700000000000045,
+                "mean": 0.013700000000000045,
+                "max": 0.013700000000000045
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.013600000000000056,
+                "mean": 0.013600000000000056,
+                "max": 0.013600000000000056
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.01029999999999999,
+                "mean": 0.01029999999999999,
+                "max": 0.01029999999999999
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.0003138296131666796,
+                "mean": 0.0003138296131666796,
+                "max": 0.0003138296131666796
+              },
+              "confidence_absolute_delta": {
+                "min": 0.007600000000000051,
+                "mean": 0.007600000000000051,
+                "max": 0.007600000000000051
+              }
+            }
+          }
+        },
+        "packed-qorder-owner-severity-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.053700000000000005,
+                "mean": 0.053700000000000005,
+                "max": 0.053700000000000005
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0017000000000000348,
+                "mean": 0.0017000000000000348,
+                "max": 0.0017000000000000348
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 3.4699906394221086e-05,
+                "mean": 3.4699906394221086e-05,
+                "max": 3.4699906394221086e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0017000000000000348,
+                "mean": 0.0017000000000000348,
+                "max": 0.0017000000000000348
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.0037000000000000366,
+                "mean": 0.0037000000000000366,
+                "max": 0.0037000000000000366
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.0038000000000000256,
+                "mean": 0.0038000000000000256,
+                "max": 0.0038000000000000256
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.011500000000000066,
+                "mean": 0.011500000000000066,
+                "max": 0.011500000000000066
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00025806289111604097,
+                "mean": 0.00025806289111604097,
+                "max": 0.00025806289111604097
+              },
+              "confidence_absolute_delta": {
+                "min": 0.011500000000000066,
+                "mean": 0.011500000000000066,
+                "max": 0.011500000000000066
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-outage-owner": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.047900000000000005,
+                "mean": 0.047900000000000005,
+                "max": 0.047900000000000005
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0021999999999999797,
+                "mean": 0.0021999999999999797,
+                "max": 0.0021999999999999797
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 6.40095708221701e-05,
+                "mean": 6.40095708221701e-05,
+                "max": 6.40095708221701e-05
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0021999999999999797,
+                "mean": 0.0021999999999999797,
+                "max": 0.0021999999999999797
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.011800000000000033,
+                "mean": 0.011800000000000033,
+                "max": 0.011800000000000033
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.01200000000000001,
+                "mean": 0.01200000000000001,
+                "max": 0.01200000000000001
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.0059000000000000025,
+                "mean": 0.0059000000000000025,
+                "max": 0.0059000000000000025
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00020154428291909354,
+                "mean": 0.00020154428291909354,
+                "max": 0.00020154428291909354
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0021999999999999797,
+                "mean": 0.0021999999999999797,
+                "max": 0.0021999999999999797
+              }
+            }
+          }
+        },
+        "packed-qorder-severity-owner-outage": {
+          "pairwise_comparison_count": 9,
+          "metrics": {
+            "outage": {
+              "type": "noul",
+              "absolute_probability_delta": {
+                "min": 0.051300000000000005,
+                "mean": 0.051300000000000005,
+                "max": 0.051300000000000005
+              }
+            },
+            "owner": {
+              "type": "choice",
+              "per_option_max_absolute_delta": {
+                "min": 0.0007000000000000339,
+                "mean": 0.0007000000000000339,
+                "max": 0.0007000000000000339
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 6.198207310841356e-06,
+                "mean": 6.198207310841356e-06,
+                "max": 6.198207310841356e-06
+              },
+              "top_choice_flip": {
+                "any": false,
+                "count_true": 0
+              },
+              "confidence_absolute_delta": {
+                "min": 0.0007000000000000339,
+                "mean": 0.0007000000000000339,
+                "max": 0.0007000000000000339
+              }
+            },
+            "severity": {
+              "type": "score",
+              "reported_score_absolute_delta": {
+                "min": 0.009000000000000008,
+                "mean": 0.009000000000000008,
+                "max": 0.009000000000000008
+              },
+              "expected_score_absolute_delta": {
+                "min": 0.008900000000000019,
+                "mean": 0.008900000000000019,
+                "max": 0.008900000000000019
+              },
+              "per_bin_max_absolute_delta": {
+                "min": 0.003600000000000006,
+                "mean": 0.003600000000000006,
+                "max": 0.003600000000000006
+              },
+              "jensen_shannon_divergence_base2": {
+                "min": 0.00012116948035429396,
+                "mean": 0.00012116948035429397,
+                "max": 0.00012116948035429396
+              },
+              "confidence_absolute_delta": {
+                "min": 0.00029999999999996696,
+                "mean": 0.00029999999999996696,
+                "max": 0.00029999999999996696
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "hosted_reference_summary": {
+    "schema_version": "0.1",
+    "experiment": "clef-flash-phase1c-question-order-repeatability",
+    "repeatability_summary": {
+      "byte_identical_repeat_conditions": 18,
+      "total_conditions": 18
+    },
+    "phase1b_cross_workflow_raw_hash_matches": {
+      "matched": 18,
+      "total": 18
+    },
+    "fixtures": {
+      "payments-partial": {
+        "byte_identical_conditions": 6,
+        "condition_count": 6,
+        "between_order_maxima": {
+          "outage_absolute_probability_delta": 0.0051,
+          "owner_per_option_max_absolute_delta": 0.008500000000000063,
+          "owner_confidence_absolute_delta": 0.024499999999999966,
+          "severity_reported_score_absolute_delta": 0.005800000000000027,
+          "severity_per_bin_max_absolute_delta": 0.00880000000000003,
+          "severity_confidence_absolute_delta": 0.021700000000000053,
+          "owner_top_choice_flip_any": false
+        }
+      },
+      "storefront-hard": {
+        "byte_identical_conditions": 6,
+        "condition_count": 6,
+        "between_order_maxima": {
+          "outage_absolute_probability_delta": 0.02959999999999996,
+          "owner_per_option_max_absolute_delta": 0.0032999999999999696,
+          "owner_confidence_absolute_delta": 0.00979999999999992,
+          "severity_reported_score_absolute_delta": 0.12119999999999997,
+          "severity_per_bin_max_absolute_delta": 0.06520000000000004,
+          "severity_confidence_absolute_delta": 0.046999999999999986,
+          "owner_top_choice_flip_any": false
+        }
+      },
+      "support-info": {
+        "byte_identical_conditions": 6,
+        "condition_count": 6,
+        "between_order_maxima": {
+          "outage_absolute_probability_delta": 0.053,
+          "owner_per_option_max_absolute_delta": 0.0025000000000000577,
+          "owner_confidence_absolute_delta": 0.007199999999999984,
+          "severity_reported_score_absolute_delta": 0.013900000000000023,
+          "severity_per_bin_max_absolute_delta": 0.0252,
+          "severity_confidence_absolute_delta": 0.05480000000000007,
+          "owner_top_choice_flip_any": false
+        }
+      }
+    }
+  },
+  "local_vs_hosted": {
+    "comparison_count": 54,
+    "owner_top_choice_mismatch_count": 0,
+    "aggregate_metrics": {
+      "outage": {
+        "type": "noul",
+        "absolute_probability_delta": {
+          "min": 9.99999999999994e-05,
+          "mean": 0.0010722222222222094,
+          "max": 0.0048000000000000265
+        }
+      },
+      "owner": {
+        "type": "choice",
+        "per_option_max_absolute_delta": {
+          "min": 0.00010000000000000026,
+          "mean": 0.00030555555555555886,
+          "max": 0.0010000000000000009
+        },
+        "jensen_shannon_divergence_base2": {
+          "min": 3.0492001345090264e-07,
+          "mean": 1.885751597683462e-06,
+          "max": 7.81678176401616e-06
+        },
+        "top_choice_flip": {
+          "any": false,
+          "count_true": 0
+        },
+        "confidence_absolute_delta": {
+          "min": 0.017199999999999993,
+          "mean": 0.035494444444444447,
+          "max": 0.06059999999999999
+        }
+      },
+      "severity": {
+        "type": "score",
+        "reported_score_absolute_delta": {
+          "min": 0.0,
+          "mean": 0.001577777777777783,
+          "max": 0.008199999999999985
+        },
+        "expected_score_absolute_delta": {
+          "min": 0.0,
+          "mean": 0.0015833333333332884,
+          "max": 0.008100000000000218
+        },
+        "per_bin_max_absolute_delta": {
+          "min": 0.00020000000000000226,
+          "mean": 0.001577777777777791,
+          "max": 0.00610000000000005
+        },
+        "jensen_shannon_divergence_base2": {
+          "min": 3.111229619367253e-07,
+          "mean": 7.033059051426103e-06,
+          "max": 3.279519844234802e-05
+        },
+        "confidence_absolute_delta": {
+          "min": 0.08139999999999992,
+          "mean": 0.16872777777777778,
+          "max": 0.28900000000000003
+        }
+      }
+    },
+    "comparisons": [
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-canonical",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 4.354165446833038e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04380000000000006
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000001229,
+            "expected_score_absolute_delta": 0.0009000000000001229,
+            "per_bin_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 4.410972696079437e-06,
+            "confidence_absolute_delta": 0.09389999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-canonical",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 4.354165446833038e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04380000000000006
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000001229,
+            "expected_score_absolute_delta": 0.0009000000000001229,
+            "per_bin_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 4.410972696079437e-06,
+            "confidence_absolute_delta": 0.09389999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-canonical",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 4.354165446833038e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04380000000000006
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000001229,
+            "expected_score_absolute_delta": 0.0009000000000001229,
+            "per_bin_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 4.410972696079437e-06,
+            "confidence_absolute_delta": 0.09389999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00029999999999996696,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 1.3138196442373892e-06,
+            "confidence_absolute_delta": 0.08139999999999992
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00039999999999995595,
+            "jensen_shannon_divergence_base2": 1.5624350092726725e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04239999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00029999999999996696,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 1.3138196442373892e-06,
+            "confidence_absolute_delta": 0.08139999999999992
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00039999999999995595,
+            "jensen_shannon_divergence_base2": 1.5624350092726725e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04239999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00029999999999996696,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 1.3138196442373892e-06,
+            "confidence_absolute_delta": 0.08139999999999992
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00039999999999995595,
+            "jensen_shannon_divergence_base2": 1.5624350092726725e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.04239999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 1.4581866944031539e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05889999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0002999999999999982
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.00020000000000000226,
+            "jensen_shannon_divergence_base2": 7.45986341279479e-07,
+            "confidence_absolute_delta": 0.10310000000000008
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 1.4581866944031539e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05889999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0002999999999999982
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.00020000000000000226,
+            "jensen_shannon_divergence_base2": 7.45986341279479e-07,
+            "confidence_absolute_delta": 0.10310000000000008
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000000105,
+            "jensen_shannon_divergence_base2": 1.4581866944031539e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05889999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0002999999999999982
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 9.999999999998899e-05,
+            "per_bin_max_absolute_delta": 0.00020000000000000226,
+            "jensen_shannon_divergence_base2": 7.45986341279479e-07,
+            "confidence_absolute_delta": 0.10310000000000008
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0003999999999999976,
+            "jensen_shannon_divergence_base2": 2.2399579966633516e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05710000000000004
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.000600000000000156,
+            "expected_score_absolute_delta": 0.0008000000000001339,
+            "per_bin_max_absolute_delta": 0.0008000000000000229,
+            "jensen_shannon_divergence_base2": 5.5180289706976504e-06,
+            "confidence_absolute_delta": 0.09460000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.00040000000000000105
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0003999999999999976,
+            "jensen_shannon_divergence_base2": 2.2399579966633516e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05710000000000004
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.000600000000000156,
+            "expected_score_absolute_delta": 0.0008000000000001339,
+            "per_bin_max_absolute_delta": 0.0008000000000000229,
+            "jensen_shannon_divergence_base2": 5.5180289706976504e-06,
+            "confidence_absolute_delta": 0.09460000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.00040000000000000105
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0003999999999999976,
+            "jensen_shannon_divergence_base2": 2.2399579966633516e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05710000000000004
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.000600000000000156,
+            "expected_score_absolute_delta": 0.0008000000000001339,
+            "per_bin_max_absolute_delta": 0.0008000000000000229,
+            "jensen_shannon_divergence_base2": 5.5180289706976504e-06,
+            "confidence_absolute_delta": 0.09460000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.00040000000000000105
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.00029999999999996696,
+            "jensen_shannon_divergence_base2": 4.723359170099182e-07,
+            "confidence_absolute_delta": 0.08940000000000003
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005000000000000004
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.2658970049452736e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.06059999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.00029999999999996696,
+            "jensen_shannon_divergence_base2": 4.723359170099182e-07,
+            "confidence_absolute_delta": 0.08940000000000003
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005000000000000004
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.2658970049452736e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.06059999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.00029999999999996696,
+            "jensen_shannon_divergence_base2": 4.723359170099182e-07,
+            "confidence_absolute_delta": 0.08940000000000003
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005000000000000004
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.2658970049452736e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.06059999999999999
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0005999999999999339,
+            "expected_score_absolute_delta": 0.000700000000000145,
+            "per_bin_max_absolute_delta": 0.0009000000000000119,
+            "jensen_shannon_divergence_base2": 3.9369433067880665e-06,
+            "confidence_absolute_delta": 0.08899999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 7.81678176401616e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05169999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0005999999999999339,
+            "expected_score_absolute_delta": 0.000700000000000145,
+            "per_bin_max_absolute_delta": 0.0009000000000000119,
+            "jensen_shannon_divergence_base2": 3.9369433067880665e-06,
+            "confidence_absolute_delta": 0.08899999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 7.81678176401616e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05169999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "payments-partial",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0005999999999999339,
+            "expected_score_absolute_delta": 0.000700000000000145,
+            "per_bin_max_absolute_delta": 0.0009000000000000119,
+            "jensen_shannon_divergence_base2": 3.9369433067880665e-06,
+            "confidence_absolute_delta": 0.08899999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0010000000000000009,
+            "jensen_shannon_divergence_base2": 7.81678176401616e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.05169999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "payments",
+        "hosted_owner_choice": "payments"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-canonical",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0042999999999999705
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 6.749259661882408e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.021199999999999997
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.005199999999999871,
+            "expected_score_absolute_delta": 0.005199999999999427,
+            "per_bin_max_absolute_delta": 0.003899999999999959,
+            "jensen_shannon_divergence_base2": 1.3355513577730524e-05,
+            "confidence_absolute_delta": 0.28900000000000003
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-canonical",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0042999999999999705
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 6.749259661882408e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.021199999999999997
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.005199999999999871,
+            "expected_score_absolute_delta": 0.005199999999999427,
+            "per_bin_max_absolute_delta": 0.003899999999999959,
+            "jensen_shannon_divergence_base2": 1.3355513577730524e-05,
+            "confidence_absolute_delta": 0.28900000000000003
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-canonical",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0042999999999999705
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 6.749259661882408e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.021199999999999997
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.005199999999999871,
+            "expected_score_absolute_delta": 0.005199999999999427,
+            "per_bin_max_absolute_delta": 0.003899999999999959,
+            "jensen_shannon_divergence_base2": 1.3355513577730524e-05,
+            "confidence_absolute_delta": 0.28900000000000003
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0004999999999999449
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.008199999999999985,
+            "expected_score_absolute_delta": 0.008100000000000218,
+            "per_bin_max_absolute_delta": 0.00610000000000005,
+            "jensen_shannon_divergence_base2": 3.279519844234802e-05,
+            "confidence_absolute_delta": 0.2856
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.5892803868296894e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.017199999999999993
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0004999999999999449
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.008199999999999985,
+            "expected_score_absolute_delta": 0.008100000000000218,
+            "per_bin_max_absolute_delta": 0.00610000000000005,
+            "jensen_shannon_divergence_base2": 3.279519844234802e-05,
+            "confidence_absolute_delta": 0.2856
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.5892803868296894e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.017199999999999993
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0004999999999999449
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.008199999999999985,
+            "expected_score_absolute_delta": 0.008100000000000218,
+            "per_bin_max_absolute_delta": 0.00610000000000005,
+            "jensen_shannon_divergence_base2": 3.279519844234802e-05,
+            "confidence_absolute_delta": 0.2856
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.5892803868296894e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.017199999999999993
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.0492001345090264e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.027599999999999958
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999339
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0030000000000001137,
+            "expected_score_absolute_delta": 0.0028999999999994586,
+            "per_bin_max_absolute_delta": 0.0030000000000000027,
+            "jensen_shannon_divergence_base2": 1.514175436988772e-05,
+            "confidence_absolute_delta": 0.27920000000000006
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.0492001345090264e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.027599999999999958
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999339
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0030000000000001137,
+            "expected_score_absolute_delta": 0.0028999999999994586,
+            "per_bin_max_absolute_delta": 0.0030000000000000027,
+            "jensen_shannon_divergence_base2": 1.514175436988772e-05,
+            "confidence_absolute_delta": 0.27920000000000006
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 3.0492001345090264e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.027599999999999958
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999339
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0030000000000001137,
+            "expected_score_absolute_delta": 0.0028999999999994586,
+            "per_bin_max_absolute_delta": 0.0030000000000000027,
+            "jensen_shannon_divergence_base2": 1.514175436988772e-05,
+            "confidence_absolute_delta": 0.27920000000000006
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.204347028817482e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0263000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0019999999999997797,
+            "expected_score_absolute_delta": 0.0018999999999995687,
+            "per_bin_max_absolute_delta": 0.0020000000000000018,
+            "jensen_shannon_divergence_base2": 3.2272367377101253e-06,
+            "confidence_absolute_delta": 0.23120000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0012999999999999678
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.204347028817482e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0263000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0019999999999997797,
+            "expected_score_absolute_delta": 0.0018999999999995687,
+            "per_bin_max_absolute_delta": 0.0020000000000000018,
+            "jensen_shannon_divergence_base2": 3.2272367377101253e-06,
+            "confidence_absolute_delta": 0.23120000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0012999999999999678
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.204347028817482e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0263000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0019999999999997797,
+            "expected_score_absolute_delta": 0.0018999999999995687,
+            "per_bin_max_absolute_delta": 0.0020000000000000018,
+            "jensen_shannon_divergence_base2": 3.2272367377101253e-06,
+            "confidence_absolute_delta": 0.23120000000000002
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0012999999999999678
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0028000000000001357,
+            "expected_score_absolute_delta": 0.0030000000000001137,
+            "per_bin_max_absolute_delta": 0.0011000000000000003,
+            "jensen_shannon_divergence_base2": 1.0947687253835874e-05,
+            "confidence_absolute_delta": 0.2449
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0048000000000000265
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 4.5838146233545513e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.018299999999999983
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0028000000000001357,
+            "expected_score_absolute_delta": 0.0030000000000001137,
+            "per_bin_max_absolute_delta": 0.0011000000000000003,
+            "jensen_shannon_divergence_base2": 1.0947687253835874e-05,
+            "confidence_absolute_delta": 0.2449
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0048000000000000265
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 4.5838146233545513e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.018299999999999983
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0028000000000001357,
+            "expected_score_absolute_delta": 0.0030000000000001137,
+            "per_bin_max_absolute_delta": 0.0011000000000000003,
+            "jensen_shannon_divergence_base2": 1.0947687253835874e-05,
+            "confidence_absolute_delta": 0.2449
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0048000000000000265
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 4.5838146233545513e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.018299999999999983
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0020999999999999908,
+            "expected_score_absolute_delta": 0.0020999999999999908,
+            "per_bin_max_absolute_delta": 0.0016000000000000458,
+            "jensen_shannon_divergence_base2": 2.424315945890004e-06,
+            "confidence_absolute_delta": 0.24219999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 7.68322838660844e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.01959999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0016999999999999238
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0020999999999999908,
+            "expected_score_absolute_delta": 0.0020999999999999908,
+            "per_bin_max_absolute_delta": 0.0016000000000000458,
+            "jensen_shannon_divergence_base2": 2.424315945890004e-06,
+            "confidence_absolute_delta": 0.24219999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 7.68322838660844e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.01959999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0016999999999999238
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "storefront-hard",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0020999999999999908,
+            "expected_score_absolute_delta": 0.0020999999999999908,
+            "per_bin_max_absolute_delta": 0.0016000000000000458,
+            "jensen_shannon_divergence_base2": 2.424315945890004e-06,
+            "confidence_absolute_delta": 0.24219999999999997
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00010000000000000026,
+            "jensen_shannon_divergence_base2": 7.68322838660844e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.01959999999999995
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0016999999999999238
+          }
+        },
+        "local_owner_choice": "storefront",
+        "hosted_owner_choice": "storefront"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-canonical",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.000800000000000009
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 7.587510051660908e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.03260000000000007
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.000300000000000078,
+            "jensen_shannon_divergence_base2": 3.111229619367253e-07,
+            "confidence_absolute_delta": 0.1452
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-canonical",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.000800000000000009
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 7.587510051660908e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.03260000000000007
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.000300000000000078,
+            "jensen_shannon_divergence_base2": 3.111229619367253e-07,
+            "confidence_absolute_delta": 0.1452
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-canonical",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.000800000000000009
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 7.587510051660908e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.03260000000000007
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0,
+            "expected_score_absolute_delta": 0.0,
+            "per_bin_max_absolute_delta": 0.000300000000000078,
+            "jensen_shannon_divergence_base2": 3.111229619367253e-07,
+            "confidence_absolute_delta": 0.1452
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0017000000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00040000000000006697,
+            "expected_score_absolute_delta": 0.00019999999999997797,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 9.424214740828807e-07,
+            "confidence_absolute_delta": 0.17510000000000003
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000006697,
+            "jensen_shannon_divergence_base2": 2.1023906000613296e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02959999999999996
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0017000000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00040000000000006697,
+            "expected_score_absolute_delta": 0.00019999999999997797,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 9.424214740828807e-07,
+            "confidence_absolute_delta": 0.17510000000000003
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000006697,
+            "jensen_shannon_divergence_base2": 2.1023906000613296e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02959999999999996
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-outage-severity-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0017000000000000001
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00040000000000006697,
+            "expected_score_absolute_delta": 0.00019999999999997797,
+            "per_bin_max_absolute_delta": 0.0006000000000000449,
+            "jensen_shannon_divergence_base2": 9.424214740828807e-07,
+            "confidence_absolute_delta": 0.17510000000000003
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00040000000000006697,
+            "jensen_shannon_divergence_base2": 2.1023906000613296e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02959999999999996
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.20474949365208e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0373
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0007999999999999986
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.349144981652834e-06,
+            "confidence_absolute_delta": 0.15139999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.20474949365208e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0373
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0007999999999999986
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.349144981652834e-06,
+            "confidence_absolute_delta": 0.15139999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-outage-severity",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 9.20474949365208e-07,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0373
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0007999999999999986
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0007000000000000339,
+            "jensen_shannon_divergence_base2": 3.349144981652834e-06,
+            "confidence_absolute_delta": 0.15139999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0002999999999999999,
+            "jensen_shannon_divergence_base2": 3.732384029297021e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0353
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 7.851050906479759e-06,
+            "confidence_absolute_delta": 0.16259999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0002999999999999999,
+            "jensen_shannon_divergence_base2": 3.732384029297021e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0353
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 7.851050906479759e-06,
+            "confidence_absolute_delta": 0.16259999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-owner-severity-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0002999999999999999,
+            "jensen_shannon_divergence_base2": 3.732384029297021e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.0353
+          },
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.00019999999999997797,
+            "expected_score_absolute_delta": 0.00029999999999996696,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 7.851050906479759e-06,
+            "confidence_absolute_delta": 0.16259999999999997
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000000119,
+            "expected_score_absolute_delta": 0.001100000000000101,
+            "per_bin_max_absolute_delta": 0.0016999999999999238,
+            "jensen_shannon_divergence_base2": 1.0603655420802328e-05,
+            "confidence_absolute_delta": 0.13860000000000006
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0001999999999999988,
+            "jensen_shannon_divergence_base2": 1.1847037319780265e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02839999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000000119,
+            "expected_score_absolute_delta": 0.001100000000000101,
+            "per_bin_max_absolute_delta": 0.0016999999999999238,
+            "jensen_shannon_divergence_base2": 1.0603655420802328e-05,
+            "confidence_absolute_delta": 0.13860000000000006
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0001999999999999988,
+            "jensen_shannon_divergence_base2": 1.1847037319780265e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02839999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-outage-owner",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0009000000000000119,
+            "expected_score_absolute_delta": 0.001100000000000101,
+            "per_bin_max_absolute_delta": 0.0016999999999999238,
+            "jensen_shannon_divergence_base2": 1.0603655420802328e-05,
+            "confidence_absolute_delta": 0.13860000000000006
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 9.99999999999994e-05
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.0001999999999999988,
+            "jensen_shannon_divergence_base2": 1.1847037319780265e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.02839999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 1,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0008000000000000229,
+            "expected_score_absolute_delta": 0.0008000000000000229,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 9.247873977221121e-06,
+            "confidence_absolute_delta": 0.14070000000000005
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 1.0614875041008311e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.031000000000000028
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 2,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0008000000000000229,
+            "expected_score_absolute_delta": 0.0008000000000000229,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 9.247873977221121e-06,
+            "confidence_absolute_delta": 0.14070000000000005
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 1.0614875041008311e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.031000000000000028
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      },
+      {
+        "fixture_id": "support-info",
+        "variant_id": "packed-qorder-severity-owner-outage",
+        "repeat_index": 3,
+        "metrics": {
+          "severity": {
+            "type": "score",
+            "reported_score_absolute_delta": 0.0008000000000000229,
+            "expected_score_absolute_delta": 0.0008000000000000229,
+            "per_bin_max_absolute_delta": 0.0018000000000000238,
+            "jensen_shannon_divergence_base2": 9.247873977221121e-06,
+            "confidence_absolute_delta": 0.14070000000000005
+          },
+          "owner": {
+            "type": "choice",
+            "per_option_max_absolute_delta": 0.00020000000000000052,
+            "jensen_shannon_divergence_base2": 1.0614875041008311e-06,
+            "top_choice_flip": false,
+            "confidence_absolute_delta": 0.031000000000000028
+          },
+          "outage": {
+            "type": "noul",
+            "absolute_probability_delta": 0.0005999999999999998
+          }
+        },
+        "local_owner_choice": "support",
+        "hosted_owner_choice": "support"
+      }
+    ]
+  },
+  "interpretation_boundary": [
+    "No semantic parity threshold was frozen before local output.",
+    "No causality conclusion is emitted by this analyzer.",
+    "Confidence deltas remain provider/runtime semantics observations and are not assumed equivalent to probability calibration.",
+    "Non-H100/H200 hardware remains a distinct recorded runtime condition."
+  ]
+}
