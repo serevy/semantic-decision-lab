@@ -3,6 +3,7 @@
 ## Run identity
 
 - Experiment: `clef-flash-phase2a-local-hosted-isolation`
+- Provider: local inference (`joint_schema_model.py:systemone`)
 - Model: `Cloudflare/clef-flash`
 - Frozen HF revision: `17f0b0ad64efb65d273590632833508766b2aae6`
 - Python: `3.13.15`
