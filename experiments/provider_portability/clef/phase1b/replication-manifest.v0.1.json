@@ -1,0 +1,63 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase1b-replication",
+  "frozen_before_phase1b_output": true,
+  "phase1a_freeze": {
+    "merge_commit": "29006a8ecfac32478bcbb67ec0aea0031a6c373d",
+    "probe_matrix_blob_sha": "f83d5c3deae3ac01051e05563ae8911ae632d37b",
+    "probes_blob_sha": "762a60069f510b5f1f3b0190bc11c23fcfb287ca",
+    "analyze_blob_sha": "20bd04931f49090317084580b22b4fa64ab80d21",
+    "hosted_runner_blob_sha": "40c94906f2c586fd12d9a06ed8f478b33fa4c44f",
+    "contract_fixture_blob_sha": "b0e91fa77372e224aa88a55e56707e07ee0495d3"
+  },
+  "expected_provider_calls": 42,
+  "inherited_variant_count": 14,
+  "inherited_variant_ids": [
+    "packed-canonical",
+    "packed-qorder-outage-severity-owner",
+    "packed-qorder-owner-outage-severity",
+    "packed-qorder-owner-severity-outage",
+    "packed-qorder-severity-outage-owner",
+    "packed-qorder-severity-owner-outage",
+    "packed-choice-payments-support-storefront",
+    "packed-choice-storefront-payments-support",
+    "packed-choice-storefront-support-payments",
+    "packed-choice-support-payments-storefront",
+    "packed-choice-support-storefront-payments",
+    "single-outage",
+    "single-owner",
+    "single-severity"
+  ],
+  "fixtures": [
+    {
+      "id": "payments-partial",
+      "path": "fixtures/payments-partial.v0.1.json",
+      "sha256": "0f29ca893025b744e13e67adc1a58616a2b63dae27f8a8141a8fa1e508534cf9"
+    },
+    {
+      "id": "storefront-hard",
+      "path": "fixtures/storefront-hard.v0.1.json",
+      "sha256": "feac83bc70721a1bdb5c0360438cce3e3f85df0e7b33950f093654c15bf0a65d"
+    },
+    {
+      "id": "support-info",
+      "path": "fixtures/support-info.v0.1.json",
+      "sha256": "f6bf50073af4e3bf09929352c1bb1c494983cfcbf16e042f070e8efb5b19840b"
+    }
+  ],
+  "replication_descriptors": [
+    "count fixtures where all five choice-order probes have exact zero metric delta",
+    "count fixtures where at least one question-order metric is non-zero",
+    "record per-fixture maxima for question-order metrics",
+    "record packed-vs-single metrics for outage, owner, and severity",
+    "record baseline answers without assigning semantic gold labels"
+  ],
+  "invariants": [
+    "All three fixtures use the same model selector, question ids, instructions, criteria text, score criteria order, and mapping layout as the Phase 1A contract fixture.",
+    "Only state content changes across replication fixtures.",
+    "Each fixture replays the exact 14 Phase 1A variants in the frozen order.",
+    "No retry is performed inside a Phase 1B run.",
+    "No semantic pass/fail threshold is defined before output.",
+    "Hosted model revision remains unavailable behind the Workers AI alias."
+  ]
+}
