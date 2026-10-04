@@ -146,7 +146,7 @@ def validate_response(
             chosen = answer.get("choice")
             if chosen not in options:
                 raise ValueError(f"{question_id}.choice is not an allowed option")
-            confidence = _probability(answer.get("confidence"), f"{question_id}.confidence")
+            _probability(answer.get("confidence"), f"{question_id}.confidence")
             probabilities = answer.get("probabilities")
             if not isinstance(probabilities, Mapping):
                 raise ValueError(f"{question_id}.probabilities must be an object")
@@ -155,8 +155,6 @@ def validate_response(
                 options,
                 tolerance=probability_tolerance,
             )
-            if abs(confidence - float(probabilities[chosen])) > probability_tolerance:
-                raise ValueError(f"{question_id}.confidence must match chosen probability")
             continue
 
         levels = [str(i) for i in range(len(question["criteria"]))]

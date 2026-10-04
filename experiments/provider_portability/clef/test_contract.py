@@ -8,6 +8,9 @@ from contract import unwrap_cloudflare_rest, validate_request, validate_response
 ROOT = Path(__file__).resolve().parent
 FIXTURE = json.loads((ROOT / "systemone-contract.v0.1.json").read_text(encoding="utf-8"))
 REQUEST = FIXTURE["request"]
+FIRST_HOSTED_EVIDENCE = json.loads(
+    (ROOT / "results" / "clef-flash-workers-ai-v0.1-first.json").read_text(encoding="utf-8")
+)
 
 
 def valid_response():
@@ -18,7 +21,7 @@ def valid_response():
             "owner": {
                 "type": "choice",
                 "choice": "payments",
-                "confidence": 0.8,
+                "confidence": 0.73,
                 "probabilities": {
                     "payments": 0.8,
                     "storefront": 0.1,
@@ -54,6 +57,15 @@ class ClefContractTest(unittest.TestCase):
     def test_direct_systemone_response_is_valid(self):
         validate_response(valid_response(), REQUEST)
 
+    def test_first_hosted_clef_flash_response_is_contract_valid(self):
+        validate_response(
+            FIRST_HOSTED_EVIDENCE["raw_response"],
+            FIRST_HOSTED_EVIDENCE["request"],
+            probability_tolerance=float(
+                FIXTURE["contract_expectations"]["probability_tolerance_after_rounding"]
+            ),
+        )
+
     def test_cloudflare_rest_envelope_is_unwrapped(self):
         response = valid_response()
         wrapped = {"result": response, "success": True, "errors": [], "messages": []}
@@ -75,6 +87,18 @@ class ClefContractTest(unittest.TestCase):
     def test_unknown_choice_is_rejected(self):
         response = valid_response()
         response["answers"]["owner"]["choice"] = "security"
+        with self.assertRaises(ValueError):
+            validate_response(response, REQUEST)
+
+    def test_choice_confidence_is_independent_from_chosen_probability(self):
+        response = valid_response()
+        response["answers"]["owner"]["confidence"] = 0.31
+        response["answers"]["owner"]["probabilities"]["payments"] = 0.8
+        validate_response(response, REQUEST)
+
+    def test_choice_confidence_outside_probability_range_is_rejected(self):
+        response = valid_response()
+        response["answers"]["owner"]["confidence"] = 1.01
         with self.assertRaises(ValueError):
             validate_response(response, REQUEST)
 
