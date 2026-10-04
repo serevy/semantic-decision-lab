@@ -16,5 +16,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Smoke
-        run: echo "workflow parser ok"
+      - uses: actions/checkout@v7
+        with:
+          ref: evidence/clef-phase1c-hosted-v0-1
+          fetch-depth: 0
+
+      - name: Download and verify frozen artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --location --header "Authorization: Bearer ${GH_TOKEN}" --header "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/11304537926/zip" --output /tmp/phase1b.zip
+          echo "3cef7569014381bd33574657e892b5f1034f29281fd6c917fe0ce6b2f9752629  /tmp/phase1b.zip" | sha256sum --check
+          mkdir -p /tmp/phase1b
+          unzip -q /tmp/phase1b.zip -d /tmp/phase1b
+
+      - name: Repair and verify Evidence
+        run: python tools/repair_clef_phase1b_bundle.py /tmp/phase1b
+
+      - name: Commit repaired Evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/provider_portability/clef/results/clef-phase1b-hosted-v0.1.bundle.json.gz.b64 experiments/provider_portability/clef/results/clef-phase1b-hosted-v0.1-summary.md
+          git diff --cached --check
+          git commit -m "evidence: repair Clef-Flash Phase 1B raw bundle"
+          git push origin HEAD:evidence/clef-phase1c-hosted-v0-1
