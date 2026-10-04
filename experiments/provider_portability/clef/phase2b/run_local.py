@@ -31,6 +31,15 @@ from run_local_clef_flash_smoke import (
 )
 
 
+def clone_inference_hidden_states_for_trace(torch: Any, hidden_states: Any) -> Any:
+    """Convert inference-mode backbone output into a normal graph-free trace tensor."""
+    with torch.no_grad():
+        cloned = hidden_states.clone()
+    if hasattr(torch, "is_inference") and torch.is_inference(cloned):
+        raise RuntimeError("Phase 2B trace clone unexpectedly remained an inference tensor")
+    return cloned
+
+
 def _json_sha256(value: Any) -> str:
     raw = json.dumps(
         value,
@@ -636,8 +645,9 @@ def main() -> int:
             # Clone the inference tensor under no_grad so subsequent tracing
             # receives a normal, graph-free tensor without changing the actual
             # model/head inference path used for the typed response.
-            with torch.no_grad():
-                hidden_states = inference_hidden_states.clone()
+            hidden_states = clone_inference_hidden_states_for_trace(
+                torch, inference_hidden_states
+            )
 
             response = _response_from_logits(module, request, encoded, logits)
             evidence.update(
