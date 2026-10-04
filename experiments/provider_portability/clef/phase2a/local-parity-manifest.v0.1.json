@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase2a-local-hosted-isolation",
+  "frozen_before_phase2a_local_output": true,
+  "local_outputs_observed_before_freeze": 0,
+  "source_commits": {
+    "phase1c_freeze_merge": "29d71b16e94b6dc026cb04cc39322bc46c2f2a8f",
+    "phase1c_evidence_merge": "754df2cf4081d98696aaee4866cbf9d3a21e1a5f"
+  },
+  "model": {
+    "hf_repo": "Cloudflare/clef-flash",
+    "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+    "discovery_prefix": "17f0b0a",
+    "decision_entrypoint": "joint_schema_model.py:systemone",
+    "loader": "joint_schema_model.py:load_release_model",
+    "max_length": 16384
+  },
+  "runtime_contract": {
+    "device": "cuda",
+    "requested_dtype": "bfloat16",
+    "torch_version_prefix": "2.11",
+    "transformers_version": "5.10.2",
+    "no_quantization": true,
+    "no_cpu_offload": true,
+    "hardware_policy": "Record exact CUDA GPU. H100/H200 is the upstream-matched condition; other BF16-capable CUDA GPUs are retained as an explicitly different runtime condition, never silently pooled."
+  },
+  "frozen_pins": {
+    "phase1c_manifest_path": "../phase1c/repeatability-manifest.v0.1.json",
+    "phase1c_manifest_blob_sha": "ea56fb48de165864647feae22ddab185995b09f0",
+    "phase1c_probes_path": "../phase1c/probes.py",
+    "phase1c_probes_blob_sha": "b5383680f09f3eaf084b4456d2958849888edbab",
+    "local_smoke_runner_path": "../run_local_clef_flash_smoke.py",
+    "local_smoke_runner_blob_sha": "f914edfe921b328f76263ca0ff37d145320520c1",
+    "contract_path": "../contract.py",
+    "contract_blob_sha": "9a261a5bd11727c224e420aad7ba624ff789e83e",
+    "canary_fixture_path": "../systemone-contract.v0.1.json",
+    "canary_fixture_blob_sha": "b0e91fa77372e224aa88a55e56707e07ee0495d3",
+    "hosted_phase1c_bundle_path": "../results/clef-phase1c-hosted-v0.1.bundle.json.gz.b64",
+    "hosted_phase1c_bundle_blob_sha": "cbcd772fe00664aeb8b51747707286bd2776033d",
+    "hosted_phase1c_analysis_path": "../results/clef-phase1c-hosted-v0.1-analysis-summary.json",
+    "hosted_phase1c_analysis_blob_sha": "8e5c3864f73e06961e320e4f12ce92aa3d19ffc7"
+  },
+  "execution": {
+    "canary_calls": 1,
+    "phase1c_schedule_calls": 54,
+    "total_model_calls": 55,
+    "reuse_single_loaded_model": true,
+    "no_retries_inside_run": true,
+    "canary_continue_gate": [
+      "request and response contract validate",
+      "immutable HF revision resolves exactly",
+      "runtime contract validates",
+      "no state truncation"
+    ],
+    "semantic_canary_threshold": null,
+    "phase1c_schedule": "inherit byte-for-byte ordering from pinned Phase 1C manifest"
+  },
+  "analysis_descriptors": [
+    "local unique canonical-response SHA-256 count for each of the 18 conditions across three repeats",
+    "local within-condition repeat deltas using frozen Phase 1A metrics",
+    "local all-nine canonical-vs-question-order pairwise comparisons using the Phase 1C method",
+    "same-condition local-vs-hosted typed-answer deltas for all 54 scheduled calls",
+    "local and hosted owner top-choice flips recorded separately",
+    "exact runtime, revision, encoding, joint-schema-code and joint-head provenance"
+  ],
+  "invariants": [
+    "The 54 experiment calls inherit the exact Phase 1C fixtures, question-order variants, repeats, and interleaved schedule.",
+    "The canary is executed before the 54-call experiment and cannot be used to tune requests, thresholds, or ordering.",
+    "No semantic parity, acceptable-delta, or causality threshold is frozen before local output.",
+    "No generic chat-generation path, quantized conversion, CPU offload, or alternative decision head is accepted as Phase 2A v0.1 evidence.",
+    "State truncation is rejected before inference for the canary and every scheduled request.",
+    "A non-H100/H200 run remains usable evidence only with its different hardware condition preserved in provenance.",
+    "Hosted evidence is read only from the pinned Phase 1C repository bundle and is never re-queried."
+  ]
+}
