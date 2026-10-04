@@ -365,7 +365,13 @@ def main() -> int:
     report = analyze(Path(args.results_dir), Path(args.manifest))
     rendered = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.output:
-        Path(args.output).write_text(rendered, encoding="utf-8")
+        try:
+            with Path(args.output).open("x", encoding="utf-8") as handle:
+                handle.write(rendered)
+        except FileExistsError as exc:
+            raise SystemExit(
+                f"refusing to overwrite analysis: {args.output}"
+            ) from exc
     else:
         print(rendered, end="")
     return 0
