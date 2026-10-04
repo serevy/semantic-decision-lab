@@ -191,6 +191,19 @@ def validate_manifest(
 
     _validate_file_pins(manifest, manifest_path)
 
+    if version == "0.2":
+        prior = manifest["prior_failed_attempts"][0]
+        first_actual_path = resolve_pinned_path(
+            manifest_path,
+            manifest["frozen_pins"]["phase2b_v0_1_failure_first_actual_path"],
+        )
+        first_actual = json.loads(first_actual_path.read_text(encoding="utf-8"))
+        if (
+            prior.get("first_actual_response_sha256")
+            != first_actual.get("response_sha256")
+        ):
+            raise ValueError("Phase 2B v0.2 prior failure response SHA mismatch")
+
     phase2a_path = resolve_pinned_path(
         manifest_path,
         manifest["frozen_pins"]["phase2a_manifest_path"],
