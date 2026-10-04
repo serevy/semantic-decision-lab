@@ -28,6 +28,15 @@ def canonical_json(value) -> bytes:
     ).encode("utf-8")
 
 
+def wire_json(value) -> bytes:
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+
 def raw_body_evidence(raw_body: bytes) -> dict[str, str]:
     return {
         "raw_response_base64": base64.b64encode(raw_body).decode("ascii"),
@@ -52,6 +61,8 @@ def main() -> int:
     request_body = json.loads(json.dumps(fixture["request"]))
     request_body["model"] = args.model
     request_sha256 = hashlib.sha256(canonical_json(request_body)).hexdigest()
+    wire_request = wire_json(request_body)
+    wire_request_sha256 = hashlib.sha256(wire_request).hexdigest()
     model_id = f"@cf/cloudflare/{args.model}"
 
     if args.dry_run:
@@ -67,6 +78,7 @@ def main() -> int:
                     ),
                     "model_id": model_id,
                     "request_sha256": request_sha256,
+                    "wire_request_sha256": wire_request_sha256,
                     "request": request_body,
                     "required_environment": [
                         "CLOUDFLARE_ACCOUNT_ID",
@@ -95,6 +107,7 @@ def main() -> int:
             "revision is recorded by this runner."
         ),
         "request_sha256": request_sha256,
+        "wire_request_sha256": wire_request_sha256,
         "request": request_body,
         "stage": "reserved-before-request",
     }
@@ -137,7 +150,7 @@ def main() -> int:
     )
     request = urllib.request.Request(
         url,
-        data=canonical_json(request_body),
+        data=wire_request,
         headers={
             "Authorization": f"Bearer {auth_token}",
             "Content-Type": "application/json",

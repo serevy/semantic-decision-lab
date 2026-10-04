@@ -1,0 +1,265 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase1a-order-and-packing",
+  "frozen_before_phase1a_output": true,
+  "source_fixture": "../systemone-contract.v0.1.json",
+  "source_fixture_sha256": "8dd52aa1f50d715f8fb506f8691ca0f3c70ab4a797ab7b3345f9f1334d242525",
+  "baseline_variant": "packed-canonical",
+  "variants": [
+    {
+      "id": "packed-canonical",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "f94cca57e89e46e24937af4ce5533a1ba3665ec95a04dfe4caa2c0005b5a435f"
+    },
+    {
+      "id": "packed-qorder-outage-severity-owner",
+      "question_order": [
+        "outage",
+        "severity",
+        "owner"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "9603cbbd56d70b98ed145bd83625cea3f5cccba265767c9599eba3589a826ff4"
+    },
+    {
+      "id": "packed-qorder-owner-outage-severity",
+      "question_order": [
+        "owner",
+        "outage",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "229d9a555590edffbd5542604f61c634aba1aced08cdef2c64f327cd0575bd37"
+    },
+    {
+      "id": "packed-qorder-owner-severity-outage",
+      "question_order": [
+        "owner",
+        "severity",
+        "outage"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "7ac4769bcbbef7acd9e0988ee1a7dc27657083cee70a505ee7bdc6b29879c0e7"
+    },
+    {
+      "id": "packed-qorder-severity-outage-owner",
+      "question_order": [
+        "severity",
+        "outage",
+        "owner"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "87e179f094f3847c426b4e9b2642371387c869a2ccb75760ebdbef937ebb75a5"
+    },
+    {
+      "id": "packed-qorder-severity-owner-outage",
+      "question_order": [
+        "severity",
+        "owner",
+        "outage"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "2e6d7e60809b720e2034641e4d325a29ae2404b17c7b13a272437806fa5f9fde"
+    },
+    {
+      "id": "packed-choice-payments-support-storefront",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "support",
+        "storefront"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "f5c2c5b1698be04741111c359de61189fe8b3cad228ac69f039c4bbeace13ea4"
+    },
+    {
+      "id": "packed-choice-storefront-payments-support",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "storefront",
+        "payments",
+        "support"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "c2803368dbe023f1e40a7281b7784404fb76f3d265b605aebd56e0e2f55370d4"
+    },
+    {
+      "id": "packed-choice-storefront-support-payments",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "storefront",
+        "support",
+        "payments"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "11f69f433bb43bdcf1ef2a9c6bd2ed3e99a3362b0c6bf38c9a6ea80502555086"
+    },
+    {
+      "id": "packed-choice-support-payments-storefront",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "support",
+        "payments",
+        "storefront"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "ca70c6719c3bef3bb6a8aaf1cad4387484ecd4493ad06012c1f7d2c3c593ba72"
+    },
+    {
+      "id": "packed-choice-support-storefront-payments",
+      "question_order": [
+        "outage",
+        "owner",
+        "severity"
+      ],
+      "owner_choice_order": [
+        "support",
+        "storefront",
+        "payments"
+      ],
+      "canonical_request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+      "wire_request_sha256": "c5e21e1f1f7ca17b87f1d1a62618272033cabfa692f2c0e8284a795c256a7bcf"
+    },
+    {
+      "id": "single-outage",
+      "question_order": [
+        "outage"
+      ],
+      "owner_choice_order": null,
+      "canonical_request_sha256": "30119f2d2b25fe6c0e3d2728d995affc20740d1d71cb161f01767e8da978ccfe",
+      "wire_request_sha256": "78e870a42022258d6fee4d07770a5d31388dc6d0e1539e8595b4cc6a708d4dc0"
+    },
+    {
+      "id": "single-owner",
+      "question_order": [
+        "owner"
+      ],
+      "owner_choice_order": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "canonical_request_sha256": "820031e488c7d5809dfaf54423550c265ff36848a6eb3e5ec9f9e0e0b71d1369",
+      "wire_request_sha256": "795d567a7194e831c6d27ce6ac49b24e9fd9f08bd679877fad4934598315cc84"
+    },
+    {
+      "id": "single-severity",
+      "question_order": [
+        "severity"
+      ],
+      "owner_choice_order": null,
+      "canonical_request_sha256": "813e03f62b24143ebbae0d34a3ad5042320746f3eb252f8c1c4c3e2e97f45b49",
+      "wire_request_sha256": "d540a111d186bbcecb25039e59c2fb4670d22eeec72e7a52647f9e6d64bcf4fe"
+    }
+  ],
+  "comparison_sets": {
+    "packing_isolation": {
+      "baseline": "packed-canonical",
+      "comparisons": {
+        "outage": "single-outage",
+        "owner": "single-owner",
+        "severity": "single-severity"
+      }
+    },
+    "question_order": {
+      "baseline": "packed-canonical",
+      "variants": [
+        "packed-qorder-outage-severity-owner",
+        "packed-qorder-owner-outage-severity",
+        "packed-qorder-owner-severity-outage",
+        "packed-qorder-severity-outage-owner",
+        "packed-qorder-severity-owner-outage"
+      ]
+    },
+    "choice_order": {
+      "baseline": "packed-canonical",
+      "variants": [
+        "packed-choice-payments-support-storefront",
+        "packed-choice-storefront-payments-support",
+        "packed-choice-storefront-support-payments",
+        "packed-choice-support-payments-storefront",
+        "packed-choice-support-storefront-payments"
+      ]
+    }
+  },
+  "metrics": {
+    "noul": [
+      "absolute_probability_delta"
+    ],
+    "choice": [
+      "per_option_max_absolute_delta",
+      "jensen_shannon_divergence_base2",
+      "top_choice_flip",
+      "confidence_absolute_delta"
+    ],
+    "score": [
+      "reported_score_absolute_delta",
+      "expected_score_absolute_delta",
+      "per_bin_max_absolute_delta",
+      "jensen_shannon_divergence_base2",
+      "confidence_absolute_delta"
+    ]
+  },
+  "invariants": [
+    "State, instructions, question definitions, and criteria text remain equivalent after JSON decoding; only explicitly frozen question/choice ordering or question inclusion may vary.",
+    "Score criteria order is never permuted because ordinal position is semantic.",
+    "Question-order probes keep owner choice order canonical.",
+    "Choice-order probes keep packed question order canonical.",
+    "Single-question probes keep the selected question unchanged from the source fixture.",
+    "request_sha256 remains the order-insensitive canonical-content hash for backward compatibility.",
+    "wire_request_sha256 is the order-sensitive hash of the exact JSON bytes sent to Workers AI.",
+    "Historical hosted smoke output is not reused as the Phase 1A baseline because changing from recursive sorted-key serialization also changes top-level/state wire order; packed-canonical is remeasured under the Phase 1A serializer."
+  ],
+  "historical_smoke_reused_as_baseline": false
+}
