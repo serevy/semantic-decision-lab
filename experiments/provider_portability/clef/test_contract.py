@@ -18,7 +18,7 @@ def valid_response():
             "owner": {
                 "type": "choice",
                 "choice": "payments",
-                "confidence": 0.8,
+                "confidence": 0.73,
                 "probabilities": {
                     "payments": 0.8,
                     "storefront": 0.1,
@@ -75,6 +75,18 @@ class ClefContractTest(unittest.TestCase):
     def test_unknown_choice_is_rejected(self):
         response = valid_response()
         response["answers"]["owner"]["choice"] = "security"
+        with self.assertRaises(ValueError):
+            validate_response(response, REQUEST)
+
+    def test_choice_confidence_is_independent_from_chosen_probability(self):
+        response = valid_response()
+        response["answers"]["owner"]["confidence"] = 0.31
+        response["answers"]["owner"]["probabilities"]["payments"] = 0.8
+        validate_response(response, REQUEST)
+
+    def test_choice_confidence_outside_probability_range_is_rejected(self):
+        response = valid_response()
+        response["answers"]["owner"]["confidence"] = 1.01
         with self.assertRaises(ValueError):
             validate_response(response, REQUEST)
 
