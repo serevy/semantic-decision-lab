@@ -343,7 +343,9 @@ def _build_head_only_record(module: Any, canonical_encoded: Any, target_order: l
 def dry_run(manifest: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
     return {
         "schema_version": "0.1",
+        "protocol_version": plan["protocol_version"],
         "experiment": manifest["experiment"],
+        "run_identity": manifest["execution"].get("run_identity"),
         "mode": "dry-run-no-model-output",
         "hf_repo": manifest["model"]["hf_repo"],
         "hf_revision": manifest["model"]["hf_revision"],
@@ -388,10 +390,18 @@ def main() -> int:
         parser.error("--output-dir is required unless --dry-run is used")
 
     output_dir = Path(args.output_dir)
+    expected_run_identity = manifest["execution"].get("run_identity")
+    if expected_run_identity and output_dir.name != expected_run_identity:
+        raise SystemExit(
+            "Phase 2B run identity mismatch: "
+            f"expected={expected_run_identity} actual={output_dir.name}"
+        )
     run_path = output_dir / "run.json"
     run_evidence: dict[str, Any] = {
         "schema_version": "0.1",
+        "protocol_version": plan["protocol_version"],
         "experiment": manifest["experiment"],
+        "run_identity": expected_run_identity,
         "stage": "reserved-before-model-preparation",
         "started_at_utc": datetime.now(timezone.utc).isoformat(),
         "provider": manifest["provider"],
@@ -511,7 +521,9 @@ def main() -> int:
         canary_path = output_dir / "canary.json"
         canary_evidence = {
             "schema_version": "0.1",
+            "protocol_version": plan["protocol_version"],
             "experiment": manifest["experiment"],
+            "run_identity": expected_run_identity,
             "stage": "reserved-before-canary-inference",
             "request": canary_request,
             "encoding_preflight": canary_encoding,
@@ -581,7 +593,9 @@ def main() -> int:
             path = output_dir / fixture_id / "actual" / f"{variant_id}.json"
             evidence = {
                 "schema_version": "0.1",
+                "protocol_version": plan["protocol_version"],
                 "experiment": manifest["experiment"],
+                "run_identity": expected_run_identity,
                 "stage": "reserved-before-traced-inference",
                 "fixture_id": fixture_id,
                 "variant_id": variant_id,
@@ -727,7 +741,9 @@ def main() -> int:
                 )
                 head_only_evidence = {
                     "schema_version": "0.1",
+                    "protocol_version": plan["protocol_version"],
                     "experiment": manifest["experiment"],
+                    "run_identity": expected_run_identity,
                     "stage": "reserved-before-head-only-counterfactual",
                     "fixture_id": fixture_id,
                     "variant_id": variant_id,
