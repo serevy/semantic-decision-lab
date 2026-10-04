@@ -1,0 +1,105 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase2b-question-order-source-localization",
+  "stage": "validated",
+  "request": {
+    "model": "clef-flash",
+    "state": {
+      "service": "checkout",
+      "observation": "All payment attempts have returned HTTP 503 for the last ten minutes.",
+      "customer_impact": "Orders cannot complete."
+    },
+    "questions": {
+      "outage": {
+        "type": "noul",
+        "instructions": "Is a customer-facing service currently unavailable?"
+      },
+      "owner": {
+        "type": "choice",
+        "instructions": "Which team should receive this incident first?",
+        "criteria": {
+          "payments": "Payment processing and checkout failures",
+          "storefront": "Catalog, product page, or storefront rendering failures",
+          "support": "Customer communication without a product outage"
+        }
+      },
+      "severity": {
+        "type": "score",
+        "instructions": "How severe is the customer impact?",
+        "criteria": [
+          "No impact",
+          "Minor",
+          "Major",
+          "Critical"
+        ]
+      }
+    }
+  },
+  "encoding_preflight": {
+    "max_length": 16384,
+    "state_tokens_original": 31,
+    "state_tokens_retained": 31,
+    "state_truncated": false,
+    "encoded_input_tokens": 373,
+    "encoded_input_ids_sha256": "7b86ba4a2f2dc74a65bda1021498d91add9a589de4fdad8b4d8ee693da29413d"
+  },
+  "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "runtime": {
+    "python": "3.13.15",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.10.2",
+    "cuda": "13.0",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "bf16_supported": true,
+    "requested_device": "cuda",
+    "requested_dtype": "bfloat16",
+    "upstream_hardware_match_h100_h200": false,
+    "hardware_condition": "explicit-non-upstream-hardware:NVIDIA A100-SXM4-80GB",
+    "loaded_parameter_devices": [
+      "cuda:0"
+    ],
+    "loaded_model_first_parameter_dtype": "torch.bfloat16"
+  },
+  "raw_response": {
+    "model": "clef-flash",
+    "answers": {
+      "outage": {
+        "type": "noul",
+        "noul": 0.9408
+      },
+      "owner": {
+        "type": "choice",
+        "choice": "payments",
+        "confidence": 0.9737,
+        "probabilities": {
+          "payments": 0.9737,
+          "storefront": 0.0131,
+          "support": 0.0131
+        }
+      },
+      "severity": {
+        "type": "score",
+        "score": 2.6507,
+        "confidence": 0.6792,
+        "legend": {
+          "0": "No impact",
+          "1": "Minor",
+          "2": "Major",
+          "3": "Critical"
+        },
+        "probabilities": {
+          "0": 0.0097,
+          "1": 0.0091,
+          "2": 0.302,
+          "3": 0.6792
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 373,
+      "output_tokens": 0
+    }
+  },
+  "response_sha256": "fd21091004fa3ecae1fff5a4c2f756729bedb000fb94c7acf22fdf21aabd2626",
+  "completed_at_utc": "2026-10-04T22:57:41.381046+00:00"
+}
