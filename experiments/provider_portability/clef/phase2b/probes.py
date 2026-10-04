@@ -20,7 +20,7 @@ from phase2a.probes import (
     validate_manifest as validate_phase2a_manifest,
 )
 
-DEFAULT_MANIFEST = ROOT / "source-localization-manifest.v0.1.json"
+DEFAULT_MANIFEST = ROOT / "source-localization-manifest.v0.2.json"
 FULL_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 
 
@@ -47,6 +47,29 @@ def _validate_file_pins(manifest: dict[str, Any], manifest_path: str | Path) -> 
         ("phase2a_analysis_path", "phase2a_analysis_blob_sha"),
         ("phase2a_evidence_archive_path", "phase2a_evidence_archive_blob_sha"),
     ]
+    if manifest.get("protocol_version") == "0.2":
+        pairs.extend(
+            [
+                ("phase2b_v0_1_manifest_path", "phase2b_v0_1_manifest_blob_sha"),
+                (
+                    "phase2b_v0_1_failure_summary_path",
+                    "phase2b_v0_1_failure_summary_blob_sha",
+                ),
+                (
+                    "phase2b_v0_1_failure_run_path",
+                    "phase2b_v0_1_failure_run_blob_sha",
+                ),
+                (
+                    "phase2b_v0_1_failure_canary_path",
+                    "phase2b_v0_1_failure_canary_blob_sha",
+                ),
+                (
+                    "phase2b_v0_1_failure_first_actual_path",
+                    "phase2b_v0_1_failure_first_actual_blob_sha",
+                ),
+            ]
+        )
+
     for path_field, sha_field in pairs:
         path = resolve_pinned_path(manifest_path, pins[path_field])
         actual = git_blob_sha(path)
@@ -58,14 +81,53 @@ def _validate_file_pins(manifest: dict[str, Any], manifest_path: str | Path) -> 
             )
 
 
+def _validate_freeze_generation(manifest: dict[str, Any]) -> str:
+    version = str(manifest.get("protocol_version", "0.1"))
+    if version == "0.1":
+        if manifest.get("frozen_before_phase2b_internal_output") is not True:
+            raise ValueError("Phase 2B v0.1 must freeze before internal output")
+        if manifest.get("phase2b_internal_outputs_observed_before_freeze") != 0:
+            raise ValueError("Phase 2B v0.1 must freeze before internal traces")
+        return version
+
+    if version == "0.2":
+        if manifest.get("frozen_before_phase2b_v0_2_retry_output") is not True:
+            raise ValueError("Phase 2B v0.2 must freeze before retry output")
+        if manifest.get("successful_phase2b_trace_outputs_observed_before_freeze") != 0:
+            raise ValueError(
+                "Phase 2B v0.2 must freeze before any successful trace output"
+            )
+        attempts = manifest.get("prior_failed_attempts")
+        if not isinstance(attempts, list) or len(attempts) != 1:
+            raise ValueError("Phase 2B v0.2 must preserve exactly one v0.1 failure")
+        prior = attempts[0]
+        expected = {
+            "run_identity": "clef-phase2b-local-v0.1",
+            "freeze_commit": "08c16640320805aeaad7942079dfbe87ea8f8d7a",
+            "outcome": "failed-after-first-actual-response-before-trace",
+            "first_actual_stage": "trace-error",
+            "failure_kind": "runner-inference-tensor-trace-context",
+            "successful_trace_outputs": 0,
+            "head_only_counterfactuals_completed": 0,
+        }
+        for key, value in expected.items():
+            if prior.get(key) != value:
+                raise ValueError(
+                    f"Phase 2B v0.2 prior failure drift: "
+                    f"{key}={prior.get(key)!r}"
+                )
+        if prior.get("first_actual_response_preserved") is not True:
+            raise ValueError("Phase 2B v0.2 must preserve the failed raw response")
+        return version
+
+    raise ValueError(f"unsupported Phase 2B protocol version: {version}")
+
+
 def validate_manifest(
     manifest: dict[str, Any],
     manifest_path: str | Path = DEFAULT_MANIFEST,
 ) -> dict[str, Any]:
-    if manifest.get("frozen_before_phase2b_internal_output") is not True:
-        raise ValueError("Phase 2B manifest must freeze before internal output")
-    if manifest.get("phase2b_internal_outputs_observed_before_freeze") != 0:
-        raise ValueError("Phase 2B v0.1 must freeze before internal traces")
+    version = _validate_freeze_generation(manifest)
 
     model = manifest["model"]
     revision = model["hf_revision"]
@@ -74,17 +136,17 @@ def validate_manifest(
     if not revision.startswith(model["discovery_prefix"]):
         raise ValueError("Phase 2B HF revision drifted outside discovery prefix")
     if model["max_length"] != 16384:
-        raise ValueError("Phase 2B v0.1 freezes max_length at 16384")
+        raise ValueError("Phase 2B freezes max_length at 16384")
 
     provider = manifest["provider"]
     if provider["kind"] != "local-inference":
-        raise ValueError("Phase 2B v0.1 is a local-inference experiment")
+        raise ValueError("Phase 2B is a local-inference experiment")
     if provider["entrypoint"] != "joint_schema_model.py:systemone":
         raise ValueError("Phase 2B must retain the released SystemOne path")
 
     runtime = manifest["runtime_contract"]
     if runtime["device"] != "cuda" or runtime["requested_dtype"] != "bfloat16":
-        raise ValueError("Phase 2B v0.1 requires CUDA BF16")
+        raise ValueError("Phase 2B requires CUDA BF16")
     if runtime["torch_version_prefix"] != "2.11":
         raise ValueError("Phase 2B requires torch 2.11.x")
     if runtime["transformers_version"] != "5.10.2":
@@ -106,7 +168,7 @@ def validate_manifest(
         if execution[key] != value:
             raise ValueError(f"Phase 2B execution drift: {key}={execution[key]}")
     if execution.get("one_observation_per_condition") is not True:
-        raise ValueError("Phase 2B v0.1 freezes one observation per condition")
+        raise ValueError("Phase 2B freezes one observation per condition")
     if execution.get("reuse_single_loaded_model") is not True:
         raise ValueError("Phase 2B requires one loaded model")
     if execution.get("no_retries_inside_run") is not True:
@@ -115,6 +177,17 @@ def validate_manifest(
         raise ValueError("Phase 2B freezes no semantic threshold")
     if execution.get("stage_delta_threshold") is not None:
         raise ValueError("Phase 2B freezes no stage-delta threshold")
+    if version == "0.2" and execution.get("run_identity") != "clef-phase2b-local-v0.2":
+        raise ValueError("Phase 2B v0.2 must use a fresh run identity")
+
+    if version == "0.2":
+        trace_fix = manifest.get("trace_runtime_fix", {})
+        if trace_fix.get("actual_inference_context") != "torch.inference_mode":
+            raise ValueError("Phase 2B v0.2 must preserve released inference context")
+        if "clone" not in str(trace_fix.get("trace_bridge", "")).lower():
+            raise ValueError("Phase 2B v0.2 must clone inference hidden states")
+        if trace_fix.get("trace_context") != "torch.no_grad":
+            raise ValueError("Phase 2B v0.2 tracing must run under torch.no_grad")
 
     _validate_file_pins(manifest, manifest_path)
 
@@ -152,6 +225,7 @@ def validate_manifest(
 
     canary_request = build_phase2a_canary_request(phase2a, phase2a_path)
     return {
+        "protocol_version": version,
         "phase2a_manifest": phase2a,
         "phase2a_plan": phase2a_plan,
         "fixtures": fixtures,
