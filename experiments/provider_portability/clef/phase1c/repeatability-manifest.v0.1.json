@@ -1,0 +1,382 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase1c-question-order-repeatability",
+  "frozen_before_phase1c_output": true,
+  "phase1a_pins": {
+    "probe_matrix_blob_sha": "f83d5c3deae3ac01051e05563ae8911ae632d37b",
+    "probes_blob_sha": "762a60069f510b5f1f3b0190bc11c23fcfb287ca",
+    "analyze_blob_sha": "20bd04931f49090317084580b22b4fa64ab80d21",
+    "hosted_runner_blob_sha": "40c94906f2c586fd12d9a06ed8f478b33fa4c44f"
+  },
+  "phase1b_fixture_pins": {
+    "payments-partial": {
+      "path": "../phase1b/fixtures/payments-partial.v0.1.json",
+      "blob_sha": "48d4628bc8fd551c920fa9506e81da8ab41ae701"
+    },
+    "storefront-hard": {
+      "path": "../phase1b/fixtures/storefront-hard.v0.1.json",
+      "blob_sha": "e01f91b1b258897f60a847144a86acd478664707"
+    },
+    "support-info": {
+      "path": "../phase1b/fixtures/support-info.v0.1.json",
+      "blob_sha": "a6702b1af81647c2fe70ffa95f5a8880fd49e639"
+    }
+  },
+  "source_commits": {
+    "phase1a_freeze_merge": "29006a8ecfac32478bcbb67ec0aea0031a6c373d",
+    "phase1b_freeze_merge": "ef521a85cb7fdf7196f0f207a0c2e5a8a430af18",
+    "phase1b_evidence_merge": "22939d8c9c50ef8ec43fc269adb5f3e120d616f2"
+  },
+  "question_order_variants": [
+    "packed-canonical",
+    "packed-qorder-outage-severity-owner",
+    "packed-qorder-owner-outage-severity",
+    "packed-qorder-owner-severity-outage",
+    "packed-qorder-severity-outage-owner",
+    "packed-qorder-severity-owner-outage"
+  ],
+  "repeats_per_condition": 3,
+  "condition_count": 18,
+  "expected_provider_calls": 54,
+  "schedule": [
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-canonical",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-canonical",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-canonical",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 1
+    },
+    {
+      "round": 1,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 1
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-canonical",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-canonical",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-canonical",
+      "repeat_index": 2
+    },
+    {
+      "round": 2,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 2
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-canonical",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "storefront-hard",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-canonical",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "support-info",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-outage-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-severity-owner-outage",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-canonical",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-outage-severity-owner",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-outage-severity",
+      "repeat_index": 3
+    },
+    {
+      "round": 3,
+      "fixture_id": "payments-partial",
+      "variant_id": "packed-qorder-owner-severity-outage",
+      "repeat_index": 3
+    }
+  ],
+  "descriptors": [
+    "unique raw response SHA-256 count for each fixture/order condition across three repeats",
+    "maximum within-condition repeat delta using frozen Phase 1A metrics",
+    "all nine pairwise canonical-vs-order comparisons per non-canonical order",
+    "per-fixture maximum between-order delta alongside maximum within-condition repeat delta",
+    "observed owner labels and top-choice flips without semantic gold labels"
+  ],
+  "invariants": [
+    "Only the six packed question-order conditions are tested; choice-order and single-question probes are excluded.",
+    "Each fixture/order condition is executed exactly three times.",
+    "The three rounds use a frozen interleaved fixture and variant schedule to reduce simple time-position confounding.",
+    "No retries are performed inside the Phase 1C run.",
+    "No semantic pass/fail or causality threshold is frozen before output.",
+    "Hosted model revision remains unavailable behind the Workers AI alias."
+  ]
+}
