@@ -1,0 +1,135 @@
+{
+  "schema_version": "0.1",
+  "observed_at_utc": "2026-10-04T09:20:48.025336+00:00",
+  "provider": "cloudflare-workers-ai",
+  "model_id": "@cf/cloudflare/clef-flash",
+  "model_selector": "clef-flash",
+  "hosted_model_revision": null,
+  "hosted_revision_note": "Workers AI exposes a model alias here; no immutable underlying model revision is recorded by this runner.",
+  "request_sha256": "760b6280af2013872a6ca33e8e26b83799283085b5668276e318c3a4ebf43fdc",
+  "request": {
+    "model": "clef-flash",
+    "state": {
+      "service": "checkout",
+      "observation": "All payment attempts have returned HTTP 503 for the last ten minutes.",
+      "customer_impact": "Orders cannot complete."
+    },
+    "questions": {
+      "outage": {
+        "type": "noul",
+        "instructions": "Is a customer-facing service currently unavailable?"
+      },
+      "owner": {
+        "type": "choice",
+        "instructions": "Which team should receive this incident first?",
+        "criteria": {
+          "payments": "Payment processing and checkout failures",
+          "storefront": "Catalog, product page, or storefront rendering failures",
+          "support": "Customer communication without a product outage"
+        }
+      },
+      "severity": {
+        "type": "score",
+        "instructions": "How severe is the customer impact?",
+        "criteria": [
+          "No impact",
+          "Minor",
+          "Major",
+          "Critical"
+        ]
+      }
+    }
+  },
+  "stage": "validated",
+  "http_status": 200,
+  "elapsed_ms_client_observed": 580.394235,
+  "raw_response_base64": "eyJyZXN1bHQiOnsibW9kZWwiOiJjbGVmLWZsYXNoIiwiYW5zd2VycyI6eyJvdXRhZ2UiOnsidHlwZSI6Im5vdWwiLCJub3VsIjowLjk0MDN9LCJvd25lciI6eyJ0eXBlIjoiY2hvaWNlIiwiY2hvaWNlIjoicGF5bWVudHMiLCJwcm9iYWJpbGl0aWVzIjp7InBheW1lbnRzIjowLjk3MzgsInN0b3JlZnJvbnQiOjAuMDEzMiwic3VwcG9ydCI6MC4wMTN9LCJjb25maWRlbmNlIjowLjkyMzF9LCJzZXZlcml0eSI6eyJ0eXBlIjoic2NvcmUiLCJzY29yZSI6Mi42NDg3LCJsZWdlbmQiOnsiMCI6Ik5vIGltcGFjdCIsIjEiOiJNaW5vciIsIjIiOiJNYWpvciIsIjMiOiJDcml0aWNhbCJ9LCJwcm9iYWJpbGl0aWVzIjp7IjAiOjAuMDA5NywiMSI6MC4wMDg3LCIyIjowLjMwNDgsIjMiOjAuNjc2OH0sImNvbmZpZGVuY2UiOjAuNDAxNX19LCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjM3Mywib3V0cHV0X3Rva2VucyI6MH19LCJzdWNjZXNzIjp0cnVlLCJlcnJvcnMiOltdLCJtZXNzYWdlcyI6W119",
+  "raw_response_sha256": "c8564d76753a7206ee8856737da5d45eca1ba10d3a43550aadf200e65bce94cb",
+  "raw_response_body": "{\"result\":{\"model\":\"clef-flash\",\"answers\":{\"outage\":{\"type\":\"noul\",\"noul\":0.9403},\"owner\":{\"type\":\"choice\",\"choice\":\"payments\",\"probabilities\":{\"payments\":0.9738,\"storefront\":0.0132,\"support\":0.013},\"confidence\":0.9231},\"severity\":{\"type\":\"score\",\"score\":2.6487,\"legend\":{\"0\":\"No impact\",\"1\":\"Minor\",\"2\":\"Major\",\"3\":\"Critical\"},\"probabilities\":{\"0\":0.0097,\"1\":0.0087,\"2\":0.3048,\"3\":0.6768},\"confidence\":0.4015}},\"usage\":{\"input_tokens\":373,\"output_tokens\":0}},\"success\":true,\"errors\":[],\"messages\":[]}",
+  "raw_response": {
+    "result": {
+      "model": "clef-flash",
+      "answers": {
+        "outage": {
+          "type": "noul",
+          "noul": 0.9403
+        },
+        "owner": {
+          "type": "choice",
+          "choice": "payments",
+          "probabilities": {
+            "payments": 0.9738,
+            "storefront": 0.0132,
+            "support": 0.013
+          },
+          "confidence": 0.9231
+        },
+        "severity": {
+          "type": "score",
+          "score": 2.6487,
+          "legend": {
+            "0": "No impact",
+            "1": "Minor",
+            "2": "Major",
+            "3": "Critical"
+          },
+          "probabilities": {
+            "0": 0.0097,
+            "1": 0.0087,
+            "2": 0.3048,
+            "3": 0.6768
+          },
+          "confidence": 0.4015
+        }
+      },
+      "usage": {
+        "input_tokens": 373,
+        "output_tokens": 0
+      }
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+  },
+  "normalized_systemone_response": {
+    "model": "clef-flash",
+    "answers": {
+      "outage": {
+        "type": "noul",
+        "noul": 0.9403
+      },
+      "owner": {
+        "type": "choice",
+        "choice": "payments",
+        "probabilities": {
+          "payments": 0.9738,
+          "storefront": 0.0132,
+          "support": 0.013
+        },
+        "confidence": 0.9231
+      },
+      "severity": {
+        "type": "score",
+        "score": 2.6487,
+        "legend": {
+          "0": "No impact",
+          "1": "Minor",
+          "2": "Major",
+          "3": "Critical"
+        },
+        "probabilities": {
+          "0": 0.0097,
+          "1": 0.0087,
+          "2": 0.3048,
+          "3": 0.6768
+        },
+        "confidence": 0.4015
+      }
+    },
+    "usage": {
+      "input_tokens": 373,
+      "output_tokens": 0
+    }
+  },
+  "completed_at_utc": "2026-10-04T09:20:48.614302+00:00"
+}
