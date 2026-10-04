@@ -22,7 +22,7 @@ jobs:
           python-version: "3.12"
       - name: Validate offline Clef contract and smoke helpers
         working-directory: experiments/provider_portability/clef
-        run: python -m unittest -v test_contract.py test_smoke_runners.py phase1a/test_phase1a.py phase1b/test_phase1b.py
+        run: python -m unittest -v test_contract.py test_smoke_runners.py phase1a/test_phase1a.py phase1b/test_phase1b.py phase1c/test_phase1c.py
       - name: Validate Workers AI request construction without credentials
         run: |
           python experiments/provider_portability/clef/run_workers_ai_smoke.py \
@@ -40,4 +40,7 @@ jobs:
             experiments/provider_portability/clef/phase1a/run_workers_ai.py \
             experiments/provider_portability/clef/phase1b/probes.py \
             experiments/provider_portability/clef/phase1b/analyze.py \
-            experiments/provider_portability/clef/phase1b/run_workers_ai.py
+            experiments/provider_portability/clef/phase1b/run_workers_ai.py \
+            experiments/provider_portability/clef/phase1c/probes.py \
+            experiments/provider_portability/clef/phase1c/analyze.py \
+            experiments/provider_portability/clef/phase1c/run_workers_ai.py
