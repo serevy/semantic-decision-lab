@@ -43,6 +43,16 @@ class Phase1AFreezeTest(unittest.TestCase):
         self.assertEqual(canonical_json(baseline), canonical_json(reordered))
         self.assertNotEqual(wire_json(baseline), wire_json(reordered))
 
+    def test_top_level_and_state_mapping_order_are_fixed_across_variants(self):
+        baseline = build_request(self.variants["packed-canonical"], self.source)
+        expected_top_level = list(baseline)
+        expected_state_order = list(baseline["state"])
+        for variant in self.matrix["variants"]:
+            request = build_request(variant, self.source)
+            self.assertEqual(list(request), expected_top_level)
+            self.assertEqual(list(request["state"]), expected_state_order)
+            self.assertEqual(request["state"], baseline["state"])
+
     def test_score_criteria_order_never_changes(self):
         expected = self.source["request"]["questions"]["severity"]["criteria"]
         for variant in self.matrix["variants"]:

@@ -258,6 +258,8 @@
     "Choice-order probes keep packed question order canonical.",
     "Single-question probes keep the selected question unchanged from the source fixture.",
     "request_sha256 remains the order-insensitive canonical-content hash for backward compatibility.",
-    "wire_request_sha256 is the order-sensitive hash of the exact JSON bytes sent to Workers AI."
-  ]
+    "wire_request_sha256 is the order-sensitive hash of the exact JSON bytes sent to Workers AI.",
+    "Historical hosted smoke output is not reused as the Phase 1A baseline because changing from recursive sorted-key serialization also changes top-level/state wire order; packed-canonical is remeasured under the Phase 1A serializer."
+  ],
+  "historical_smoke_reused_as_baseline": false
 }

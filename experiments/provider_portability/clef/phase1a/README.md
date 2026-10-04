@@ -25,9 +25,14 @@ The hosted runner now separates two hashes:
 
 This separation is required because the previous hosted smoke serializer used
 `sort_keys=True` for the HTTP body. That behavior would have erased the very
-question/choice order differences this phase intends to test. The original
-v0.1 smoke request happened to already be in the same sorted order, so its
-observed baseline content is unaffected.
+question/choice order differences this phase intends to test.
+
+The historical hosted smoke is **not reused as the Phase 1A baseline**. Although
+its question and owner-choice order happened to match sorted order, recursive
+sorting also changed top-level and state mapping order. Phase 1A therefore
+remeasures `packed-canonical` with the new order-preserving serializer and
+compares only Phase 1A variants against that new baseline. Top-level and state
+mapping order remain fixed across all Phase 1A variants.
 
 ## Frozen comparison sets
 

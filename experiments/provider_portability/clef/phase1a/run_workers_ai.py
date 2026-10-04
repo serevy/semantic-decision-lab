@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -76,10 +77,23 @@ def main() -> int:
             )
             completed.append(variant_id)
 
+            evidence = None
+            if evidence_path.is_file():
+                evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+                if (
+                    evidence.get("request_sha256")
+                    != variant["canonical_request_sha256"]
+                    or evidence.get("wire_request_sha256")
+                    != variant["wire_request_sha256"]
+                ):
+                    failures.append(
+                        {"variant": variant_id, "stage": "evidence-hash-mismatch"}
+                    )
+                    break
+
             if completed_process.returncode != 0:
                 stage = "missing-evidence"
-                if evidence_path.is_file():
-                    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+                if evidence is not None:
                     stage = str(evidence.get("stage"))
                 failures.append({"variant": variant_id, "stage": stage})
                 if stage in STOP_STAGES:
@@ -87,6 +101,7 @@ def main() -> int:
 
     summary = {
         "schema_version": "0.1",
+        "matrix_sha256": hashlib.sha256(matrix_path.read_bytes()).hexdigest(),
         "experiment": matrix["experiment"],
         "completed_variants": completed,
         "failures": failures,
