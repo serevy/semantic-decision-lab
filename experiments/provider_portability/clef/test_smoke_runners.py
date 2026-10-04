@@ -10,7 +10,7 @@ from run_local_clef_flash_smoke import (
     inspect_state_encoding,
     validate_approved_revision,
 )
-from run_workers_ai_smoke import raw_body_evidence
+from run_workers_ai_smoke import canonical_json, raw_body_evidence, wire_json
 
 
 class EvidenceIoTest(unittest.TestCase):
@@ -105,6 +105,16 @@ class EncodingPreflightTest(unittest.TestCase):
         self.assertTrue(diagnostics["state_truncated"])
         self.assertEqual(diagnostics["state_tokens_original"], 15)
         self.assertEqual(diagnostics["state_tokens_retained"], 10)
+
+
+class HostedWireSerializationTest(unittest.TestCase):
+    def test_canonical_hash_ignores_mapping_order_but_wire_bytes_preserve_it(self):
+        first = {"questions": {"a": {"type": "noul"}, "b": {"type": "noul"}}}
+        second = {"questions": {"b": {"type": "noul"}, "a": {"type": "noul"}}}
+        self.assertEqual(canonical_json(first), canonical_json(second))
+        self.assertNotEqual(wire_json(first), wire_json(second))
+        self.assertLess(wire_json(first).find(b'"a"'), wire_json(first).find(b'"b"'))
+        self.assertLess(wire_json(second).find(b'"b"'), wire_json(second).find(b'"a"'))
 
 
 class HostedRawEvidenceTest(unittest.TestCase):
