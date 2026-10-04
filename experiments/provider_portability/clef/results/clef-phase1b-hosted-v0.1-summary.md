@@ -147,16 +147,29 @@ Base64-encoded compact Evidence bundle containing:
 - all 42 exact provider response bodies as `raw_response_base64`;
 - request and wire hashes;
 - run identity and artifact identity;
-- the full Phase 1B analysis object.
+- all 42 exact provider response bodies and their request/wire hashes.
 
-Integrity:
+The full analysis summary remains separately preserved in `clef-phase1b-hosted-v0.1-analysis-summary.json`.
+
+Integrity after repair:
 
 - decoded gzip SHA-256:
-  `1243e384a8ab5a73dfd9fd73d7593ba44ff2324ea3fc21e25fa522646797f41d`
+  `c306d9c804ec22541b96ca601da1bc7dfee00297b343fcbe7c74ec91674911ea`
 - Base64 text SHA-256:
-  `17c5df9d4b1fd8f7531c4b7405157da33934b43f0011126e81acfca36af9d66c`
+  `af1a25d3ffe16132c6f6a2b2585fe165a2c11e82c065a1b6d207ae05854ccfe1`
 - uncompressed compact JSON SHA-256:
-  `5d2f6a515d251913efb7fea16dc05c9b4e99e6275f3c7bde2fb33eb6815a36e0`
+  `5329baffb357cca3caf4a4df540dce023c7c2fe89462b0e8ddc7d76a55225edb`
+
+Repair provenance:
+
+- the previously retained bundle was found during PR #131 review to fail gzip CRC validation;
+- this replacement was reconstructed from GitHub Actions Artifact `11304537926`;
+- the downloaded artifact SHA-256 was rechecked against the frozen digest
+  `3cef7569014381bd33574657e892b5f1034f29281fd6c917fe0ce6b2f9752629`;
+- all **42 / 42** decoded raw response bodies matched their recorded
+  `raw_response_sha256` before this replacement was written;
+- the repaired repository Evidence independently reproduces the Phase 1B -> Phase 1C
+  raw-response SHA-256 comparison at **18 / 18**.
 
 Example reconstruction:
 

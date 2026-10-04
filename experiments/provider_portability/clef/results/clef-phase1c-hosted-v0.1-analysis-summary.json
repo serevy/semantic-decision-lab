@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase1c-question-order-repeatability",
+  "repeatability_summary": {
+    "byte_identical_repeat_conditions": 18,
+    "total_conditions": 18
+  },
+  "phase1b_cross_workflow_raw_hash_matches": {
+    "matched": 18,
+    "total": 18
+  },
+  "fixtures": {
+    "payments-partial": {
+      "byte_identical_conditions": 6,
+      "condition_count": 6,
+      "between_order_maxima": {
+        "outage_absolute_probability_delta": 0.0051,
+        "owner_per_option_max_absolute_delta": 0.008500000000000063,
+        "owner_confidence_absolute_delta": 0.024499999999999966,
+        "severity_reported_score_absolute_delta": 0.005800000000000027,
+        "severity_per_bin_max_absolute_delta": 0.00880000000000003,
+        "severity_confidence_absolute_delta": 0.021700000000000053,
+        "owner_top_choice_flip_any": false
+      }
+    },
+    "storefront-hard": {
+      "byte_identical_conditions": 6,
+      "condition_count": 6,
+      "between_order_maxima": {
+        "outage_absolute_probability_delta": 0.02959999999999996,
+        "owner_per_option_max_absolute_delta": 0.0032999999999999696,
+        "owner_confidence_absolute_delta": 0.00979999999999992,
+        "severity_reported_score_absolute_delta": 0.12119999999999997,
+        "severity_per_bin_max_absolute_delta": 0.06520000000000004,
+        "severity_confidence_absolute_delta": 0.046999999999999986,
+        "owner_top_choice_flip_any": false
+      }
+    },
+    "support-info": {
+      "byte_identical_conditions": 6,
+      "condition_count": 6,
+      "between_order_maxima": {
+        "outage_absolute_probability_delta": 0.053,
+        "owner_per_option_max_absolute_delta": 0.0025000000000000577,
+        "owner_confidence_absolute_delta": 0.007199999999999984,
+        "severity_reported_score_absolute_delta": 0.013900000000000023,
+        "severity_per_bin_max_absolute_delta": 0.0252,
+        "severity_confidence_absolute_delta": 0.05480000000000007,
+        "owner_top_choice_flip_any": false
+      }
+    }
+  }
+}
