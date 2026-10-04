@@ -40,6 +40,38 @@ def clone_inference_hidden_states_for_trace(torch: Any, hidden_states: Any) -> A
     return cloned
 
 
+def run_trace_components_from_inference_hidden_states(
+    torch: Any,
+    *,
+    module: Any,
+    model: Any,
+    processor: Any,
+    request: dict[str, Any],
+    encoded: Any,
+    inference_hidden_states: Any,
+    input_ids: Any,
+    output_embedding_weight: Any,
+) -> tuple[dict[str, Any], dict[str, Any], Any]:
+    """Bridge released inference output into the trace-only no-grad path."""
+    hidden_states = clone_inference_hidden_states_for_trace(
+        torch, inference_hidden_states
+    )
+    with torch.no_grad():
+        if torch.is_grad_enabled():
+            raise RuntimeError("Phase 2B trace unexpectedly has grad enabled")
+        trace, tensors = _trace_components(
+            module,
+            model,
+            processor,
+            request,
+            encoded,
+            hidden_states,
+            input_ids,
+            output_embedding_weight,
+        )
+    return trace, tensors, hidden_states
+
+
 def _json_sha256(value: Any) -> str:
     raw = json.dumps(
         value,
@@ -640,15 +672,6 @@ def main() -> int:
                     output_embedding_weight,
                 )[0]
 
-            # Phase 2B reuses backbone states for trace-only LayerNorm/mean
-            # operations after the released inference path has completed.
-            # Clone the inference tensor under no_grad so subsequent tracing
-            # receives a normal, graph-free tensor without changing the actual
-            # model/head inference path used for the typed response.
-            hidden_states = clone_inference_hidden_states_for_trace(
-                torch, inference_hidden_states
-            )
-
             response = _response_from_logits(module, request, encoded, logits)
             evidence.update(
                 {
@@ -676,17 +699,19 @@ def main() -> int:
                 raise
 
             try:
-                with torch.no_grad():
-                    trace, tensors = _trace_components(
-                        module,
-                        model,
-                        processor,
-                        request,
-                        encoded,
-                        hidden_states,
-                        batch["input_ids"],
-                        output_embedding_weight,
+                trace, tensors, hidden_states = (
+                    run_trace_components_from_inference_hidden_states(
+                        torch,
+                        module=module,
+                        model=model,
+                        processor=processor,
+                        request=request,
+                        encoded=encoded,
+                        inference_hidden_states=inference_hidden_states,
+                        input_ids=batch["input_ids"],
+                        output_embedding_weight=output_embedding_weight,
                     )
+                )
             except Exception as exc:
                 evidence.update(
                     {
