@@ -1,6 +1,7 @@
 import unittest
 
 from phase2b.probes import load_manifest, validate_manifest
+from phase2b.run_local import clone_inference_hidden_states_for_trace
 
 
 class Phase2BFreezeTest(unittest.TestCase):
@@ -85,6 +86,25 @@ class Phase2BFreezeTest(unittest.TestCase):
         )
         self.assertIn("clone", trace_fix["trace_bridge"].lower())
         self.assertEqual(trace_fix["trace_context"], "torch.no_grad")
+
+    def test_trace_bridge_clone_is_not_an_inference_tensor(self):
+        try:
+            import torch
+        except ImportError:
+            self.skipTest("torch unavailable")
+
+        with torch.inference_mode():
+            source = torch.arange(8, dtype=torch.float32).reshape(2, 4)
+
+        cloned = clone_inference_hidden_states_for_trace(torch, source)
+        self.assertFalse(torch.is_inference(cloned))
+        self.assertFalse(cloned.requires_grad)
+        self.assertTrue(torch.equal(cloned, source))
+
+        layer_norm = torch.nn.LayerNorm(4)
+        with torch.no_grad():
+            output = layer_norm(cloned)
+        self.assertEqual(tuple(output.shape), (2, 4))
 
     def test_head_only_intervention_is_narrow(self):
         control = self.manifest["head_only_counterfactual"]
