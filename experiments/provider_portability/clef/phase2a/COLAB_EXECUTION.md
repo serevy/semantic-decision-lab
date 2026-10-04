@@ -56,20 +56,13 @@ The final two commands should show the frozen commit and a clean worktree.
 The protocol requires `torch` 2.11.x and exactly
 `transformers==5.10.2`.
 
-```bash
-!python -m pip install --upgrade \
-  "torch>=2.11,<2.12" \
-  "transformers==5.10.2" \
-  huggingface_hub \
-  safetensors \
-  accelerate \
-  pillow
+```python
+%pip install --upgrade "torch>=2.11,<2.12" "transformers==5.10.2" huggingface_hub safetensors accelerate pillow
 ```
 
 Verify before the run:
 
-```bash
-!python - <<'PY'
+```python
 import torch
 import transformers
 
@@ -83,7 +76,6 @@ assert str(torch.__version__).startswith("2.11")
 assert transformers.__version__ == "5.10.2"
 assert torch.cuda.is_available()
 assert torch.cuda.is_bf16_supported()
-PY
 ```
 
 The Phase 2A runner independently repeats these gates.
@@ -92,20 +84,18 @@ The Phase 2A runner independently repeats these gates.
 
 This produces **no model decision output** and downloads no model weights.
 
-```bash
-!python experiments/provider_portability/clef/phase2a/run_local.py \
-  --dry-run \
-  > /content/clef-phase2a-dry-run.json
-
+```python
+!python experiments/provider_portability/clef/phase2a/run_local.py --dry-run > /content/clef-phase2a-dry-run.json
 !python -m json.tool /content/clef-phase2a-dry-run.json > /dev/null
-!python - <<'PY'
+
 import json
-p = json.load(open("/content/clef-phase2a-dry-run.json"))
+with open("/content/clef-phase2a-dry-run.json", encoding="utf-8") as handle:
+    p = json.load(handle)
+
 print("revision:", p["hf_revision"])
 print("conditions:", p["condition_count"])
 print("scheduled calls:", p["scheduled_calls"])
 print("total calls including canary:", p["total_model_calls_if_executed"])
-PY
 ```
 
 Expected frozen envelope:
@@ -123,9 +113,8 @@ If any of those values differ, stop.
 Use a fresh output directory. Never overwrite or resume a failed Evidence
 directory.
 
-```bash
-!python experiments/provider_portability/clef/phase2a/run_local.py \
-  --output-dir /content/clef-phase2a-local-v0.1
+```python
+!python experiments/provider_portability/clef/phase2a/run_local.py --output-dir /content/clef-phase2a-local-v0.1
 ```
 
 The runner will:
@@ -146,11 +135,8 @@ There are no in-run retries.
 
 Only after the run reaches `stage: validated`:
 
-```bash
-!python experiments/provider_portability/clef/phase2a/analyze.py \
-  --results-dir /content/clef-phase2a-local-v0.1 \
-  --output /content/clef-phase2a-local-v0.1-analysis.json
-
+```python
+!python experiments/provider_portability/clef/phase2a/analyze.py --results-dir /content/clef-phase2a-local-v0.1 --output /content/clef-phase2a-local-v0.1-analysis.json
 !python -m json.tool /content/clef-phase2a-local-v0.1-analysis.json > /dev/null
 ```
 
@@ -162,10 +148,8 @@ hosted bundle frozen by PR #131.
 Whether the model run succeeds or fails, archive the directory **before**
 changing code, packages, GPU, or retrying.
 
-```bash
-!tar -C /content -czf /content/clef-phase2a-local-v0.1-evidence.tgz \
-  clef-phase2a-local-v0.1
-
+```python
+!tar -C /content -czf /content/clef-phase2a-local-v0.1-evidence.tgz clef-phase2a-local-v0.1
 !sha256sum /content/clef-phase2a-local-v0.1-evidence.tgz
 ```
 
