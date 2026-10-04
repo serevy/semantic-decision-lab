@@ -606,14 +606,24 @@ def main() -> int:
                 device,
             )
             with torch.inference_mode():
-                hidden_states, output_embedding_weight = _run_backbone(model, batch)
+                inference_hidden_states, output_embedding_weight = _run_backbone(
+                    model, batch
+                )
                 logits = model.head(
-                    hidden_states,
+                    inference_hidden_states,
                     batch["input_ids"],
                     batch["attention_mask"],
                     batch["records"],
                     output_embedding_weight,
                 )[0]
+
+            # Phase 2B reuses backbone states for trace-only LayerNorm/mean
+            # operations after the released inference path has completed.
+            # Clone the inference tensor under no_grad so subsequent tracing
+            # receives a normal, graph-free tensor without changing the actual
+            # model/head inference path used for the typed response.
+            with torch.no_grad():
+                hidden_states = inference_hidden_states.clone()
 
             response = _response_from_logits(module, request, encoded, logits)
             evidence.update(
@@ -642,16 +652,17 @@ def main() -> int:
                 raise
 
             try:
-                trace, tensors = _trace_components(
-                    module,
-                    model,
-                    processor,
-                    request,
-                    encoded,
-                    hidden_states,
-                    batch["input_ids"],
-                    output_embedding_weight,
-                )
+                with torch.no_grad():
+                    trace, tensors = _trace_components(
+                        module,
+                        model,
+                        processor,
+                        request,
+                        encoded,
+                        hidden_states,
+                        batch["input_ids"],
+                        output_embedding_weight,
+                    )
             except Exception as exc:
                 evidence.update(
                     {
