@@ -643,13 +643,13 @@ def main() -> int:
 
             try:
                 trace, tensors = _trace_components(
-                module,
-                model,
-                processor,
-                request,
-                encoded,
-                hidden_states,
-                batch["input_ids"],
+                    module,
+                    model,
+                    processor,
+                    request,
+                    encoded,
+                    hidden_states,
+                    batch["input_ids"],
                     output_embedding_weight,
                 )
             except Exception as exc:
