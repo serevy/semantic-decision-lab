@@ -6,7 +6,10 @@ import math
 from pathlib import Path
 from typing import Any, Mapping
 
-from probes import load_matrix
+try:
+    from .probes import load_matrix
+except ImportError:
+    from probes import load_matrix
 
 
 def _distribution(answer: Mapping[str, Any]) -> dict[str, float]:

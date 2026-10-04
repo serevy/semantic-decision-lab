@@ -7,7 +7,10 @@ import sys
 import tempfile
 from pathlib import Path
 
-from probes import load_matrix, load_source_fixture, materialize_fixture, validate_matrix
+try:
+    from .probes import load_matrix, load_source_fixture, materialize_fixture, validate_matrix
+except ImportError:
+    from probes import load_matrix, load_source_fixture, materialize_fixture, validate_matrix
 
 
 ROOT = Path(__file__).resolve().parent

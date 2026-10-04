@@ -5,8 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from analyze import compare_answer
-from probes import build_request, load_matrix, load_source_fixture, validate_matrix
+from phase1a.analyze import compare_answer
+from phase1a.probes import build_request, load_matrix, load_source_fixture, validate_matrix
 from run_workers_ai_smoke import canonical_json, wire_json
 
 

@@ -3,8 +3,13 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+CLEF_ROOT = Path(__file__).resolve().parent.parent
+if str(CLEF_ROOT) not in sys.path:
+    sys.path.insert(0, str(CLEF_ROOT))
 
 from contract import validate_request
 from run_workers_ai_smoke import canonical_json, wire_json
