@@ -1,0 +1,87 @@
+name: Clef-Flash Phase 1C hosted v0.1
+
+on:
+  push:
+    branches:
+      - "experiment/clef-phase1c-hosted-v0-1"
+    paths:
+      - ".github/workflows/clef-phase1c-hosted-v0.1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phase1c:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_AUTH_TOKEN: ${{ secrets.CLOUDFLARE_AUTH_TOKEN }}
+      RESULT_DIR: evidence/clef-phase1c-hosted-v0.1
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Verify live-run credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID}" || -z "${CLOUDFLARE_AUTH_TOKEN}" ]]; then
+            echo "::error::Cloudflare Workers AI repository secrets are not configured."
+            exit 2
+          fi
+
+      - name: Validate frozen Phase 1C schedule before external calls
+        working-directory: experiments/provider_portability/clef
+        run: python -m unittest -v phase1c/test_phase1c.py
+
+      - name: Run frozen 54-call repeatability control
+        shell: bash
+        run: |
+          set -euo pipefail
+          python experiments/provider_portability/clef/phase1c/run_workers_ai.py \
+            --output-dir "${RESULT_DIR}"
+
+      - name: Analyze within-vs-between repeatability
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python experiments/provider_portability/clef/phase1c/analyze.py \
+            --results-dir "${RESULT_DIR}" \
+            --output "${RESULT_DIR}/analysis.v0.1.json"
+          python -m json.tool "${RESULT_DIR}/analysis.v0.1.json" > /dev/null
+
+      - name: Write run summary
+        if: success()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RESULT_DIR"])
+          analysis = json.loads((root / "analysis.v0.1.json").read_text(encoding="utf-8"))
+          summary = analysis["repeatability_summary"]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("## Clef-Flash Phase 1C hosted v0.1\n\n")
+              out.write(f"Conditions: {summary['total_conditions']}\n\n")
+              out.write(f"Byte-identical repeat conditions: {summary['byte_identical_repeat_conditions']}\n")
+          PY
+
+      - name: Upload Phase 1C Evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: clef-phase1c-hosted-v0.1-evidence
+          path: evidence/clef-phase1c-hosted-v0.1
+          if-no-files-found: warn
+          retention-days: 30
