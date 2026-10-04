@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1",
+  "purpose": "Clef-Flash Phase 1B replication fixture: storefront rendering outage; no semantic gold label.",
+  "request": {
+    "model": "clef-flash",
+    "state": {
+      "service": "storefront",
+      "observation": "Product detail pages render blank for all users while checkout and payment processing remain healthy.",
+      "customer_impact": "Customers cannot view product details before deciding what to buy."
+    },
+    "questions": {
+      "outage": {
+        "type": "noul",
+        "instructions": "Is a customer-facing service currently unavailable?"
+      },
+      "owner": {
+        "type": "choice",
+        "instructions": "Which team should receive this incident first?",
+        "criteria": {
+          "payments": "Payment processing and checkout failures",
+          "storefront": "Catalog, product page, or storefront rendering failures",
+          "support": "Customer communication without a product outage"
+        }
+      },
+      "severity": {
+        "type": "score",
+        "instructions": "How severe is the customer impact?",
+        "criteria": [
+          "No impact",
+          "Minor",
+          "Major",
+          "Critical"
+        ]
+      }
+    }
+  },
+  "contract_expectations": {
+    "answer_ids": [
+      "outage",
+      "owner",
+      "severity"
+    ],
+    "semantic_gold": null,
+    "probability_tolerance_after_rounding": 0.002
+  }
+}
