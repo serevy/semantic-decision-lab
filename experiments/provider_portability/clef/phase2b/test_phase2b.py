@@ -1,7 +1,11 @@
 import unittest
+from unittest.mock import patch
 
 from phase2b.probes import load_manifest, validate_manifest
-from phase2b.run_local import clone_inference_hidden_states_for_trace
+from phase2b.run_local import (
+    clone_inference_hidden_states_for_trace,
+    run_trace_components_from_inference_hidden_states,
+)
 
 
 class Phase2BFreezeTest(unittest.TestCase):
@@ -105,6 +109,55 @@ class Phase2BFreezeTest(unittest.TestCase):
         with torch.no_grad():
             output = layer_norm(cloned)
         self.assertEqual(tuple(output.shape), (2, 4))
+
+    def test_runner_trace_handoff_uses_normal_tensor_under_no_grad(self):
+        try:
+            import torch
+        except ImportError:
+            self.skipTest("torch unavailable")
+
+        with torch.inference_mode():
+            source = torch.arange(8, dtype=torch.float32).reshape(1, 2, 4)
+
+        observed = {}
+
+        def fake_trace(
+            module,
+            model,
+            processor,
+            request,
+            encoded,
+            hidden_states,
+            input_ids,
+            output_embedding_weight,
+        ):
+            observed["is_inference"] = torch.is_inference(hidden_states)
+            observed["grad_enabled"] = torch.is_grad_enabled()
+            return {"ok": True}, {"hidden_states": hidden_states}
+
+        with patch(
+            "phase2b.run_local._trace_components",
+            side_effect=fake_trace,
+        ):
+            trace, tensors, hidden_states = (
+                run_trace_components_from_inference_hidden_states(
+                    torch,
+                    module=object(),
+                    model=object(),
+                    processor=object(),
+                    request={},
+                    encoded=object(),
+                    inference_hidden_states=source,
+                    input_ids=object(),
+                    output_embedding_weight=object(),
+                )
+            )
+
+        self.assertEqual(trace, {"ok": True})
+        self.assertFalse(observed["is_inference"])
+        self.assertFalse(observed["grad_enabled"])
+        self.assertFalse(torch.is_inference(hidden_states))
+        self.assertIs(tensors["hidden_states"], hidden_states)
 
     def test_head_only_intervention_is_narrow(self):
         control = self.manifest["head_only_counterfactual"]
