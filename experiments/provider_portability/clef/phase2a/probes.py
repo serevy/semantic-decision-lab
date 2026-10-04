@@ -156,6 +156,7 @@ def validate_manifest(
 
 
 def materialize_case(case: dict[str, Any]) -> dict[str, Any]:
-    request = materialize_phase1c_case(case)
+    fixture = materialize_phase1c_case(case)
+    request = fixture["request"]
     validate_request(request)
     return request
