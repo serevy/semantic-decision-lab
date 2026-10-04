@@ -18,6 +18,7 @@ from evidence_io import reserve_evidence, update_evidence
 from phase2a.run_local import REQUIRED_SNAPSHOT_FILES, _runtime_condition
 from phase2b.probes import (
     DEFAULT_MANIFEST,
+    git_blob_sha,
     load_manifest,
     materialize_case,
     resolve_pinned_path,
@@ -400,6 +401,15 @@ def main() -> int:
         "head_only_counterfactuals": manifest["execution"][
             "head_only_counterfactuals"
         ],
+        "source_blob_shas": {
+            "manifest": git_blob_sha(manifest_path),
+            "phase2b/run_local.py": git_blob_sha(ROOT / "run_local.py"),
+            "phase2b/probes.py": git_blob_sha(ROOT / "probes.py"),
+            "phase2b/analyze.py": git_blob_sha(ROOT / "analyze.py"),
+            "phase2a/run_local.py": git_blob_sha(
+                CLEF_ROOT / "phase2a" / "run_local.py"
+            ),
+        },
     }
     try:
         reserve_evidence(run_path, run_evidence)
@@ -615,13 +625,24 @@ def main() -> int:
                 }
             )
             update_evidence(path, evidence)
-            validate_response(
-                response,
-                request,
-                probability_tolerance=probability_tolerance,
-            )
+            try:
+                validate_response(
+                    response,
+                    request,
+                    probability_tolerance=probability_tolerance,
+                )
+            except Exception as exc:
+                evidence.update(
+                    {
+                        "stage": "actual-response-contract-error",
+                        "error": f"{type(exc).__name__}: {exc}",
+                    }
+                )
+                update_evidence(path, evidence)
+                raise
 
-            trace, tensors = _trace_components(
+            try:
+                trace, tensors = _trace_components(
                 module,
                 model,
                 processor,
@@ -629,9 +650,20 @@ def main() -> int:
                 encoded,
                 hidden_states,
                 batch["input_ids"],
-                output_embedding_weight,
-            )
+                    output_embedding_weight,
+                )
+            except Exception as exc:
+                evidence.update(
+                    {
+                        "stage": "trace-error",
+                        "error": f"{type(exc).__name__}: {exc}",
+                    }
+                )
+                update_evidence(path, evidence)
+                raise
             evidence["trace"] = trace
+            evidence["stage"] = "trace-recorded"
+            update_evidence(path, evidence)
 
             if variant_id == "packed-canonical":
                 canonical_cache[fixture_id] = {
@@ -651,12 +683,24 @@ def main() -> int:
                         f"{fixture_id}: canonical trace must run before variants"
                     )
                 canonical = canonical_cache[fixture_id]
-                evidence["deltas_vs_canonical"] = _trace_delta(
-                    trace,
-                    tensors,
-                    canonical["trace"],
-                    canonical["tensors"],
-                )
+                try:
+                    evidence["deltas_vs_canonical"] = _trace_delta(
+                        trace,
+                        tensors,
+                        canonical["trace"],
+                        canonical["tensors"],
+                    )
+                except Exception as exc:
+                    evidence.update(
+                        {
+                            "stage": "trace-delta-error",
+                            "error": f"{type(exc).__name__}: {exc}",
+                        }
+                    )
+                    update_evidence(path, evidence)
+                    raise
+                evidence["stage"] = "trace-and-delta-recorded"
+                update_evidence(path, evidence)
 
                 target_order = list(request["questions"])
                 head_only_record = _build_head_only_record(
@@ -686,38 +730,61 @@ def main() -> int:
                     "runtime": runtime,
                 }
                 reserve_evidence(head_only_path, head_only_evidence)
-                with torch.inference_mode():
-                    counter_logits = model.head(
-                        canonical["hidden_states"],
-                        canonical["batch"]["input_ids"],
-                        canonical["batch"]["attention_mask"],
-                        [head_only_record],
-                        canonical["output_embedding_weight"],
-                    )[0]
-                counter_response = _response_from_logits(
-                    module,
-                    request,
-                    head_only_record,
-                    counter_logits,
-                )
-                validate_response(
-                    counter_response,
-                    request,
-                    probability_tolerance=probability_tolerance,
-                )
-                head_only_evidence.update(
-                    {
-                        "stage": "validated",
-                        "raw_response": counter_response,
-                        "response_sha256": _response_sha256(counter_response),
-                        "logits": _logit_record(
-                            head_only_record,
-                            counter_logits,
-                        ),
-                        "completed_at_utc": datetime.now(timezone.utc).isoformat(),
-                    }
-                )
-                update_evidence(head_only_path, head_only_evidence)
+                try:
+                    with torch.inference_mode():
+                        counter_logits = model.head(
+                            canonical["hidden_states"],
+                            canonical["batch"]["input_ids"],
+                            canonical["batch"]["attention_mask"],
+                            [head_only_record],
+                            canonical["output_embedding_weight"],
+                        )[0]
+                    counter_response = _response_from_logits(
+                        module,
+                        request,
+                        head_only_record,
+                        counter_logits,
+                    )
+                    head_only_evidence.update(
+                        {
+                            "stage": "head-only-response-received",
+                            "raw_response": counter_response,
+                            "response_sha256": _response_sha256(counter_response),
+                            "logits": _logit_record(
+                                head_only_record,
+                                counter_logits,
+                            ),
+                        }
+                    )
+                    update_evidence(head_only_path, head_only_evidence)
+                    validate_response(
+                        counter_response,
+                        request,
+                        probability_tolerance=probability_tolerance,
+                    )
+                    head_only_evidence.update(
+                        {
+                            "stage": "validated",
+                            "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+                        }
+                    )
+                    update_evidence(head_only_path, head_only_evidence)
+                except Exception as exc:
+                    head_only_evidence.update(
+                        {
+                            "stage": "head-only-counterfactual-error",
+                            "error": f"{type(exc).__name__}: {exc}",
+                        }
+                    )
+                    update_evidence(head_only_path, head_only_evidence)
+                    evidence.update(
+                        {
+                            "stage": "head-only-counterfactual-error-after-actual-trace",
+                            "error": f"{type(exc).__name__}: {exc}",
+                        }
+                    )
+                    update_evidence(path, evidence)
+                    raise
                 completed_head_only += 1
 
             evidence.update(
