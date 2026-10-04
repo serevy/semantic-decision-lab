@@ -8,6 +8,9 @@ from contract import unwrap_cloudflare_rest, validate_request, validate_response
 ROOT = Path(__file__).resolve().parent
 FIXTURE = json.loads((ROOT / "systemone-contract.v0.1.json").read_text(encoding="utf-8"))
 REQUEST = FIXTURE["request"]
+FIRST_HOSTED_EVIDENCE = json.loads(
+    (ROOT / "results" / "clef-flash-workers-ai-v0.1-first.json").read_text(encoding="utf-8")
+)
 
 
 def valid_response():
@@ -53,6 +56,15 @@ class ClefContractTest(unittest.TestCase):
 
     def test_direct_systemone_response_is_valid(self):
         validate_response(valid_response(), REQUEST)
+
+    def test_first_hosted_clef_flash_response_is_contract_valid(self):
+        validate_response(
+            FIRST_HOSTED_EVIDENCE["raw_response"],
+            FIRST_HOSTED_EVIDENCE["request"],
+            probability_tolerance=float(
+                FIXTURE["contract_expectations"]["probability_tolerance_after_rounding"]
+            ),
+        )
 
     def test_cloudflare_rest_envelope_is_unwrapped(self):
         response = valid_response()
