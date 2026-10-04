@@ -98,29 +98,27 @@ kept distinct.
 
 ## Raw Evidence bundle
 
-The complete compact bundle is stored as four ordered Base64 text parts:
+`clef-phase1c-hosted-v0.1.bundle.json.gz.b64` is a gzip-compressed,
+Base64-encoded compact Evidence bundle containing:
 
-- `clef-phase1c-hosted-v0.1.bundle.json.gz.b64.part-00`
-- `clef-phase1c-hosted-v0.1.bundle.json.gz.b64.part-01`
-- `clef-phase1c-hosted-v0.1.bundle.json.gz.b64.part-02`
-- `clef-phase1c-hosted-v0.1.bundle.json.gz.b64.part-03`
+- all 54 exact provider response bodies as `raw_response_base64`;
+- request and wire hashes plus repeat identity;
+- run and artifact identity;
+- the full Phase 1C analysis object;
+- the 18 / 18 Phase 1B → Phase 1C raw-response SHA-256 comparisons.
 
-Concatenating them reproduces the original Base64 file containing all 54 exact
-provider response bodies, request/wire hashes, run identity, and analysis.
-
-Integrity of the concatenated bundle:
+Integrity:
 
 - uncompressed compact JSON SHA-256:
-  `b8565405e5611035fae32ae7fd8c4839392e4d4a4ed95bae30053081d7de0120`
+  `1f9941e51390940adf67be9bdd50c79d1f6914b2a89bc0aa7d962535591e0133`
 - decoded gzip SHA-256:
-  `0eba089ef62afd6396be66f9d1396a6a48d16823c98d6df38a399533ac833cdb`
-- concatenated Base64 text SHA-256:
-  `616f895c4bef1d2e93a31daecbf15ad4a4977d76d3f3f8b4febdfe5e5fc4820c`
+  `07bd48fbee5776f32ec29493139a77a17f4089d6a3690293098fd283c1d6c12c`
+- Base64 text SHA-256:
+  `30179814c015326ac7cab3703f24fea8e4d3ea9b062fdc73a7c9e6bbaa7a8000`
 
 Example reconstruction:
 
 ```bash
-cat clef-phase1c-hosted-v0.1.bundle.json.gz.b64.part-* |
-  base64 -d |
+base64 -d clef-phase1c-hosted-v0.1.bundle.json.gz.b64 |
   gzip -d > clef-phase1c-hosted-v0.1.bundle.json
 ```
