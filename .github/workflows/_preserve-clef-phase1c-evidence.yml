@@ -39,6 +39,17 @@ jobs:
           mkdir -p /tmp/clef-phase1c
           unzip -q /tmp/clef-phase1c.zip -d /tmp/clef-phase1c
 
+          curl --fail --location --silent --show-error \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/11304537926/zip" \
+            -o /tmp/clef-phase1b.zip
+          echo "3cef7569014381bd33574657e892b5f1034f29281fd6c917fe0ce6b2f9752629  /tmp/clef-phase1b.zip" | sha256sum -c -
+          rm -rf /tmp/clef-phase1b
+          mkdir -p /tmp/clef-phase1b
+          unzip -q /tmp/clef-phase1b.zip -d /tmp/clef-phase1b
+
       - name: Validate and build durable bundle
         run: |
           python - <<'PY'
@@ -114,37 +125,33 @@ jobs:
               for v in conditions.values()
           )
 
-          phase1b_b64 = (
-              results / "clef-phase1b-hosted-v0.1.bundle.json.gz.b64"
-          ).read_text(encoding="ascii")
-          phase1b = json.loads(
-              gzip.decompress(base64.b64decode(phase1b_b64)).decode("utf-8")
-          )
-
-          phase1b_records = phase1b.get("records")
-          if not isinstance(phase1b_records, list):
-              found = []
-              def walk(x):
-                  if isinstance(x, dict):
-                      if {"fixture", "variant", "raw_response_sha256"} <= set(x):
-                          found.append(x)
-                      for v in x.values():
-                          walk(v)
-                  elif isinstance(x, list):
-                      for v in x:
-                          walk(v)
-              walk(phase1b)
-              phase1b_records = found
-
+          phase1b_root = Path("/tmp/clef-phase1b")
+          known_fixtures = set(analysis["fixtures"])
+          known_variants = {variant for _, variant in conditions}
           phase1b_map = {}
-          for r in phase1b_records:
-              if not isinstance(r, dict):
+
+          for p in sorted(phase1b_root.rglob("*.json")):
+              try:
+                  d = json.loads(p.read_text(encoding="utf-8"))
+              except (UnicodeDecodeError, json.JSONDecodeError):
                   continue
-              fixture = r.get("fixture")
-              variant = r.get("variant")
-              sha = r.get("raw_response_sha256")
-              if fixture and variant and sha:
-                  phase1b_map[(fixture, variant)] = sha
+              if not isinstance(d, dict) or "raw_response_sha256" not in d:
+                  continue
+
+              rel_parts = p.relative_to(phase1b_root).parts
+              fixture = d.get("fixture")
+              variant = d.get("variant")
+
+              if fixture not in known_fixtures:
+                  fixture = next((part for part in rel_parts if part in known_fixtures), None)
+              if variant not in known_variants:
+                  candidates = list(rel_parts) + [p.stem]
+                  variant = next((part for part in candidates if part in known_variants), None)
+
+              if fixture and variant:
+                  phase1b_map[(fixture, variant)] = d["raw_response_sha256"]
+
+          assert len(phase1b_map) == 18
 
           phase1c_map = {
               (r["fixture"], r["variant"]): r["raw_response_sha256"]
