@@ -1,0 +1,126 @@
+{
+  "schema_version": "0.1",
+  "protocol_version": "0.2",
+  "experiment": "clef-flash-phase2b-question-order-source-localization",
+  "freeze_generation": "v0.2-after-preserved-v0.1-runner-failure",
+  "frozen_before_phase2b_v0_2_retry_output": true,
+  "successful_phase2b_trace_outputs_observed_before_freeze": 0,
+  "prior_failed_attempts": [
+    {
+      "run_identity": "clef-phase2b-local-v0.1",
+      "freeze_commit": "08c16640320805aeaad7942079dfbe87ea8f8d7a",
+      "outcome": "failed-after-first-actual-response-before-trace",
+      "canary_stage": "validated",
+      "first_actual_fixture": "payments-partial",
+      "first_actual_variant": "packed-canonical",
+      "first_actual_response_preserved": true,
+      "first_actual_response_sha256": "ba2db69107ac21385caf1fc04a6057d1f0676fc13cf28689475788846006f9a5",
+      "first_actual_stage": "trace-error",
+      "failure_class": "RuntimeError",
+      "failure_kind": "runner-inference-tensor-trace-context",
+      "successful_trace_outputs": 0,
+      "head_only_counterfactuals_completed": 0
+    }
+  ],
+  "source_commits": {
+    "phase2a_evidence_merge": "a0ea2cc1f617482596d96ec481468b767f6b970c",
+    "phase2b_v0_1_freeze_merge": "08c16640320805aeaad7942079dfbe87ea8f8d7a"
+  },
+  "provider": {
+    "kind": "local-inference",
+    "entrypoint": "joint_schema_model.py:systemone"
+  },
+  "model": {
+    "hf_repo": "Cloudflare/clef-flash",
+    "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+    "discovery_prefix": "17f0b0a",
+    "max_length": 16384
+  },
+  "runtime_contract": {
+    "device": "cuda",
+    "requested_dtype": "bfloat16",
+    "torch_version_prefix": "2.11",
+    "transformers_version": "5.10.2",
+    "no_quantization": true,
+    "no_cpu_offload": true,
+    "hardware_policy": "Record exact CUDA GPU. H100/H200 is the upstream-matched condition; other BF16-capable CUDA GPUs remain explicit distinct runtime conditions."
+  },
+  "frozen_pins": {
+    "phase2a_manifest_path": "../phase2a/local-parity-manifest.v0.1.json",
+    "phase2a_manifest_blob_sha": "4f0bbbdd32cee8c1bd6959c7d9cf63fe993b9a5a",
+    "phase2a_probes_path": "../phase2a/probes.py",
+    "phase2a_probes_blob_sha": "ae6f08eac5e6684a7a0604a33e4685b49299f693",
+    "phase2a_runner_path": "../phase2a/run_local.py",
+    "phase2a_runner_blob_sha": "485a9ff3d1407f0acfcc55970da2dbae9c51caf9",
+    "local_smoke_runner_path": "../run_local_clef_flash_smoke.py",
+    "local_smoke_runner_blob_sha": "f914edfe921b328f76263ca0ff37d145320520c1",
+    "contract_path": "../contract.py",
+    "contract_blob_sha": "9a261a5bd11727c224e420aad7ba624ff789e83e",
+    "canary_fixture_path": "../systemone-contract.v0.1.json",
+    "canary_fixture_blob_sha": "b0e91fa77372e224aa88a55e56707e07ee0495d3",
+    "phase2a_summary_path": "../results/clef-phase2a-local-v0.1-summary.md",
+    "phase2a_summary_blob_sha": "c78051c1554cbc5a4bde686200b76daaec06e355",
+    "phase2a_analysis_path": "../results/clef-phase2a-local-v0.1-analysis.json",
+    "phase2a_analysis_blob_sha": "768ba7f37e577bcc03564e71426199c0b375e091",
+    "phase2a_evidence_archive_path": "../results/clef-phase2a-local-v0.1-evidence.tgz",
+    "phase2a_evidence_archive_blob_sha": "c3c5f757d582c1e61cfd54ca7fe83b1130726118",
+    "phase2b_v0_1_manifest_path": "source-localization-manifest.v0.1.json",
+    "phase2b_v0_1_manifest_blob_sha": "f56bbd721c96a45560c9ea1b7b38695082677bf5",
+    "phase2b_v0_1_failure_summary_path": "../results/clef-phase2b-local-v0.1-failure-summary.md",
+    "phase2b_v0_1_failure_summary_blob_sha": "411b63b5cbb421d14fa4bbbb06dd773703c2f761",
+    "phase2b_v0_1_failure_run_path": "../results/clef-phase2b-local-v0.1-failure-run.json",
+    "phase2b_v0_1_failure_run_blob_sha": "134472faf0930092b1ba7d83e26fe83b71aacb9d",
+    "phase2b_v0_1_failure_canary_path": "../results/clef-phase2b-local-v0.1-failure-canary.json",
+    "phase2b_v0_1_failure_canary_blob_sha": "7a28a0301d5c1a1e2eb3551fe05c9be93c14f9d3",
+    "phase2b_v0_1_failure_first_actual_path": "../results/clef-phase2b-local-v0.1-failure-payments-partial-packed-canonical.json",
+    "phase2b_v0_1_failure_first_actual_blob_sha": "1b172612a02889b34d9602a6aea42e2e0e751fd3"
+  },
+  "execution": {
+    "run_identity": "clef-phase2b-local-v0.2",
+    "canary_calls": 1,
+    "traced_actual_conditions": 18,
+    "actual_backbone_forwards": 18,
+    "total_backbone_forwards_including_canary": 19,
+    "head_only_counterfactuals": 15,
+    "one_observation_per_condition": true,
+    "repeatability_basis": "Phase 2A retained Evidence: 18/18 conditions byte-identical across three repeats.",
+    "reuse_single_loaded_model": true,
+    "no_retries_inside_run": true,
+    "semantic_threshold": null,
+    "stage_delta_threshold": null
+  },
+  "trace_stages": [
+    "encoded input and absolute semantic spans",
+    "state-span backbone hidden representation",
+    "final-token/global backbone hidden vector",
+    "aligned question mean-span backbone vectors",
+    "aligned option mean-span backbone context vectors",
+    "aligned lexical option vectors from output embeddings",
+    "released-head logits/probabilities",
+    "fixed-backbone head-only tuple-order counterfactual logits/probabilities"
+  ],
+  "head_only_counterfactual": {
+    "backbone_hidden_states": "canonical fixed",
+    "input_ids": "canonical fixed",
+    "attention_mask": "canonical fixed",
+    "question_spans": "canonical semantic spans retained",
+    "only_intervention": "reorder EncodedRecord.questions tuple to the target question order",
+    "alignment": "compare outputs by question_id, not tuple position"
+  },
+  "trace_runtime_fix": {
+    "actual_inference_context": "torch.inference_mode",
+    "trace_bridge": "clone backbone hidden states under torch.no_grad after released inference output",
+    "trace_context": "torch.no_grad",
+    "reason": "PyTorch inference tensors cannot be passed to parameterized trace-only modules under ordinary autograd tracking."
+  },
+  "invariants": [
+    "Phase 2B v0.2 inherits exactly the 3 fixtures and 6 packed question-order conditions frozen by Phase 1C and reused by Phase 2A.",
+    "Phase 2B v0.2 takes one actual observation per condition because Phase 2A already observed exact 3-repeat local repeatability for all 18 conditions.",
+    "The released model weights, joint head, tokenizer/processor, dtype, max length, and actual typed-response inference path are unchanged from Phase 2B v0.1.",
+    "The v0.1 failed run is preserved and its run identity is never reused.",
+    "The fixed-backbone counterfactual never mutates weights, hidden values, canonical input_ids, or semantic spans; it changes only the order of EncodedQuestion objects supplied to the released head.",
+    "No semantic, numerical-noise, or causality threshold is selected before v0.2 output.",
+    "No Phase 2A or Phase 2B v0.1 Evidence file is modified.",
+    "A non-H100/H200 run remains a distinct runtime condition."
+  ]
+}
