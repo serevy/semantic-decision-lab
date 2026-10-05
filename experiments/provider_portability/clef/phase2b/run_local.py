@@ -31,6 +31,47 @@ from run_local_clef_flash_smoke import (
 )
 
 
+def clone_inference_hidden_states_for_trace(torch: Any, hidden_states: Any) -> Any:
+    """Convert inference-mode backbone output into a normal graph-free trace tensor."""
+    with torch.no_grad():
+        cloned = hidden_states.clone()
+    if hasattr(torch, "is_inference") and torch.is_inference(cloned):
+        raise RuntimeError("Phase 2B trace clone unexpectedly remained an inference tensor")
+    return cloned
+
+
+def run_trace_components_from_inference_hidden_states(
+    torch: Any,
+    *,
+    module: Any,
+    model: Any,
+    processor: Any,
+    request: dict[str, Any],
+    encoded: Any,
+    inference_hidden_states: Any,
+    input_ids: Any,
+    output_embedding_weight: Any,
+) -> tuple[dict[str, Any], dict[str, Any], Any]:
+    """Bridge released inference output into the trace-only no-grad path."""
+    hidden_states = clone_inference_hidden_states_for_trace(
+        torch, inference_hidden_states
+    )
+    with torch.no_grad():
+        if torch.is_grad_enabled():
+            raise RuntimeError("Phase 2B trace unexpectedly has grad enabled")
+        trace, tensors = _trace_components(
+            module,
+            model,
+            processor,
+            request,
+            encoded,
+            hidden_states,
+            input_ids,
+            output_embedding_weight,
+        )
+    return trace, tensors, hidden_states
+
+
 def _json_sha256(value: Any) -> str:
     raw = json.dumps(
         value,
@@ -343,7 +384,9 @@ def _build_head_only_record(module: Any, canonical_encoded: Any, target_order: l
 def dry_run(manifest: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
     return {
         "schema_version": "0.1",
+        "protocol_version": plan["protocol_version"],
         "experiment": manifest["experiment"],
+        "run_identity": manifest["execution"].get("run_identity"),
         "mode": "dry-run-no-model-output",
         "hf_repo": manifest["model"]["hf_repo"],
         "hf_revision": manifest["model"]["hf_revision"],
@@ -388,10 +431,18 @@ def main() -> int:
         parser.error("--output-dir is required unless --dry-run is used")
 
     output_dir = Path(args.output_dir)
+    expected_run_identity = manifest["execution"].get("run_identity")
+    if expected_run_identity and output_dir.name != expected_run_identity:
+        raise SystemExit(
+            "Phase 2B run identity mismatch: "
+            f"expected={expected_run_identity} actual={output_dir.name}"
+        )
     run_path = output_dir / "run.json"
     run_evidence: dict[str, Any] = {
         "schema_version": "0.1",
+        "protocol_version": plan["protocol_version"],
         "experiment": manifest["experiment"],
+        "run_identity": expected_run_identity,
         "stage": "reserved-before-model-preparation",
         "started_at_utc": datetime.now(timezone.utc).isoformat(),
         "provider": manifest["provider"],
@@ -511,7 +562,9 @@ def main() -> int:
         canary_path = output_dir / "canary.json"
         canary_evidence = {
             "schema_version": "0.1",
+            "protocol_version": plan["protocol_version"],
             "experiment": manifest["experiment"],
+            "run_identity": expected_run_identity,
             "stage": "reserved-before-canary-inference",
             "request": canary_request,
             "encoding_preflight": canary_encoding,
@@ -581,7 +634,9 @@ def main() -> int:
             path = output_dir / fixture_id / "actual" / f"{variant_id}.json"
             evidence = {
                 "schema_version": "0.1",
+                "protocol_version": plan["protocol_version"],
                 "experiment": manifest["experiment"],
+                "run_identity": expected_run_identity,
                 "stage": "reserved-before-traced-inference",
                 "fixture_id": fixture_id,
                 "variant_id": variant_id,
@@ -606,9 +661,11 @@ def main() -> int:
                 device,
             )
             with torch.inference_mode():
-                hidden_states, output_embedding_weight = _run_backbone(model, batch)
+                inference_hidden_states, output_embedding_weight = _run_backbone(
+                    model, batch
+                )
                 logits = model.head(
-                    hidden_states,
+                    inference_hidden_states,
                     batch["input_ids"],
                     batch["attention_mask"],
                     batch["records"],
@@ -642,15 +699,18 @@ def main() -> int:
                 raise
 
             try:
-                trace, tensors = _trace_components(
-                    module,
-                    model,
-                    processor,
-                    request,
-                    encoded,
-                    hidden_states,
-                    batch["input_ids"],
-                    output_embedding_weight,
+                trace, tensors, hidden_states = (
+                    run_trace_components_from_inference_hidden_states(
+                        torch,
+                        module=module,
+                        model=model,
+                        processor=processor,
+                        request=request,
+                        encoded=encoded,
+                        inference_hidden_states=inference_hidden_states,
+                        input_ids=batch["input_ids"],
+                        output_embedding_weight=output_embedding_weight,
+                    )
                 )
             except Exception as exc:
                 evidence.update(
@@ -716,7 +776,9 @@ def main() -> int:
                 )
                 head_only_evidence = {
                     "schema_version": "0.1",
+                    "protocol_version": plan["protocol_version"],
                     "experiment": manifest["experiment"],
+                    "run_identity": expected_run_identity,
                     "stage": "reserved-before-head-only-counterfactual",
                     "fixture_id": fixture_id,
                     "variant_id": variant_id,

@@ -1,0 +1,161 @@
+{
+  "schema_version": "0.1",
+  "experiment": "clef-flash-phase2b-question-order-source-localization",
+  "stage": "trace-error",
+  "fixture_id": "payments-partial",
+  "variant_id": "packed-canonical",
+  "source_repeat_index": 1,
+  "request": {
+    "model": "clef-flash",
+    "state": {
+      "service": "checkout",
+      "observation": "About 20% of card payment attempts time out; retries usually succeed within one minute.",
+      "customer_impact": "Some customers need to retry payment, but most orders can still complete."
+    },
+    "questions": {
+      "outage": {
+        "type": "noul",
+        "instructions": "Is a customer-facing service currently unavailable?"
+      },
+      "owner": {
+        "type": "choice",
+        "instructions": "Which team should receive this incident first?",
+        "criteria": {
+          "payments": "Payment processing and checkout failures",
+          "storefront": "Catalog, product page, or storefront rendering failures",
+          "support": "Customer communication without a product outage"
+        }
+      },
+      "severity": {
+        "type": "score",
+        "instructions": "How severe is the customer impact?",
+        "criteria": [
+          "No impact",
+          "Minor",
+          "Major",
+          "Critical"
+        ]
+      }
+    }
+  },
+  "encoding_preflight": {
+    "max_length": 16384,
+    "state_tokens_original": 44,
+    "state_tokens_retained": 44,
+    "state_truncated": false,
+    "encoded_input_tokens": 386,
+    "encoded_input_ids_sha256": "ad26e859bd4bd4c7914e67b1074ebc515d6982b7558090560ff1710e9693c688"
+  },
+  "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "runtime": {
+    "python": "3.13.15",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.10.2",
+    "cuda": "13.0",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "bf16_supported": true,
+    "requested_device": "cuda",
+    "requested_dtype": "bfloat16",
+    "upstream_hardware_match_h100_h200": false,
+    "hardware_condition": "explicit-non-upstream-hardware:NVIDIA A100-SXM4-80GB",
+    "loaded_parameter_devices": [
+      "cuda:0"
+    ],
+    "loaded_model_first_parameter_dtype": "torch.bfloat16"
+  },
+  "raw_response": {
+    "model": "clef-flash",
+    "answers": {
+      "outage": {
+        "type": "noul",
+        "noul": 0.0241
+      },
+      "owner": {
+        "type": "choice",
+        "choice": "payments",
+        "confidence": 0.9774,
+        "probabilities": {
+          "payments": 0.9774,
+          "storefront": 0.0094,
+          "support": 0.0132
+        }
+      },
+      "severity": {
+        "type": "score",
+        "score": 1.0074,
+        "confidence": 0.9378,
+        "legend": {
+          "0": "No impact",
+          "1": "Minor",
+          "2": "Major",
+          "3": "Critical"
+        },
+        "probabilities": {
+          "0": 0.0317,
+          "1": 0.9378,
+          "2": 0.0218,
+          "3": 0.0087
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 386,
+      "output_tokens": 0
+    }
+  },
+  "response_sha256": "ba2db69107ac21385caf1fc04a6057d1f0676fc13cf28689475788846006f9a5",
+  "logits": {
+    "outage": {
+      "option_ids": [
+        "true",
+        "false"
+      ],
+      "logits": [
+        -3.046875,
+        0.65625
+      ],
+      "probabilities": {
+        "true": 0.024053553119301796,
+        "false": 0.9759464263916016
+      }
+    },
+    "owner": {
+      "option_ids": [
+        "payments",
+        "storefront",
+        "support"
+      ],
+      "logits": [
+        0.3046875,
+        -4.34375,
+        -4.0
+      ],
+      "probabilities": {
+        "payments": 0.9774391055107117,
+        "storefront": 0.009360498748719692,
+        "support": 0.013200418092310429
+      }
+    },
+    "severity": {
+      "option_ids": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "logits": [
+        -3.140625,
+        0.24609375,
+        -3.515625,
+        -4.4375
+      ],
+      "probabilities": {
+        "0": 0.03171638399362564,
+        "1": 0.937814474105835,
+        "2": 0.021798329427838326,
+        "3": 0.008670777082443237
+      }
+    }
+  },
+  "error": "RuntimeError: Inference tensors cannot be saved for backward. Please do not use Tensors created in inference mode in computation tracked by autograd. To work around this, you can make a clone to get a normal tensor and use it in autograd, or use `torch.no_grad()` instead of `torch.inference_mode()`."
+}

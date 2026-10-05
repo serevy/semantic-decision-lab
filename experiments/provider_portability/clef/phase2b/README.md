@@ -15,6 +15,25 @@ Phase 2B therefore does **not** spend another 54 calls re-proving repeatability.
 It traces one observation for each of the same 18 conditions and adds a
 fixed-backbone head-order counterfactual.
 
+## v0.2 retry freeze
+
+The first frozen v0.1 execution reached a validated canary and preserved the
+first actual typed response/logits, then failed before the first internal trace.
+The failure was a runner context bug: backbone hidden states created under
+`torch.inference_mode()` were later passed to trace-only `hidden_norm` while
+ordinary autograd tracking was enabled.
+
+The v0.1 failed Evidence is preserved and its run identity is never reused.
+
+v0.2 keeps the released inference path unchanged. After the actual model/head
+output is produced under `torch.inference_mode()`, the backbone hidden states
+are cloned under `torch.no_grad()` into a normal graph-free tensor used only by
+the trace path. Trace-only LayerNorm/mean operations also run under
+`torch.no_grad()`.
+
+No successful Phase 2B internal trace had been observed before the v0.2 retry
+freeze.
+
 ## Upstream path under test
 
 The released local path is:
@@ -74,7 +93,7 @@ The same Phase 1C / Phase 2A fixture family is inherited:
 One provider-neutral canary is executed first.
 
 Phase 2A's 18/18 byte-identical three-repeat result is pinned as the reason that
-Phase 2B v0.1 uses one observation per condition. Phase 2B does not redefine
+Phase 2B v0.2 uses one observation per condition. Phase 2B does not redefine
 repeatability.
 
 ## Runtime boundary
@@ -116,11 +135,12 @@ None of those outcomes alone prove a specific causal mechanism.
 
 ## Evidence discipline
 
-- Freeze protocol and code before the first Phase 2B internal trace.
-- Preserve failed runs before any retry.
+- Preserve the v0.1 failed run before the v0.2 retry.
+- Freeze v0.2 protocol and code before the first successful Phase 2B internal trace.
+- Preserve every failed run before any retry.
 - Never overwrite an Evidence directory.
 - Record exact model/code/head hashes and runtime.
 - Keep Phase 2A raw Evidence immutable.
 - No post-output threshold selection.
 
-Refs #118, #131, #132, #135.
+Refs #118, #131, #132, #135, #136.
