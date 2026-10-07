@@ -61,6 +61,54 @@ def _preserve_canary_error(
     update_evidence(canary_path, canary_evidence)
 
 
+def _run_canary(
+    *,
+    canary_path: Path,
+    canary_evidence: dict[str, Any],
+    canary_encoding: dict[str, Any],
+    module: Any,
+    model: Any,
+    processor: Any,
+    canary_request: dict[str, Any],
+    max_length: int,
+    probability_tolerance: float,
+) -> dict[str, Any]:
+    reserve_evidence(canary_path, canary_evidence)
+    try:
+        if canary_encoding["state_truncated"]:
+            raise RuntimeError("Phase 2C canary state truncation is forbidden")
+        canary_response = module.systemone(
+            model,
+            processor,
+            canary_request,
+            max_length=max_length,
+        )
+        canary_evidence.update(
+            {
+                "stage": "canary-response-received",
+                "raw_response": canary_response,
+                "response_sha256": _response_sha256(canary_response),
+            }
+        )
+        update_evidence(canary_path, canary_evidence)
+        validate_response(
+            canary_response,
+            canary_request,
+            probability_tolerance=probability_tolerance,
+        )
+        canary_evidence.update(
+            {
+                "stage": "validated",
+                "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+            }
+        )
+        update_evidence(canary_path, canary_evidence)
+        return canary_response
+    except Exception as exc:
+        _preserve_canary_error(canary_path, canary_evidence, exc)
+        raise
+
+
 def _token_sha256(values: Any) -> str:
     if hasattr(values, "detach"):
         values = values.detach().cpu().reshape(-1).tolist()
@@ -465,34 +513,17 @@ def main() -> int:
             "hf_revision": revision,
             "runtime": runtime,
         }
-        reserve_evidence(canary_path, canary_evidence)
-        try:
-            if canary_encoding["state_truncated"]:
-                raise RuntimeError("Phase 2C canary state truncation is forbidden")
-            canary_response = module.systemone(
-                model, processor, canary_request, max_length=manifest["model"]["max_length"]
-            )
-            canary_evidence.update(
-                {
-                    "stage": "canary-response-received",
-                    "raw_response": canary_response,
-                    "response_sha256": _response_sha256(canary_response),
-                }
-            )
-            update_evidence(canary_path, canary_evidence)
-            validate_response(
-                canary_response, canary_request, probability_tolerance=probability_tolerance
-            )
-            canary_evidence.update(
-                {
-                    "stage": "validated",
-                    "completed_at_utc": datetime.now(timezone.utc).isoformat(),
-                }
-            )
-            update_evidence(canary_path, canary_evidence)
-        except Exception as exc:
-            _preserve_canary_error(canary_path, canary_evidence, exc)
-            raise
+        _run_canary(
+            canary_path=canary_path,
+            canary_evidence=canary_evidence,
+            canary_encoding=canary_encoding,
+            module=module,
+            model=model,
+            processor=processor,
+            canary_request=canary_request,
+            max_length=manifest["model"]["max_length"],
+            probability_tolerance=probability_tolerance,
+        )
         run_evidence["stage"] = "canary-validated-before-controls"
         update_evidence(run_path, run_evidence)
 
