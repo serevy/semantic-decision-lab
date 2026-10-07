@@ -1,0 +1,112 @@
+{
+  "schema_version": "0.1",
+  "protocol_version": "0.1",
+  "experiment": "clef-flash-phase2c-backbone-mechanism-isolation",
+  "frozen_before_phase2c_output": true,
+  "phase2c_model_outputs_observed_before_freeze": 0,
+  "source_commits": {
+    "phase2b_evidence_merge": "04b1fa1997071c447953023f92f5b6b247365eec"
+  },
+  "provider": {
+    "kind": "local-inference",
+    "entrypoint": "joint_schema_model.py:systemone"
+  },
+  "model": {
+    "hf_repo": "Cloudflare/clef-flash",
+    "hf_revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+    "discovery_prefix": "17f0b0a",
+    "max_length": 16384
+  },
+  "runtime_contract": {
+    "device": "cuda",
+    "requested_dtype": "bfloat16",
+    "torch_version_prefix": "2.11",
+    "transformers_version": "5.10.2",
+    "no_quantization": true,
+    "no_cpu_offload": true,
+    "hardware_policy": "Record exact CUDA GPU. H100/H200 is the upstream-matched condition; other BF16-capable CUDA GPUs remain explicit distinct runtime conditions."
+  },
+  "frozen_pins": {
+    "phase2b_manifest_path": "../phase2b/source-localization-manifest.v0.2.json",
+    "phase2b_manifest_blob_sha": "83306a0152d7ae131620a65901110a5ccd8deef8",
+    "phase2b_probes_path": "../phase2b/probes.py",
+    "phase2b_probes_blob_sha": "9386c1beedd73e7221f09f179dcd6d6058d5abf0",
+    "phase2b_runner_path": "../phase2b/run_local.py",
+    "phase2b_runner_blob_sha": "f89c407759f90e7216c6261af036243d30112565",
+    "phase2b_analyzer_path": "../phase2b/analyze.py",
+    "phase2b_analyzer_blob_sha": "9f7b00d74f785ccb7a3c4586f8257c885247a21a",
+    "phase2b_summary_path": "../results/clef-phase2b-local-v0.2-summary.md",
+    "phase2b_summary_blob_sha": "83ed63eb50127ea59eb876f0f542b3e888a270ec",
+    "phase2b_analysis_path": "../results/clef-phase2b-local-v0.2-analysis.json",
+    "phase2b_analysis_blob_sha": "5d307707429436ac02a77d0118bf9c1d69f41bc4",
+    "phase2b_evidence_archive_path": "../results/clef-phase2b-local-v0.2-evidence.tgz",
+    "phase2b_evidence_archive_blob_sha": "8adfc1146b961736826f90ddfc10dc15bdac7a72",
+    "contract_path": "../contract.py",
+    "contract_blob_sha": "9a261a5bd11727c224e420aad7ba624ff789e83e",
+    "canary_fixture_path": "../systemone-contract.v0.1.json",
+    "canary_fixture_blob_sha": "b0e91fa77372e224aa88a55e56707e07ee0495d3",
+    "local_smoke_runner_path": "../run_local_clef_flash_smoke.py",
+    "local_smoke_runner_blob_sha": "f914edfe921b328f76263ca0ff37d145320520c1"
+  },
+  "execution": {
+    "run_identity": "clef-phase2c-local-v0.1",
+    "canary_calls": 1,
+    "standard_conditions": 18,
+    "zero_position_conditions": 18,
+    "suffix_shift_conditions": 6,
+    "experimental_backbone_forwards": 42,
+    "suffix_shift_offsets": [
+      32,
+      128
+    ],
+    "one_observation_per_condition": true,
+    "repeatability_basis": "Phase 2A retained Evidence: 18/18 conditions byte-identical across three repeats.",
+    "reuse_single_loaded_model": true,
+    "no_retries_inside_run": true,
+    "semantic_threshold": null,
+    "numerical_noise_threshold": null,
+    "sufficiency_threshold": null,
+    "necessity_threshold": null,
+    "causality_threshold": null
+  },
+  "controls": {
+    "standard": {
+      "input_ids": "request native",
+      "attention_mask": "request native",
+      "position_ids": "model default",
+      "question_order": "request native"
+    },
+    "zero_position": {
+      "input_ids": "request native",
+      "attention_mask": "request native",
+      "position_ids": "all zero",
+      "causal_token_order": "request native",
+      "alignment": "compare by semantic question_id and option_id"
+    },
+    "canonical_suffix_shift": {
+      "source_variant": "packed-canonical",
+      "input_ids": "canonical fixed",
+      "attention_mask": "canonical fixed",
+      "causal_token_order": "canonical fixed",
+      "state_prefix_position_ids": "canonical fixed",
+      "suffix_position_ids": "canonical sequential position + frozen positive offset",
+      "offsets": [
+        32,
+        128
+      ],
+      "suffix_boundary": "first token after exact rendered state span",
+      "alignment": "compare against standard packed-canonical by semantic question_id and option_id"
+    }
+  },
+  "invariants": [
+    "Phase 2C reuses exactly the 3 fixtures and 6 packed question-order conditions frozen by Phase 1C and reused by Phase 2A and Phase 2B.",
+    "Phase 2C takes one observation per standard/zero-position condition because Phase 2A already observed exact 3-repeat local repeatability for all 18 conditions.",
+    "The released model weights, joint head, tokenizer/processor, dtype, max length, and response head are unchanged from Phase 2B.",
+    "Phase 2B Evidence and source files are immutable inputs and are never rewritten by Phase 2C.",
+    "Zero-position controls change only explicit position_ids relative to their request-native encoded condition.",
+    "Suffix-shift controls start from packed-canonical and change only explicit suffix position_ids after the exact rendered state span.",
+    "Synthetic position-ID controls are mechanism probes, not valid provider requests.",
+    "No semantic, numerical-noise, sufficiency, necessity, or causality threshold is selected before Phase 2C output.",
+    "A non-H100/H200 run remains a distinct runtime condition."
+  ]
+}
