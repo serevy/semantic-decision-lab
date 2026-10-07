@@ -46,6 +46,21 @@ def _response_sha256(response: dict[str, Any]) -> str:
     return _json_sha256(response)
 
 
+def _preserve_canary_error(
+    canary_path: Path,
+    canary_evidence: dict[str, Any],
+    exc: Exception,
+) -> None:
+    canary_evidence.update(
+        {
+            "stage": "canary-error",
+            "error": f"{type(exc).__name__}: {exc}",
+            "failed_at_utc": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+    update_evidence(canary_path, canary_evidence)
+
+
 def _token_sha256(values: Any) -> str:
     if hasattr(values, "detach"):
         values = values.detach().cpu().reshape(-1).tolist()
@@ -476,14 +491,7 @@ def main() -> int:
             )
             update_evidence(canary_path, canary_evidence)
         except Exception as exc:
-            canary_evidence.update(
-                {
-                    "stage": "canary-error",
-                    "error": f"{type(exc).__name__}: {exc}",
-                    "failed_at_utc": datetime.now(timezone.utc).isoformat(),
-                }
-            )
-            update_evidence(canary_path, canary_evidence)
+            _preserve_canary_error(canary_path, canary_evidence, exc)
             raise
         run_evidence["stage"] = "canary-validated-before-controls"
         update_evidence(run_path, run_evidence)
