@@ -126,6 +126,7 @@ Bounded interpretations only:
   Phase 2C model output;
 - preserve Phase 2B files unchanged;
 - preserve every failed Phase 2C run before any retry;
+- if the canary fails, preserve `canary-error`, the exception, and failure time in `canary.json` before propagation;
 - never reuse a failed run identity;
 - no post-output threshold selection;
 - no silent context truncation;
