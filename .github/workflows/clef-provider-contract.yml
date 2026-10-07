@@ -35,10 +35,10 @@ jobs:
           python -m json.tool "$RUNNER_TEMP/clef-phase2a-dry-run.json" > /dev/null
       - name: Validate Phase 2B and Phase 2C local protocols without GPU/model output
         run: |
-          python experiments/provider_portability/clef/phase2b/run_local.py \\
+          python experiments/provider_portability/clef/phase2b/run_local.py \
             --dry-run > "$RUNNER_TEMP/clef-phase2b-dry-run.json"
           python -m json.tool "$RUNNER_TEMP/clef-phase2b-dry-run.json" > /dev/null
-          python experiments/provider_portability/clef/phase2c/run_local.py \\
+          python experiments/provider_portability/clef/phase2c/run_local.py \
             --dry-run > "$RUNNER_TEMP/clef-phase2c-dry-run.json"
           python -m json.tool "$RUNNER_TEMP/clef-phase2c-dry-run.json" > /dev/null
       - name: Compile smoke runners
@@ -59,11 +59,11 @@ jobs:
             experiments/provider_portability/clef/phase1c/run_workers_ai.py \
             experiments/provider_portability/clef/phase2a/probes.py \
             experiments/provider_portability/clef/phase2a/run_local.py \
-            experiments/provider_portability/clef/phase2a/analyze.py \\
-            experiments/provider_portability/clef/phase2b/probes.py \\
-            experiments/provider_portability/clef/phase2b/run_local.py \\
-            experiments/provider_portability/clef/phase2b/analyze.py \\
-            experiments/provider_portability/clef/phase2c/probes.py \\
-            experiments/provider_portability/clef/phase2c/run_local.py \\
-            experiments/provider_portability/clef/phase2c/analysis_plan.py \\
+            experiments/provider_portability/clef/phase2a/analyze.py \
+            experiments/provider_portability/clef/phase2b/probes.py \
+            experiments/provider_portability/clef/phase2b/run_local.py \
+            experiments/provider_portability/clef/phase2b/analyze.py \
+            experiments/provider_portability/clef/phase2c/probes.py \
+            experiments/provider_portability/clef/phase2c/run_local.py \
+            experiments/provider_portability/clef/phase2c/analysis_plan.py \
             experiments/provider_portability/clef/phase2c/analyze.py
