@@ -453,24 +453,38 @@ def main() -> int:
             "runtime": runtime,
         }
         reserve_evidence(canary_path, canary_evidence)
-        canary_response = module.systemone(
-            model, processor, canary_request, max_length=manifest["model"]["max_length"]
-        )
-        canary_evidence.update(
-            {
-                "stage": "canary-response-received",
-                "raw_response": canary_response,
-                "response_sha256": _response_sha256(canary_response),
-            }
-        )
-        update_evidence(canary_path, canary_evidence)
-        validate_response(
-            canary_response, canary_request, probability_tolerance=probability_tolerance
-        )
-        canary_evidence.update(
-            {"stage": "validated", "completed_at_utc": datetime.now(timezone.utc).isoformat()}
-        )
-        update_evidence(canary_path, canary_evidence)
+        try:
+            canary_response = module.systemone(
+                model, processor, canary_request, max_length=manifest["model"]["max_length"]
+            )
+            canary_evidence.update(
+                {
+                    "stage": "canary-response-received",
+                    "raw_response": canary_response,
+                    "response_sha256": _response_sha256(canary_response),
+                }
+            )
+            update_evidence(canary_path, canary_evidence)
+            validate_response(
+                canary_response, canary_request, probability_tolerance=probability_tolerance
+            )
+            canary_evidence.update(
+                {
+                    "stage": "validated",
+                    "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+                }
+            )
+            update_evidence(canary_path, canary_evidence)
+        except Exception as exc:
+            canary_evidence.update(
+                {
+                    "stage": "canary-error",
+                    "error": f"{type(exc).__name__}: {exc}",
+                    "failed_at_utc": datetime.now(timezone.utc).isoformat(),
+                }
+            )
+            update_evidence(canary_path, canary_evidence)
+            raise
         run_evidence["stage"] = "canary-validated-before-controls"
         update_evidence(run_path, run_evidence)
 
