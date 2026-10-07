@@ -447,8 +447,6 @@ def main() -> int:
         canary_encoding = inspect_state_encoding(
             module, processor, canary_request, max_length=manifest["model"]["max_length"]
         )
-        if canary_encoding["state_truncated"]:
-            raise RuntimeError("Phase 2C canary state truncation is forbidden")
         canary_fixture = load_fixture(
             resolve_pinned_path(manifest_path, manifest["frozen_pins"]["canary_fixture_path"])
         )
@@ -469,6 +467,8 @@ def main() -> int:
         }
         reserve_evidence(canary_path, canary_evidence)
         try:
+            if canary_encoding["state_truncated"]:
+                raise RuntimeError("Phase 2C canary state truncation is forbidden")
             canary_response = module.systemone(
                 model, processor, canary_request, max_length=manifest["model"]["max_length"]
             )
