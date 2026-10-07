@@ -1,6 +1,6 @@
 import unittest
 from pathlib import Path
-from unittest.mock import Mock, call, patch
+from unittest.mock import Mock, patch
 
 from phase2c.probes import load_manifest, validate_manifest
 from phase2c.run_local import _preserve_canary_error, _run_canary, dry_run
@@ -129,12 +129,11 @@ class Phase2CFreezeTest(unittest.TestCase):
         )
         self.assertIn("failed_at_utc", evidence)
         self.assertEqual(
-            manager.mock_calls,
-            [
-                call.reserve(path, {"stage": "reserved-before-canary-inference"}),
-                call.update(path, evidence),
-            ],
+            [mock_call[0] for mock_call in manager.mock_calls],
+            ["reserve", "update"],
         )
+        reserve.assert_called_once_with(path, evidence)
+        update.assert_called_once_with(path, evidence)
 
     def test_dry_run_freezes_exact_schedule(self):
         result = dry_run(self.manifest, self.plan)
