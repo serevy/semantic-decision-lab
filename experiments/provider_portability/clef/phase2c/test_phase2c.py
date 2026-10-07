@@ -1,9 +1,9 @@
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, call, patch
 
 from phase2c.probes import load_manifest, validate_manifest
-from phase2c.run_local import _preserve_canary_error, dry_run
+from phase2c.run_local import _preserve_canary_error, _run_canary, dry_run
 
 
 class Phase2CFreezeTest(unittest.TestCase):
@@ -91,6 +91,50 @@ class Phase2CFreezeTest(unittest.TestCase):
         )
         self.assertIn("failed_at_utc", evidence)
         update.assert_called_once_with(path, evidence)
+
+    def test_truncated_canary_is_reserved_and_preserved_before_propagation(self):
+        path = Path("canary.json")
+        evidence = {"stage": "reserved-before-canary-inference"}
+        module = Mock()
+
+        with (
+            patch("phase2c.run_local.reserve_evidence") as reserve,
+            patch("phase2c.run_local.update_evidence") as update,
+        ):
+            manager = Mock()
+            manager.attach_mock(reserve, "reserve")
+            manager.attach_mock(update, "update")
+
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "Phase 2C canary state truncation is forbidden",
+            ):
+                _run_canary(
+                    canary_path=path,
+                    canary_evidence=evidence,
+                    canary_encoding={"state_truncated": True},
+                    module=module,
+                    model=object(),
+                    processor=object(),
+                    canary_request={"model": "test"},
+                    max_length=16384,
+                    probability_tolerance=1e-6,
+                )
+
+        module.systemone.assert_not_called()
+        self.assertEqual(evidence["stage"], "canary-error")
+        self.assertEqual(
+            evidence["error"],
+            "RuntimeError: Phase 2C canary state truncation is forbidden",
+        )
+        self.assertIn("failed_at_utc", evidence)
+        self.assertEqual(
+            manager.mock_calls,
+            [
+                call.reserve(path, {"stage": "reserved-before-canary-inference"}),
+                call.update(path, evidence),
+            ],
+        )
 
     def test_dry_run_freezes_exact_schedule(self):
         result = dry_run(self.manifest, self.plan)
