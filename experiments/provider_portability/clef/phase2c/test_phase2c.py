@@ -1,7 +1,9 @@
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 from phase2c.probes import load_manifest, validate_manifest
-from phase2c.run_local import dry_run
+from phase2c.run_local import _preserve_canary_error, dry_run
 
 
 class Phase2CFreezeTest(unittest.TestCase):
@@ -73,6 +75,22 @@ class Phase2CFreezeTest(unittest.TestCase):
             "causality_threshold",
         ):
             self.assertIsNone(execution[key])
+
+    def test_canary_failure_is_preserved_before_propagation(self):
+        evidence = {"stage": "canary-response-received"}
+        error = RuntimeError("synthetic canary failure")
+        path = Path("canary.json")
+
+        with patch("phase2c.run_local.update_evidence") as update:
+            _preserve_canary_error(path, evidence, error)
+
+        self.assertEqual(evidence["stage"], "canary-error")
+        self.assertEqual(
+            evidence["error"],
+            "RuntimeError: synthetic canary failure",
+        )
+        self.assertIn("failed_at_utc", evidence)
+        update.assert_called_once_with(path, evidence)
 
     def test_dry_run_freezes_exact_schedule(self):
         result = dry_run(self.manifest, self.plan)
