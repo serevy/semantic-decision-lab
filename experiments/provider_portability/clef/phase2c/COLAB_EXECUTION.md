@@ -229,8 +229,11 @@ Archive the complete first-run directory immediately:
 !sha256sum /content/clef-phase2c-local-v0.1-evidence.tgz
 ```
 
-Optionally copy the immutable archive to mounted Google Drive **after** the
-archive and SHA-256 are created:
+The archive **must be copied outside the Colab VM before analysis,
+interpretation, retry, or ending the session**. A copy that exists only under
+`/content` is not considered preserved Evidence.
+
+Google Drive is the default off-VM destination:
 
 ```python
 from google.colab import drive
@@ -244,7 +247,15 @@ drive.mount("/content/drive")
 !sha256sum /content/drive/MyDrive/semantic-decision-lab-evidence/clef-phase2c-local-v0.1-evidence.tgz
 ```
 
-The copied archive hash must match the original archive hash.
+The copied archive SHA-256 **must exactly match** the original archive SHA-256.
+
+If Google Drive is unavailable, use another durable destination outside the
+Colab VM (for example, download the archive to the operator machine) and verify
+the same SHA-256 there. Record which external destination was used.
+
+**STOP gate:** do not begin analysis, inspect selective model results, change
+code/packages, retry, or intentionally terminate the Colab session until at
+least one off-VM copy exists and its SHA-256 has been verified.
 
 ## 8. Analysis boundary
 
