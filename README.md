@@ -105,4 +105,4 @@ Working experiment detail stays in GitHub Issues. A PDDR is created only when ev
 | GitHub Issue | Hypothesis, protocol, observations, raw evidence, failures, and follow-ups |
 | PDDR | Evidence-backed adoption, rejection, deferral, scope, consequences, and revisit conditions |
 
-This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) defines the boundary between experimental work and durable decision records.
+This repository uses [PDDR Kit](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0) `v0.3.0` for its managed core (updated in [PR #145](https://github.com/serevy/semantic-decision-lab/pull/145)); experimental Evidence, decision records and optional Skills were not updated as part of the core migration. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) defines the boundary between experimental work and durable decision records.
