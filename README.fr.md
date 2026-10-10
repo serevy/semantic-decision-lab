@@ -2,6 +2,11 @@
 
 [English](README.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [한국어](README.ko.md) | **Français**
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main&event=push)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
+[![PDDR Kit v0.3.0](https://img.shields.io/badge/PDDR%20Kit-v0.3.0-0969da)](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0)
+[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
+
 > **Expériences indépendantes des fournisseurs sur les couches de décision sémantique :** transformer un état ambigu en décisions typées et probabilistes que les systèmes déterministes peuvent exploiter.
 
 La question fondamentale n’est pas « un LLM peut-il tout faire ? », mais plutôt :
@@ -18,19 +23,31 @@ Une couche sémantique doit répondre à **ce que signifie l’état actuel**. L
 
 Cette séparation nous permet de tester le jugement sémantique indépendamment de la logique d’exécution. Elle rend également explicites l’incertitude, l’abstention, l’escalade et le remplacement du fournisseur, au lieu de les dissimuler dans un agent monolithique.
 
+## Périmètre de recherche
+
+Une revue de l'état de l'art menée en 2026 a relevé de nombreux travaux existants sur le routage et les cascades de modèles, la compression du contexte et des prompts, les transmissions structurées entre agents, le suivi des états de dialogue et d'action, l'évaluation pragmatique, la supervision des trajectoires et des processus, la planification de haut niveau pour les systèmes incarnés et les représentations intermédiaires.
+
+Le laboratoire considère donc ces techniques comme **des briques et des références comparatives**, et non comme des innovations en elles-mêmes. Son périmètre de recherche commun est plus précis :
+
+> **Peut-on représenter un jugement sémantique ambigu sous forme d'états typés et de transitions tenant compte de l'incertitude, préserver le comportement des systèmes en aval, maintenir autant que possible la portabilité entre fournisseurs et laisser l'exécution, l'autorisation, les politiques et la sécurité matérielle sous le contrôle de mécanismes déterministes ?**
+
+Les expériences devraient réutiliser les méthodes établies lorsqu'elles conviennent et réserver les développements spécifiques à la fidélité sémantique, à la calibration, à l'abstention, aux transitions d'état, aux effets en aval et aux limites d'autorité.
+
+Consultez [PDDR-0007](docs/records/PDDR-0007-focus-typed-semantic-state.md) et [#70 Radar des références externes](https://github.com/serevy/semantic-decision-lab/issues/70) pour les éléments probants et la décision de périmètre.
+
 ## Carte de recherche
 
 | Domaine | Question de recherche | Principaux fils conducteurs |
 |---|---|---|
-| Orchestration | Le routage sémantique peut-il réduire les coûts ou la latence sans dégrader les résultats obtenus ? | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
-| Contexte et mémoire | Pouvons-nous sélectionner un contexte plus restreint tout en préservant les informations essentielles à la prise de décision ? | [#2 Sélection du contexte PDDR](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 évaluation de la réussite de la tâche en aval](https://github.com/serevy/semantic-decision-lab/issues/74) |
-| Transmissions | L’état libre d’un agent peut-il devenir une transmission typée et compacte sans perdre de contraintes importantes&nbsp;? | [#3 Transmission typée](https://github.com/serevy/semantic-decision-lab/issues/3) |
-| Interprétation de l’état | Pouvons-nous représenter l’état décisionnel, l’état pragmatique et les trajectoires sémantiques sans inventer de certitude non étayée ? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
-| Portes de domaine et découverte | Où la classification sémantique, la notation, la récupération et le classement sont-ils utiles dans les flux de travail de domaines délimités ? | [#6 Portes de stratégie de trading](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 Découverte de VTubers](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 Découverte des goûts](https://github.com/serevy/semantic-decision-lab/issues/8) |
-| Temps réel / incarné | Des décisions sémantiques à faible latence peuvent-elles améliorer les systèmes interactifs tout en maintenant la sécurité matérielle indépendante ? | [#10 Couche de décision temps réel / incarnée](https://github.com/serevy/semantic-decision-lab/issues/10) |
-| Portabilité du fournisseur | La même application de décisions typées peut-elle passer d’un fournisseur hébergé à un fournisseur local, et inversement, sans transmettre en aval des hypothèses spécifiques au fournisseur&nbsp;? | [#81 Portabilité du fournisseur System One](https://github.com/serevy/semantic-decision-lab/issues/81) |
+| Orchestration | Le routage sémantique peut-il améliorer ensemble la réussite des tâches de bout en bout, le coût, la latence, les escalades et les reprises de travail ? | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| Contexte et mémoire | Jusqu'où peut-on réduire le contexte de l'historique décisionnel tout en préservant les comportements décisionnels en aval ? | [#2 PDDR Context Selection](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 évaluation de la réussite des tâches en aval](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| Transmissions | Quelle est la transmission typée minimale qui préserve les contraintes, l'incertitude, la provenance des preuves et la prochaine action requise ? | [#3 Typed Handoff](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| Interprétation de l'état | Peut-on représenter l'état décisionnel, l'état pragmatique et les transitions sémantiques sans inventer de certitude ni d'autorisation non étayée ? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| Contrôles de domaine et découverte | Où la classification sémantique, la notation, la recherche et le classement aident-ils dans des flux de travail à périmètre défini ? | [#6 Trading Strategy Gate](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 VTuber Discovery](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 Taste Discovery](https://github.com/serevy/semantic-decision-lab/issues/8) |
+| Temps réel / incarné | Un état sémantique à faible latence peut-il améliorer l'interaction malgré le délai, la dérive ou les changements de politique du modèle, tout en préservant une sécurité matérielle déterministe et indépendante ? | [#10 Real-time / Embodied Decision Layer](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| Portabilité entre fournisseurs | Un contrat de décision typée peut-il préserver le sens sémantique, la calibration et les capacités observables chez les fournisseurs hébergés et locaux, au-delà de la seule forme de l'API ? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-Le dépôt considère des formes de tâches établies telles que la classification, la notation, le routage, la recherche d’informations et la vérification comme des éléments constitutifs. L’axe de recherche porte sur la manière dont ces primitives se composent en architectures logicielles fiables et sur leur comportement dans des conditions d’évaluation réelles.
+Le dépôt traite la classification, la notation, le routage, la recherche, la compression, les transmissions structurées, la vérification, l'analyse des trajectoires et les représentations intermédiaires typées comme des briques établies. Il étudie comment les états sémantiques typés et leurs transitions préservent les comportements en aval lorsque ces éléments sont réunis dans des architectures logicielles fiables.
 
 ## Neutre vis-à-vis des fournisseurs par conception
 
@@ -93,4 +110,4 @@ Les détails de l’expérimentation en cours restent dans GitHub Issues. Un PDD
 | GitHub Issue | Hypothèse, protocole, observations, éléments probants bruts, échecs et suivis |
 | PDDR | Adoption, rejet, report, périmètre, conséquences et conditions de réexamen fondés sur des données probantes |
 
-Ce dépôt utilise [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) définit la limite entre le travail expérimental et les enregistrements de décisions durables.
+Ce dépôt utilise [PDDR Kit](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0) `v0.3.0` pour son cœur géré (mis à jour dans [PR #145](https://github.com/serevy/semantic-decision-lab/pull/145)) ; les preuves expérimentales Evidence, les dossiers de décision et les Skills facultatifs n'ont pas été modifiés dans cette migration du cœur. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) définit la frontière entre expériences et décisions durables.
