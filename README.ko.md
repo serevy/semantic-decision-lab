@@ -2,6 +2,11 @@
 
 [English](README.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | **한국어** | [Français](README.fr.md)
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main&event=push)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
+[![PDDR Kit v0.3.0](https://img.shields.io/badge/PDDR%20Kit-v0.3.0-0969da)](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0)
+[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
+
 > **의미 결정 계층에 대한 공급자 중립적 실험: 모호한 상태를 결정론적 시스템이 소비할 수 있는 타입화된 확률적 결정으로 전환.**
 
 핵심 질문은 “LLM이 모든 것을 할 수 있는가?”가 아닙니다. 핵심은 다음과 같습니다.
@@ -18,19 +23,31 @@
 
 이러한 분리를 통해 실행 로직과 독립적으로 의미론적 판단을 테스트할 수 있습니다. 또한 불확실성, 기권, 에스컬레이션 및 제공자 교체를 모놀리식 에이전트 내부에 숨기는 대신 명시적으로 드러낼 수 있습니다.
 
+## 연구 범위
+
+2026년에 실시한 선행 연구 검토에서는 모델 라우팅과 캐스케이딩, 컨텍스트·프롬프트 압축, 구조화된 에이전트 핸드오프, 대화·행동 상태 추적, 화용론 평가, 궤적·프로세스 감독, 고수준 체화 계획 및 중간 표현 등에 이미 상당한 연구가 있음을 확인했습니다.
+
+따라서 이 연구실은 이러한 기법 자체의 신규성을 주장하지 않고 **구성 요소와 비교 기준**으로 취급합니다. 공통 연구 범위는 다음과 같이 더 좁게 설정합니다.
+
+> **모호한 의미 판단을 불확실성을 인식하는 타입 지정 상태와 전이로 표현하여 다운스트림 동작을 보존하고, 실용적인 범위에서 프로바이더 간 이식성을 유지하면서, 결정론적 실행·인가·정책·하드 세이프티에 종속시킬 수 있는가?**
+
+실험은 가능하면 확립된 방법을 재사용하고, 맞춤형 엔지니어링은 의미적 충실도, 보정, 판단 보류, 상태 전이, 다운스트림 영향 및 권한 경계에 집중해야 합니다.
+
+근거 및 범위 결정은 [PDDR-0007](docs/records/PDDR-0007-focus-typed-semantic-state.md)과 [#70 외부 참고 자료 레이더](https://github.com/serevy/semantic-decision-lab/issues/70)를 참조하세요.
+
 ## 연구 지도
 
 | 영역 | 연구 질문 | 주요 논의 |
 |---|---|---|
-| 오케스트레이션 | 의미 기반 라우팅으로 성공적인 결과를 저해하지 않으면서 비용이나 지연 시간을 줄일 수 있는가? | [#1 AI 작업 라우팅](https://github.com/serevy/semantic-decision-lab/issues/1) |
-| 맥락 및 메모리 | 의사 결정에 중요한 정보를 보존하면서 더 작은 맥락을 선택할 수 있는가? | [#2 PDDR 맥락 선택](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 다운스트림 작업 성공 평가](https://github.com/serevy/semantic-decision-lab/issues/74) |
-| 핸드오프 | 자유 형식 에이전트 상태가 중요한 제약 조건을 잃지 않고 간결한 형식의 핸드오프로 변환될 수 있는가? | [#3 형식이 지정된 핸드오프](https://github.com/serevy/semantic-decision-lab/issues/3) |
-| 상태 해석 | 지원되지 않는 확실성을 꾸며내지 않고 의사결정 상태, 화용론적 상태 및 의미적 궤적을 나타낼 수 있는가? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
-| 도메인 게이트 및 탐색 | 제한된 도메인 워크플로에서 의미론적 분류, 점수 산정, 검색 및 순위 지정은 어디에 도움이 됩니까? | [#6 트레이딩 전략 게이트](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 버튜버 탐색](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 취향 탐색](https://github.com/serevy/semantic-decision-lab/issues/8) |
-| 실시간 / 체화 | 낮은 지연 시간의 의미론적 결정이 대화형 시스템을 개선하는 동시에 하드 세이프티는 독립적으로 유지될 수 있는가? | [#10 실시간 / 체화 의사 결정 계층](https://github.com/serevy/semantic-decision-lab/issues/10) |
-| 제공자 이식성 | 동일한 typed-decision 애플리케이션을 호스팅 제공자와 로컬 제공자 간에 이동할 때 제공자별 가정이 다운스트림으로 누출되지 않는가? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
+| 오케스트레이션 | 의미 기반 라우팅으로 종단 간 작업 성공률, 비용, 지연 시간, 에스컬레이션 및 재작업을 함께 개선할 수 있는가? | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| 맥락 및 메모리 | 다운스트림 의사결정 동작을 유지하면서 의사결정 이력 컨텍스트를 얼마나 줄일 수 있는가? | [#2 PDDR Context Selection](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 다운스트림 작업 성공 평가](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| 핸드오프 | 제약, 불확실성, 증거 출처 및 필요한 다음 행동을 유지하는 가장 작은 타입 지정 핸드오프는 무엇인가? | [#3 Typed Handoff](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| 상태 해석 | 근거 없는 확실성이나 권한을 만들어 내지 않고 의사결정 상태, 화용론적 상태 및 의미적 전이를 표현할 수 있는가? | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| 도메인 게이트 및 탐색 | 범위가 제한된 도메인 워크플로에서 의미 분류, 점수화, 검색 및 순위 지정은 어디에 도움이 되는가? | [#6 Trading Strategy Gate](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 VTuber Discovery](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 Taste Discovery](https://github.com/serevy/semantic-decision-lab/issues/8) |
+| 실시간 / 체화 | 지연, 드리프트 또는 모델 정책 변경이 있어도 결정론적 하드 세이프티를 독립적으로 유지하면서 저지연 의미 상태로 상호작용을 개선할 수 있는가? | [#10 Real-time / Embodied Decision Layer](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| 프로바이더 이식성 | 타입 지정 의사결정 계약이 API 형태뿐 아니라 의미, 보정 및 관찰 가능한 기능을 호스팅·로컬 프로바이더 전반에서 보존할 수 있는가? | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-이 저장소는 분류, 채점, 라우팅, 검색, 검증과 같은 확립된 작업 형태를 구성 요소로 취급합니다. 연구의 초점은 이러한 기본 요소가 신뢰할 수 있는 소프트웨어 아키텍처로 어떻게 구성되는지, 그리고 실제 평가 제약 조건에서 어떻게 작동하는지에 있습니다.
+분류, 점수화, 라우팅, 검색, 압축, 구조화된 핸드오프, 검증, 궤적 분석 및 타입 지정 중간 표현은 이미 확립된 구성 요소로 취급합니다. 연구의 초점은 이런 기본 요소를 신뢰할 수 있는 소프트웨어 아키텍처로 결합했을 때 타입 지정 의미 상태와 전이가 다운스트림 동작을 얼마나 보존하는지에 있습니다.
 
 ## 프로바이더 중립적으로 설계됨
 
@@ -93,4 +110,4 @@ README는 의도적으로 **실시간 순위표가 아닙니다**.
 | GitHub Issue | 가설, 프로토콜, 관찰 결과, 원시 증거, 실패 및 후속 조치 |
 | PDDR | 근거에 기반한 채택, 거부, 보류, 범위, 결과 및 재검토 조건 |
 
-이 저장소는 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`을(를) 사용합니다. [`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)은(는) 실험적 작업과 지속 가능한 의사 결정 기록 사이의 경계를 정의합니다.
+이 저장소는 관리형 코어에 [PDDR Kit](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0) `v0.3.0`을 사용합니다([PR #145](https://github.com/serevy/semantic-decision-lab/pull/145)에서 업데이트). 이 코어 마이그레이션에는 실험용 Evidence, 의사결정 기록 및 선택적 Skills의 업데이트가 포함되지 않았습니다.[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)은 실험과 지속적인 의사결정 기록의 경계를 정의합니다.

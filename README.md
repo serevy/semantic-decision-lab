@@ -2,6 +2,9 @@
 
 **English** | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [한국어](README.ko.md) | [Français](README.fr.md)
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main&event=push)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
+[![PDDR Kit v0.3.0](https://img.shields.io/badge/PDDR%20Kit-v0.3.0-0969da)](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0)
 [![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
 > **Provider-neutral experiments on semantic decision layers:** turning ambiguous state into typed, probabilistic decisions that deterministic systems can consume.

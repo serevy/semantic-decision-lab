@@ -41,8 +41,42 @@ inline_code_re = re.compile(
 if inline_code_re.findall(source) != inline_code_re.findall(translated):
     errors.append("inline code spans changed")
 
-link_dest_re = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
-if link_dest_re.findall(source) != link_dest_re.findall(translated):
+language_options = [
+    ("English", "README.md"),
+    ("日本語", "README.ja.md"),
+    ("简体中文", "README.zh-CN.md"),
+    ("한국어", "README.ko.md"),
+    ("Français", "README.fr.md"),
+]
+
+
+def expected_language_switcher(active_name: str) -> str:
+    return " | ".join(
+        f"**{label}**" if filename == active_name else f"[{label}]({filename})"
+        for label, filename in language_options
+    )
+
+
+source_lines = source.splitlines()
+translated_lines = translated.splitlines()
+source_name = Path(sys.argv[1]).name
+translated_name = Path(sys.argv[2]).name
+
+if len(source_lines) < 3 or source_lines[2] != expected_language_switcher(source_name):
+    errors.append("canonical README language switcher is invalid")
+if len(translated_lines) < 3 or translated_lines[2] != expected_language_switcher(translated_name):
+    errors.append("translated README language switcher is invalid")
+
+# The active language is bold text, not a self-link. Compare all other Markdown
+# destinations in order while verifying the switcher separately above.
+def without_language_switcher(lines: list[str]) -> str:
+    return "\n".join(line for index, line in enumerate(lines) if index != 2)
+
+
+link_dest_re = re.compile(r"!?\\[[^\\]]*\\]\\(([^)]+)\\)")
+if link_dest_re.findall(without_language_switcher(source_lines)) != link_dest_re.findall(
+    without_language_switcher(translated_lines)
+):
     errors.append("Markdown link/image destinations changed")
 
 heading_re = re.compile(r"(?m)^(#{1,6})\s")

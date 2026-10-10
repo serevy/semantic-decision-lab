@@ -8,44 +8,65 @@ on:
       - site/**
       - docs/assets/**
       - .github/workflows/pages.yml
+  pull_request:
+    paths:
+      - site/**
+      - docs/assets/**
+      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Build static site
+      - name: Build and verify static site
         run: |
           set -eu
+          test -s site/index.html
+          test -s site/styles.css
+          test -s docs/assets/semantic-decision-core.svg
+          test -s docs/assets/provider-neutral-architecture.svg
           rm -rf _site
           mkdir -p _site/assets
           cp -R site/. _site/
           cp docs/assets/*.svg _site/assets/
+          test -s _site/index.html
+          test -s _site/styles.css
+          test -s _site/assets/semantic-decision-core.svg
+          grep -q 'PDDR-0007' _site/index.html
 
       - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Check GitHub Pages is enabled for Actions
+        uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

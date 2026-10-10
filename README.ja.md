@@ -2,6 +2,11 @@
 
 [English](README.md) | **日本語** | [简体中文](README.zh-CN.md) | [한국어](README.ko.md) | [Français](README.fr.md)
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main&event=push)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
+[![PDDR Kit v0.3.0](https://img.shields.io/badge/PDDR%20Kit-v0.3.0-0969da)](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0)
+[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
+
 > **意味決定層におけるプロバイダー中立の実験：**曖昧な状態を、決定論的システムが利用できる型付きの確率的な決定へと変換します。
 
 核心となる問いは「LLMは何でもできるか」ではなく、次のとおりです。
@@ -18,19 +23,31 @@
 
 この分離により、実行ロジックとは独立して意味的判断をテストできます。また、不確実性、棄権、エスカレーション、プロバイダーの置き換えを、一枚岩のエージェントの内部に隠すのではなく、明示的に扱えるようになります。
 
+## 研究対象の境界
+
+2026年の先行研究調査では、モデルのルーティングやカスケード、コンテキスト・プロンプトの圧縮、構造化されたエージェント間の引き継ぎ、対話・行動状態の追跡、語用論の評価、軌跡・プロセスの監督学習、高水準の身体性プランニング、中間表現について、すでに多くの研究が存在することが分かりました。
+
+そのため、このラボではこれらの技術を単独の新規性の主張ではなく、**構成要素や比較基準**として扱います。共通の研究対象は、より狭く定義します。
+
+> **曖昧な意味判断を、不確実性を扱える型付きの状態とその遷移として表現し、下流の振る舞いを保ち、可能な範囲でプロバイダーを交換可能にしながら、決定論的な実行・認可・ポリシー・ハードセーフティに判断権限を従属させられるか？**
+
+実験では、利用可能な既存手法を再利用し、独自の実装は意味の忠実性、確率の較正、棄権、状態遷移、下流への影響、権限の境界に重点を置きます。
+
+根拠とスコープの判断については、[PDDR-0007](docs/records/PDDR-0007-focus-typed-semantic-state.md) と [#70 外部リファレンスレーダー](https://github.com/serevy/semantic-decision-lab/issues/70) を参照してください。
+
 ## 研究マップ
 
 | 領域 | 研究課題 | 主な論点 |
 |---|---|---|
-| オーケストレーション | 成功した結果を損なうことなく、セマンティックルーティングによってコストやレイテンシーを削減できますか？ | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
-| コンテキストとメモリ | 意思決定に重要な情報を保持しながら、より小さいコンテキストを選択できますか？ | [#2 PDDR コンテキスト選択](https://github.com/serevy/semantic-decision-lab/issues/2)、[#74 下流タスク成功評価](https://github.com/serevy/semantic-decision-lab/issues/74) |
-| 引き継ぎ | 自由形式のエージェント状態を、重要な制約を失わずに、簡潔で型付きの引き継ぎ情報に変換できるか？ | [#3 型付き引き継ぎ](https://github.com/serevy/semantic-decision-lab/issues/3) |
-| 状態の解釈 | 意思決定状態、実用的状態、意味論的軌跡を、裏付けのない確実性を捏造せずに表現できるか？ | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
-| ドメインゲートと発見 | 制約されたドメインワークフローにおいて、意味分類、スコアリング、検索、ランキングはどこで役立つか？ | [#6 取引戦略ゲート](https://github.com/serevy/semantic-decision-lab/issues/6)、[#7 VTuber発見](https://github.com/serevy/semantic-decision-lab/issues/7)、[#8 好みの発見](https://github.com/serevy/semantic-decision-lab/issues/8) |
-| リアルタイム／身体性 | 低遅延の意味判断によってインタラクティブシステムを改善しつつ、ハードセーフティを独立させたままにできるか？ | [#10 リアルタイム／身体性意思決定層](https://github.com/serevy/semantic-decision-lab/issues/10) |
-| プロバイダーの可搬性 | 同じ型付き意思決定アプリケーションを、プロバイダー固有の前提を下流に漏らすことなく、ホステッドプロバイダー間およびローカルプロバイダー間で移行できるか？ | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
+| オーケストレーション | セマンティックルーティングで、タスク全体の成功率・コスト・レイテンシー・エスカレーションや手戻りをまとめて改善できるか？ | [#1 AI Work Routing](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| コンテキストとメモリ | 下流の意思決定行動を保ちながら、意思決定履歴のコンテキストをどこまで削減できるか？ | [#2 PDDR Context Selection](https://github.com/serevy/semantic-decision-lab/issues/2), [#74 下流タスク成功評価](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| 引き継ぎ | 制約、不確実性、証拠の出所、必要な次のアクションを保持する最小の型付き引き継ぎは何か？ | [#3 Typed Handoff](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| 状態の解釈 | 根拠のない確実性や権限を作り出さずに、意思決定状態、語用論的状態、意味的な状態遷移を表現できるか？ | [#4](https://github.com/serevy/semantic-decision-lab/issues/4), [#5](https://github.com/serevy/semantic-decision-lab/issues/5), [#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| ドメインゲートと発見 | 制約のあるドメインのワークフローで、意味分類、スコアリング、検索、ランキングはどこで役立つか？ | [#6 Trading Strategy Gate](https://github.com/serevy/semantic-decision-lab/issues/6), [#7 VTuber Discovery](https://github.com/serevy/semantic-decision-lab/issues/7), [#8 Taste Discovery](https://github.com/serevy/semantic-decision-lab/issues/8) |
+| リアルタイム／身体性 | 遅延、ドリフト、モデルのポリシー変更があっても、決定論的なハードセーフティを独立させたまま、低遅延の意味状態で対話を改善できるか？ | [#10 Real-time / Embodied Decision Layer](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| プロバイダーの可搬性 | 型付き意思決定の契約は、API形式だけでなく意味、較正、観測可能な機能を、ホステッド・ローカルのプロバイダー間で保持できるか？ | [#81 System One provider portability](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-このリポジトリでは、分類、スコアリング、ルーティング、検索、検証といった確立されたタスクの形を構成要素として扱います。研究の焦点は、これらの基本要素が信頼性の高いソフトウェアアーキテクチャへどのように組み合わさるか、そして実際の評価制約下でどのように振る舞うかにあります。
+分類、スコアリング、ルーティング、検索、圧縮、構造化された引き継ぎ、検証、軌跡分析、型付き中間表現は、確立された構成要素として扱います。研究の中心は、それらを信頼性の高いソフトウェアアーキテクチャへ組み合わせた際、型付き意味状態とその遷移が下流の振る舞いをどこまで保持できるかです。
 
 ## プロバイダーに依存しない設計
 
@@ -93,4 +110,4 @@ README は意図的に **ライブリーダーボードではありません**�
 | GitHub Issue | 仮説、プロトコル、観察結果、生の証拠、失敗、およびフォローアップ |
 | PDDR | 根拠に裏付けられた採用、却下、延期、範囲、結果、および再検討条件 |
 
-このリポジトリでは、[PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`を使用します。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)は、実験的な作業と永続的な意思決定記録の境界を定義します。
+このリポジトリでは、管理対象コアに [PDDR Kit](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0) `v0.3.0` を使用します（[PR #145](https://github.com/serevy/semantic-decision-lab/pull/145) で更新）。このコア移行では、実験用のEvidence、意思決定記録、オプションのSkillsは更新していません。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md)は、実験と永続的な意思決定記録の境界を定義します。
