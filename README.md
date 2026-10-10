@@ -2,6 +2,9 @@
 
 **English** | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [한국어](README.ko.md) | [Français](README.fr.md)
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![README structure](https://github.com/serevy/semantic-decision-lab/actions/workflows/readme-i18n.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/readme-i18n.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
 [![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
 > **Provider-neutral experiments on semantic decision layers:** turning ambiguous state into typed, probabilistic decisions that deterministic systems can consume.
@@ -82,7 +85,7 @@ Common rules:
 
 The README is intentionally **not** a live leaderboard.
 
-Stable, frozen findings may be promoted here later as small charts or summary figures. Dense result breakdowns, provenance, diagnostics, and interactive views belong in experiment artifacts, `docs/`, or a future GitHub Pages site.
+Stable, frozen findings may be promoted here later as small charts or summary figures. Dense result breakdowns, provenance, diagnostics, and interactive views belong in experiment artifacts, `docs/`, or the [GitHub Pages site](https://serevy.github.io/semantic-decision-lab/).
 
 This keeps the landing page readable while avoiding a common failure mode: attractive charts that silently outlive the experiment version that produced them.
 

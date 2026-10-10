@@ -2,6 +2,11 @@
 
 [English](README.md) | [日本語](README.ja.md) | **简体中文** | [한국어](README.ko.md) | [Français](README.fr.md)
 
+[![PDDR validation](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pddr.yml)
+[![README structure](https://github.com/serevy/semantic-decision-lab/actions/workflows/readme-i18n.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/readme-i18n.yml)
+[![GitHub Pages](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/serevy/semantic-decision-lab/actions/workflows/pages.yml)
+[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/serevy/semantic-decision-lab?utm_source=oss&utm_medium=github&utm_campaign=serevy%2Fsemantic-decision-lab&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
+
 > **关于语义决策层的提供方中立实验：**将模糊状态转化为确定性系统可以使用的类型化概率决策。
 
 核心问题不是“LLM 能做所有事情吗？”而是：
@@ -18,19 +23,30 @@
 
 这种分离使我们能够独立测试语义判断与执行逻辑。它还将不确定性、弃答、升级处理和提供商替换明确呈现出来，而不是将它们隐藏在单体代理中。
 
+## 研究边界
+
+2026 年的既有研究调查发现，模型路由／级联、上下文和提示词压缩、结构化智能体交接、对话／动作状态跟踪、语用评估、轨迹／过程监督、高层具身规划，以及中间表示等方向已有大量研究。
+
+因此，本实验室将这些技术视为**构建模块和比较基线**，而不单独主张其新颖性。共同的研究边界更为明确：
+
+> **能否将模糊的语义判断表示为带类型、能表达不确定性的状态及其转换，在保留下游行为的同时，在实际可行时维持跨提供商可移植性，并始终服从确定性的执行、授权、策略及硬性安全约束？**
+
+实验应尽可能复用现有方法，将定制工程投入到语义保真度、校准、弃答、状态转换、下游影响及权限边界上。
+
+有关证据与范围决策，请参阅 [PDDR-0007](docs/records/PDDR-0007-focus-typed-semantic-state.md) 和 [#70 外部参考雷达](https://github.com/serevy/semantic-decision-lab/issues/70)。
 ## 研究地图
 
 | 领域 | 研究问题 | 主要线索 |
 |---|---|---|
-| 编排 | 语义路由能否在不降低成功结果的情况下减少成本或延迟？ | [#1 AI 工作路由](https://github.com/serevy/semantic-decision-lab/issues/1) |
-| 上下文与记忆 | 我们能否在保留决策关键信息的同时选择更小的上下文？ | [#2 PDDR 上下文选择](https://github.com/serevy/semantic-decision-lab/issues/2)、[#74 下游任务成功评估](https://github.com/serevy/semantic-decision-lab/issues/74) |
-| 交接 | 自由格式的代理状态能否在不丢失重要约束的情况下，转换为紧凑的类型化交接？ | [#3 类型化交接](https://github.com/serevy/semantic-decision-lab/issues/3) |
-| 状态解释 | 我们能否在不臆造无依据的确定性的情况下，表示决策状态、语用状态和语义轨迹？ | [#4](https://github.com/serevy/semantic-decision-lab/issues/4)、[#5](https://github.com/serevy/semantic-decision-lab/issues/5)、[#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
-| 领域门控与发现 | 在受限领域工作流中，语义分类、评分、检索和排序在哪些方面有所帮助？ | [#6 交易策略门控](https://github.com/serevy/semantic-decision-lab/issues/6)、[#7 VTuber 发现](https://github.com/serevy/semantic-decision-lab/issues/7)、[#8 品味发现](https://github.com/serevy/semantic-decision-lab/issues/8) |
-| 实时 / 具身 | 在硬安全保持独立的同时，低延迟语义决策能否改进交互式系统？ | [#10 实时 / 具身决策层](https://github.com/serevy/semantic-decision-lab/issues/10) |
-| 提供商可移植性 | 同一个类型化决策应用能否在托管提供商和本地提供商之间迁移，而不会将特定于提供商的假设泄漏到下游？ | [#81 系统一提供商可移植性](https://github.com/serevy/semantic-decision-lab/issues/81) |
+| 编排 | 语义路由能否同时改善端到端任务成功率、成本、延迟，以及升级处理／返工情况？ | [#1 AI 工作路由](https://github.com/serevy/semantic-decision-lab/issues/1) |
+| 上下文与记忆 | 决策历史上下文可以压缩到什么程度，同时仍保留下游决策行为？ | [#2 PDDR 上下文选择](https://github.com/serevy/semantic-decision-lab/issues/2)、[#74 下游任务成功评估](https://github.com/serevy/semantic-decision-lab/issues/74) |
+| 交接 | 能够保留约束、不确定性、证据来源和下一步必要操作的最小类型化交接是什么？ | [#3 类型化交接](https://github.com/serevy/semantic-decision-lab/issues/3) |
+| 状态解释 | 能否在不臆造无依据的确定性或授权的情况下，表示决策状态、语用状态与语义转换？ | [#4](https://github.com/serevy/semantic-decision-lab/issues/4)、[#5](https://github.com/serevy/semantic-decision-lab/issues/5)、[#9](https://github.com/serevy/semantic-decision-lab/issues/9) |
+| 领域门控与发现 | 在范围明确的领域工作流中，语义分类、评分、检索与排序在哪些方面有用？ | [#6 交易策略门控](https://github.com/serevy/semantic-decision-lab/issues/6)、[#7 VTuber 发现](https://github.com/serevy/semantic-decision-lab/issues/7)、[#8 品味发现](https://github.com/serevy/semantic-decision-lab/issues/8) |
+| 实时 / 具身 | 面对延迟、漂移或模型策略变化，能否在确定性硬安全机制保持独立的同时，用低延迟语义状态改善交互？ | [#10 实时 / 具身决策层](https://github.com/serevy/semantic-decision-lab/issues/10) |
+| 提供商可移植性 | 类型化决策契约能否在托管和本地提供商间保留语义含义、校准及可观测能力，而不只是 API 形式？ | [#81 系统一提供商可移植性](https://github.com/serevy/semantic-decision-lab/issues/81) |
 
-该仓库将分类、评分、路由、检索和验证等既定任务形式视为构建模块。研究重点在于这些原语如何组合成可靠的软件架构，以及它们在真实评估约束下如何表现。
+本仓库将分类、评分、路由、检索、压缩、结构化交接、验证、轨迹分析和类型化中间表示等成熟方法视为构建模块。研究重点是：这些原语组合成可靠的软件架构后，类型化语义状态与转换能在多大程度上保留下游行为。
 
 ## 设计上与提供商无关
 
@@ -68,7 +84,7 @@ Jev 是这项工作中的重要提供方和参考点，但它**并不是研究�
 
 README 有意**不是**实时排行榜。
 
-稳定且冻结的发现日后可在此处以小型图表或摘要图的形式展示。详细的结果拆解、来源信息、诊断信息和交互式视图应放在实验产物、`docs/`或未来的 GitHub Pages 网站中。
+稳定且冻结的发现日后可在此处以小型图表或摘要图的形式展示。详细的结果拆解、来源信息、诊断信息和交互式视图应放在实验产物、`docs/`或[GitHub Pages 网站](https://serevy.github.io/semantic-decision-lab/)中。
 
 这能让着陆页保持易读，同时避免一种常见的失败模式：那些颇具吸引力的图表悄然长存，甚至超过了生成它们的实验版本。
 
@@ -93,4 +109,4 @@ README 有意**不是**实时排行榜。
 | GitHub Issue | 假设、协议、观察结果、原始证据、失败情况和后续跟进 |
 | PDDR | 有证据支持的采用、拒绝、推迟、范围、后果和重新审议条件 |
 
-此仓库使用 [PDDR Kit](https://github.com/serevy/pddr-kit) `v0.2.1`。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) 定义了实验性工作与持久决策记录之间的界限。
+本仓库的 [PDDR Kit](https://github.com/serevy/pddr-kit/releases/tag/v0.3.0) 托管核心已更新至 `v0.3.0`（见 [PR #145](https://github.com/serevy/semantic-decision-lab/pull/145)）；实验 Evidence、决策记录和可选 Skills 不属于本次核心迁移的范围。[`PDDR-0001`](docs/records/PDDR-0001-separate-experiments-from-decisions.md) 定义了实验工作与持久决策记录之间的界限。

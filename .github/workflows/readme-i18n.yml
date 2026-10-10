@@ -6,7 +6,14 @@ on:
       - main
     paths:
       - README.md
-      - .i18n/**
+      - README.*.md
+      - .i18n/verify-readme-published.py
+      - .github/workflows/readme-i18n.yml
+  pull_request:
+    paths:
+      - README.md
+      - README.*.md
+      - .i18n/verify-readme-published.py
       - .github/workflows/readme-i18n.yml
 
   workflow_dispatch:
@@ -26,14 +33,33 @@ on:
 permissions:
   contents: read
 
-# The OpenAI project currently has a 10 RPM limit. Serialize automatic and
-# manual runs so they cannot consume the shared project quota concurrently.
+# Paid translation runs are manual-only and serialized; PR/push validation
+# checks the committed files without API calls or paid model usage.
 concurrency:
-  group: readme-i18n
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'workflow_dispatch' && 'readme-i18n-translate' || format('readme-i18n-verify-{0}', github.event.pull_request.number || github.ref) }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 
 jobs:
+  verify:
+    name: verify-readme-structure
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate committed translations without API calls
+        run: |
+          set -eu
+          for lang in ja zh-CN ko fr; do
+            python .i18n/verify-readme-published.py README.md "README.${lang}.md"
+          done
+
   translate:
+    # Manual-only until the request-count/translation-chunking bottleneck is fixed.
+    if: github.event_name == 'workflow_dispatch'
     name: translate-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
     runs-on: ubuntu-latest
     env:
