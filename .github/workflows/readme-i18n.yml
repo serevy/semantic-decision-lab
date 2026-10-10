@@ -1,14 +1,15 @@
 name: README i18n
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - README.md
-      - .i18n/**
+      - README.ja.md
+      - README.zh-CN.md
+      - README.ko.md
+      - README.fr.md
+      - .i18n/verify-readme-translation.py
       - .github/workflows/readme-i18n.yml
-
   workflow_dispatch:
     inputs:
       target:
@@ -26,19 +27,38 @@ on:
 permissions:
   contents: read
 
-# The OpenAI project currently has a 10 RPM limit. Serialize automatic and
-# manual runs so they cannot consume the shared project quota concurrently.
-concurrency:
-  group: readme-i18n
-  cancel-in-progress: false
+# Paid translation is opt-in. A PR runs deterministic, API-free checks only.
 
 jobs:
+  verify:
+    if: github.event_name == 'pull_request'
+    name: verify-readme-parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Verify all localized READMEs without API access
+        run: |
+          set -eu
+          for lang in ja zh-CN ko fr; do
+            python3 .i18n/verify-readme-translation.py README.md "README.${lang}.md"
+          done
+
   translate:
+    if: github.event_name == 'workflow_dispatch'
+    # The API project's 10 RPM budget is shared by all target languages.
+    # Serialize manual translation jobs without blocking inexpensive PR checks.
+    concurrency:
+      group: readme-i18n-api
+      cancel-in-progress: false
     name: translate-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
     runs-on: ubuntu-latest
     env:
       TARGET_LANG: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'all' }}
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -120,7 +140,7 @@ jobs:
           # Each translator process gets a fresh request counter while the
           # surrounding loop remains strictly serial, preserving the shared
           # project RPM boundary.
-          export README_I18N_MAX_REQUESTS=60
+          export README_I18N_MAX_REQUESTS=90
 
           for lang in "${targets[@]}"; do
             echo "::group::Translate $lang"
